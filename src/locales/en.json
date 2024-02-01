@@ -44,27 +44,6 @@
       "showAll": "All Clients",
       "add": "Add New Client"
     },
-    "Drivers": {
-      "title": "Drivers",
-      "showAll": "All Drivers",
-      "add": "Add New Driver"
-    },
-    "StoresTypes": {
-      "title": "Stores Types",
-      "showAll": "All Stores Types",
-      "add": "Add New Type",
-      "joinRequest": "join request"
-    },
-    "Stores": {
-      "title": "Stores",
-      "showAll": "All Stores",
-      "add": "Add New Store"
-    },
-    "Coupons": {
-      "title": "Coupons",
-      "showAll": "All Coupons",
-      "add": "Add New Coupon"
-    },
     "ContactMessages": {
       "title": "Contact Messages",
       "showAll": "All Contact Messages"
@@ -78,52 +57,65 @@
     "settings": {
       "title": "App Settings"
     },
-    "Roles": {
-      "title": "Roles and Permissions",
-      "showAll": "All Roles",
-      "add": "Add New Role"
-    },
-    "Admins": {
-      "title": "Admins",
-      "showAll": "All Admins",
-      "add": "Add New Admin"
-    },
+   "Roles": {
+       "title": "Powers and tasks",
+       "showAll": "All roles",
+       "add": "Add a new permission",
+       "show": "Show credentials",
+       "edit": "Edit credentials"
+     },
+   "Admins": {
+       "title": "System administrators/ Managers",
+       "showAll": "All Managers",
+       "add": "Add a new Manager",
+       "show": "show user data",
+       "edit": "Edit Manager data"
+     },
     "ImagesSpaces": {
       "title": "Ads Spaces",
       "showAll": "All Ads Spaces",
       "add": "Add New Ad Space"
     },
-    "Areas": {
-      "areas": "Areas",
-      "title": "Areas",
-      "showAll": "All Areas",
-      "add": "Add New Area",
-      "show": "Show New Area",
-      "edit": "Edit New Area"
-    },
-    "Countries": {
-      "title": "Countries",
-      "name": "Country Name",
-      "showAll": "Show All Countries",
-      "add": "Add a New Country",
-      "show": "Show Country",
-      "edit": "Edit Country"
-    },
-    "Cities": {
-      "title": "Cities",
-      "name": "Cities Name",
-      "showAll": "Show All Cities",
-      "add": "Add a New Cities",
-      "show": "Show Cities",
-      "edit": "Edit Cities"
-    },
-    "Districts": {
-      "title": "Districts",
-      "showAll": "All Districts",
-      "add": "Add New District",
-      "show": "Show New District",
-      "edit": "Edit New District"
-    },
+   "Coaches": {
+       "title": "Coaches",
+       "name": "Coach Name",
+       "showAll": "All Coaches",
+       "add": "Add a new coach",
+       "show": "Coaches Show",
+       "edit": "Edit Coaches"
+     },
+     "MainSpecializations": {
+       "title": "Main Specialties",
+       "nametitle": "Name of specialty",
+       "name": "Name of major specialization",
+       "showAll": "All majors",
+       "add": "Add a new major",
+       "show": "Display specialization data",
+       "edit": "Edit specialty data"
+     },
+     "Subspecialties": {
+       "title": "Subspecialties",
+       "showAll": "All subspecialties",
+       "name": "Name of the subspecialty",
+       "add": "Add a new subspecialty",
+       "show": "Display specialization data",
+       "edit": "Edit specialty data"
+     },
+     "SubscriptionsPrice": {
+       "title" : "Manage Subscriptions",
+       "showAll": "Show customer subscriptions"
+     },
+     "Certificates": {
+       "title" : "Certificates",
+       "name" : "Certificate Name",
+       "date": "the date the certificate was added",
+       "add": "Add a new certificate",
+       "show": "display certificate data",
+       "edit": "Edit certificate data"
+     },
+     "financialreports": {
+       "title" : "Financial Reports"
+     },
     "ServicesTypes": {
       "title": "Services Types",
       "showAll": "All Services Types",
@@ -313,12 +305,11 @@
       "activation": "Activation",
       "actions": "Actions"
     },
-    "Products": {
+    "MainSpecializations": {
       "serialNumber": "Serial",
-      "image": "Product Image",
-      "name": "Product Name",
-      "nameAr": "Arabic Product Type Name",
-      "nameEn": "English Product Type Name",
+      "name": "Name of major specialization",
+      "nameAr": "Name of the specialty in Arabic",
+      "nameEn": "Name of the specialty in English",
       "descriptionAr": "Arabic Description",
       "descriptionEn": "English Description",
       "price": "Price",
@@ -352,7 +343,7 @@
       "actions": "Actions"
     },
     "Rates": {
-      "rates": "Rates",
+      "rates": "Customer Opinions",
       "serialNumber": "Serial",
       "clientName": "Client Name",
       "rate": "Rate",
@@ -538,7 +529,8 @@
     "noNotifications": "Notifications Center Is Empty Now!",
     "copyRights": "All Rights Reserved For Moltaqa © {year}",
     "madeWithLove": "Made With ❤️ By Moltaqa",
-    "show_store": "Show Store Data"
+    "show_store": "Show Store Data",
+    "MainSpecializations": "Main Specializations"
   },
 
   "BUTTONS": {
@@ -626,10 +618,7 @@
     "product_section": "Product Categories",
     "additions": "Additions",
     "components": "Components",
-    "AllSections": "All Sections",
-    "show_offer": "Show Offer",
-    "download_invoice": "Download invoice",
-    "addStore": "Add Store",
+    "MainSpecializations": "Add a main specialization",
     "subscriptions": "Subscription history" 
   },
 
@@ -1218,7 +1207,7 @@
     "region": "The area Name field is required",
     "field_type": "Additional field type is required",
     "estate_depart": "Estate depart field is required",
-    "is_show_map": "show map field not choose" ,
+    "is_show_map": "Active field not choose" ,
     "package_duration" : "The number of days must be positive" ,
     "dissount" : "The discount percentage cannot be higher than 100" ,
     "discount_field" : "The discount percentage field is required"

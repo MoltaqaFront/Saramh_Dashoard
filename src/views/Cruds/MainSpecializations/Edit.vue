@@ -1,0 +1,241 @@
+<template>
+  <div class="crud_form_wrapper">
+    <!-- Start:: Title -->
+    <div class="form_title_wrapper">
+      <h4>{{ $t("SIDENAV.MainSpecializations.edit") }}</h4>
+    </div>
+    <!-- End:: Title -->
+
+    <!-- Start:: Single Step Form Content -->
+    <div class="single_step_form_content_wrapper">
+      <form @submit.prevent="validateFormInputs">
+        <div class="row">
+          <!-- Start:: Name Input -->
+          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameAr')" v-model.trim="data.nameAr"
+            @input="validateInput" required />
+          <!-- End:: Name Input -->
+
+          <!-- Start:: Name Input -->
+          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameEn')" v-model.trim="data.nameEn"
+            @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+
+          <!-- End:: Name Input -->
+
+          <!-- Start:: Status Input -->
+          <base-select-input col="6" :optionsList="is_show" :placeholder="$t('PLACEHOLDERS.status')"
+            v-model="data.status" />
+          <!-- End:: Status Input -->
+
+          <!-- Start:: Submit Button Wrapper -->
+          <div class="btn_wrapper">
+            <base-button class="mt-2" styleType="primary_btn" :btnText="$t('BUTTONS.save')" :isLoading="isWaitingRequest"
+              :disabled="isWaitingRequest" />
+          </div>
+          <!-- End:: Submit Button Wrapper -->
+        </div>
+      </form>
+    </div>
+    <!-- END:: Single Step Form Content -->
+  </div>
+</template>
+
+<script>
+import moment from "moment";
+
+export default {
+  name: "CreateAdditionalFields",
+
+  data() {
+    return {
+      // Start:: Loader Control Data
+      isWaitingRequest: false,
+      // End:: Loader Control Data
+
+      // Start:: Data Collection To Send
+      data: {
+        nameAr: null,
+        nameEn: null,
+        active: true,
+        status: null,
+      },
+      allVehicleTypes: [],
+
+      // End:: Data Collection To Send
+
+      arabicRegex: /^[\u0600-\u06FF\s]+$/,
+      EnRegex: /[\u0600-\u06FF]/,
+    };
+  },
+
+  computed: {
+    is_show() {
+      return [
+        {
+          id: 1,
+          name: this.$t("PLACEHOLDERS.active"),
+          value: 1,
+        },
+        {
+          id: 0,
+          name: this.$t("PLACEHOLDERS.notActive"),
+          value: 0,
+        }
+      ];
+    },
+
+
+  },
+
+  methods: {
+    disabledDate(current) {
+      return current && current < moment().startOf("day");
+    },
+
+    onCopy(event) {
+      event.preventDefault();
+    },
+    onPaste(event) {
+      event.preventDefault();
+    },
+
+    addRow() {
+      this.field_values.push(
+        {
+          value_ar: "",
+          value_en: ""
+        }
+      )
+    },
+
+    removeRow(index) {
+      this.field_values.splice(index, 1)
+    },
+
+    validateInput() {
+      // Remove non-Arabic characters from the input
+      this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
+    },
+    removeArabicCharacters() {
+      this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
+    },
+
+    // Start:: Select Upload Image
+    selectImage(selectedImage) {
+      this.data.image = selectedImage;
+    },
+    // End:: Select Upload Image
+
+    // Start:: validate Form Inputs
+    validateFormInputs() {
+      this.isWaitingRequest = true;
+      if (!this.data.nameAr) {
+        this.isWaitingRequest = false;
+        this.$message.error(this.$t("VALIDATION.nameAr"));
+        return;
+      } else if (!this.data.nameEn) {
+        this.isWaitingRequest = false;
+        this.$message.error(this.$t("VALIDATION.nameEn"));
+        return;
+      } else {
+        this.submitForm();
+        return;
+      }
+    },
+    // End:: validate Form Inputs
+
+    // Start:: Submit Form
+    async submitForm() {
+      const REQUEST_DATA = new FormData();
+      REQUEST_DATA.append("name[ar]", this.data.nameAr);
+      REQUEST_DATA.append("name[en]", this.data.nameEn);
+      REQUEST_DATA.append("is_active", +this.data.status == true ? 0 : 1);
+      REQUEST_DATA.append("_method", "PUT");
+
+      // Start:: Append Request Data
+
+      try {
+        await this.$axios({
+          method: "POST",
+          url: `specialties/${this.$route.params.id}`,
+          data: REQUEST_DATA,
+        });
+        this.isWaitingRequest = false;
+        this.$message.success(this.$t("MESSAGES.addedSuccessfully"));
+        this.$router.push({ path: "/MainSpecializations/all" });
+      } catch (error) {
+        this.isWaitingRequest = false;
+        this.$message.error(error.response.data.message);
+      }
+    },
+    // End:: Submit Form
+
+    async getDataToEdit() {
+      try {
+        let res = await this.$axios({
+          method: "GET",
+          url: `specialties/${this.$route.params.id}`,
+        });
+        this.data.nameAr = res.data.data.Specialty.name_ar;
+        this.data.nameEn = res.data.data.Specialty.name_en;
+        this.data.status = res.data.data.Specialty.is_active;
+        if (!this.data.status) {
+          this.data.status =
+          {
+            id: 0,
+            name: this.$t("PLACEHOLDERS.notActive"),
+            value: 0,
+          }
+        } else {
+          this.data.status =
+          {
+            id: 1,
+            name: this.$t("PLACEHOLDERS.active"),
+            value: 1,
+          }
+        }
+       // this.data.active = res.data.data.additionalField.is_active;
+        // console.log(res.data.body.add_space)
+      } catch (error) {
+        this.loading = false;
+        console.log(error.response.data.message);
+      }
+    },
+    // end all ads data
+
+  },
+
+  created() {
+    // Start:: Fire Methods
+    this.getDataToEdit();
+    //this.showVehicleTypes()
+    // End:: Fire Methods
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.all_action {
+  display: flex;
+  gap: 15px
+}
+
+.add_another {
+  border: none;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--light_gray_clr);
+  border-radius: 50%;
+  font-size: 18px;
+  color: var(--light_gray_clr);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .fa-trash {
+    color: #ff2159;
+    cursor: pointer
+  }
+}
+</style>
