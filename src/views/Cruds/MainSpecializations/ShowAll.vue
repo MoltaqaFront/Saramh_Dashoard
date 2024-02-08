@@ -117,7 +117,7 @@
               </button>
             </a-tooltip>
 
-             <template v-if="$can('users activate', 'users') && item.id !== 1">
+             <template>
                 <a-tooltip placement="bottom" v-if="!item.is_active">
                   <template slot="title">
                     <span>{{ $t("BUTTONS.activate") }}</span>
@@ -134,10 +134,6 @@
                     <i class="fad fa-times-circle"></i>
                   </button>
                 </a-tooltip>
-              </template>
-            
-              <template v-else>
-                <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
               </template>
           </div>
         </template>
@@ -186,7 +182,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "AllAdmins",
+  name: "AllMainSpecializations",
 
   computed: {
     ...mapGetters({
@@ -230,7 +226,7 @@ export default {
       tableHeaders: [
         {
           text: this.$t("TABLES.MainSpecializations.serialNumber"),
-          value: "id",
+          value: "serialNumber",
           align: "center",
           width: "80",
           sortable: false,
@@ -337,6 +333,9 @@ export default {
           },
         });
         this.loading = false;
+         res.data.data.forEach((item, index) => {
+          item.serialNumber = (this.paginations.current_page - 1) * this.paginations.items_per_page + index + 1;
+        });
         // console.log("All Data ==>", res.data.data);
         this.tableRows = res.data.data;
         this.paginations.last_page = res.data.meta.last_page;

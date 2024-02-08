@@ -66,7 +66,7 @@
       "edit" : "تعديل بيانات الصلاحية"
     },
     "Admins": {
-      "title": "مديري النظام/ الادمن",
+      "title": "مديري النظام",
       "showAll": "كل المديرين",
       "add": "إضافة مدير جديد",
       "show" : "عرض بيانات مستخدم",
@@ -82,6 +82,10 @@
       "name": "اسم المدرب",
       "showAll": "كل المدربين",
       "add": "إضافة مدرب جديد",
+      "program" :"برامج المدرب" ,
+      "program_name" : "اسم البرنامج",
+      "description" : "وصف البرنامج" ,
+      "price_sub" : "سعر الاشتراك بدون الضريبة",
       "show": "عرض المدرب ",
       "edit": " تعديل المدرب"
     },
@@ -221,10 +225,16 @@
       "serialNumber": "المسلسل",
       "image": "الصورة",
       "name": "اسم المدرب",
-      "phone": "رقم الجوال",
+      "nameAr" : "الاسم بالغة العربية" ,
+      "nameEn" : "الاسم باللغة الانجليزية",
+      "phone": "رقم جوال المدرب",
+      "moblie" : "رقم الواتس اب",
       "main": "التخصص الرئيسي",
       "sub": "التخصص الفرعي",
-      "isAvailable": "متاح",
+      "noteAr" : "نبذة عن المدرب باللغة العربيه",
+      "noteEn" : "نبذة عن المدرب باللغة الانجليزية" ,
+      "experience" : "عدد سنوات الخبرة",
+      "isAvailable": "حالة الاتاحة",
       "number" : "عدد المدربين",
       "totalnum" : "عدد الاشتراكات مع المدربين",
       "active": "مفعل",
@@ -295,18 +305,17 @@
       "actions": "التحكم",
       "created_at": "تاريخ الانشاء"
     },
-    "Offers": {
+    "Subspecialties": {
       "serialNumber": "المسلسل",
-      "startDate": "البدء",
-      "endDate": "الإنتهاء",
-      "product": "المنتج",
-      "service": "الخدمة",
-      "percentage": "النسبة",
-      "priceBeforeDiscount": "السعر قبل الخصم",
-      "priceAfterDiscount": "السعر بعد الخصم",
-      "discountValue": "القيمة",
+      "name": "اسم التخصص الفرعى",
+      "nameAr": "اسم التخصص بالعربية",
+      "main" : "التخصص الرئيسي",
+      "nameEn": "اسم التخصص بالإنجليزية",
+      "descriptionAr": "الوصف بالعربية",
+      "descriptionEN": "الوصف بالإنجليزية",
       "activation": "تفعيل",
-      "actions": "التحكم"
+      "actions": "التحكم",
+      "created_at": "تاريخ الانشاء"
     },
     "Orders": {
       "serialNumber": "المسلسل",
@@ -365,7 +374,7 @@
     "verified": "تم التحقق",
     "notVerified": "لم يتم التحقق",
     "active": "مفعل",
-    "notActive": "غير مفعل",
+    "notActive": "معطل",
     "replied": "تم الرد",
     "notReplied": "لم يتم الرد",
     "request": "طلب",
@@ -507,7 +516,8 @@
     "copyRights": "جميع الحقوق محفوظة لشركة مُلتقي للبرمجيات © {year}",
     "madeWithLove": "بواسطة مُلتقي للبرمجيات ❤️",
     "show_store": "عرض بيانات المتجر",
-    "MainSpecializations" : "التخصصات الرئيسية"
+    "MainSpecializations" : "التخصصات الرئيسية" ,
+    "Subspecialties" : "التخصصات الفرعية"
   },
 
   "BUTTONS": {
@@ -580,7 +590,9 @@
     "search": "بحث",
     "rseet_search": "اعادة الضبط",
     "activate": "تفعيل",
-    "deactivate": "إلغاء التفعيل",
+    "deactivate": "تعطيل",
+    "available": "متاح",
+    "disavailable" : "غير متاح",
     "replay": "رد",
     "addStoreEmployee": "إضافة موظف المتجر",
     "addSection": "اضافة قسم جديد",
@@ -598,6 +610,7 @@
     "components": "المكونات",
 
     "MainSpecializations" : "إضافة تخصص رئيسي",
+    "Subspecialties" : "إضافة تخصص فرعي" ,
     "download_invoice": "تحميل الفاتورة"
   },
 
@@ -1205,6 +1218,7 @@
     "deletedSuccessfully": "تم الحذف بنجاح",
     "changedSuccessfully": "تم تغيير الحالة بنجاح",
     "changeActivation": "تم تغيير حالة التفعيل بنجاح",
+    "changeAvailable" : "تم تغير حالة الاتاحة بنجاح",
     "changeVerification": "تم تغيير حالة تنشيط الحساب بنجاح",
     "changeHaveContainer": "تم تغيير حالة لديه حاوية بنجاح",
     "changeDraft": "تم تغيير حالة الأرشفة بنجاح",

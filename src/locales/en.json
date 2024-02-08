@@ -81,6 +81,14 @@
        "name": "Coach Name",
        "showAll": "All Coaches",
        "add": "Add a new coach",
+       "nameAr": "The trainer's name in Arabic",
+       "nameEn": "The coach's name in English",
+      "noteAr": "About the trainer in Arabic",
+       "noteEn": "About the trainer in English",
+       "program": "Coache programs",
+       "program_name": "program name",
+       "description": "program description",
+       "price_sub": "Subscription price without tax",
        "show": "Coaches Show",
        "edit": "Edit Coaches"
      },
@@ -243,9 +251,12 @@
       "image": "Image",
       "name": "Name",
       "phone": "Phone",
+      "moblie": "WhatsApp number",
+      "note" : "About the coache",
+      "experience": "number of years of experience",
       "main": "Main specialty",
       "sub": "Subspecialty",
-      "isAvailable": "Availablity",
+      "isAvailable": "Availability status",
       "number" : "Number of coaches",
       "totalnum" : "Number of subscriptions with trainers",
       "active": "Activation",
@@ -317,19 +328,18 @@
       "actions": "Actions",
       "created_at": "Creadted At"
     },
-    "Offers": {
-      "serialNumber": "Serial",
-      "startDate": "Start",
-      "endDate": "End",
-      "product": "Product",
-      "service": "Service",
-      "percentage": "Percentage",
-      "priceBeforeDiscount": "Before Discount",
-      "priceAfterDiscount": "After Discount",
-      "discountValue": "Value",
-      "activation": "Activation",
-      "actions": "Actions"
-    },
+   "Subspecialties": {
+       "serialNumber": "serial",
+       "name": "Name of the subspecialty",
+       "nameAr": "Name of the specialty in Arabic",
+       "nameEn": "Name of the specialty in English",
+       "main": "main specialty",
+       "descriptionAr": "Description in Arabic",
+       "descriptionEN": "Description in English",
+       "activation": "activation",
+       "actions": "control",
+       "created_at": "Creation date"
+     },
     "Orders": {
       "serialNumber": "Serial",
       "orderNumber": "Order Number",
@@ -530,7 +540,8 @@
     "copyRights": "All Rights Reserved For Moltaqa © {year}",
     "madeWithLove": "Made With ❤️ By Moltaqa",
     "show_store": "Show Store Data",
-    "MainSpecializations": "Main Specializations"
+    "MainSpecializations": "Main Specializations" ,
+    "Subspecialties": "Subspecialties"
   },
 
   "BUTTONS": {
@@ -599,6 +610,8 @@
     "rseet_search": "Reset Search",
     "activate": "Activate",
     "deactivate": "Deactivate",
+    "available": "Available",
+    "disavailable": "Not Available",
     "replay": "Replay",
     "addStoreEmployee": "add Store Employee",
     "addSection": "Add Section",
@@ -619,6 +632,7 @@
     "additions": "Additions",
     "components": "Components",
     "MainSpecializations": "Add a main specialization",
+    "Subspecialties": "Add a subspecialty",
     "subscriptions": "Subscription history" 
   },
 
@@ -1224,6 +1238,7 @@
     "deletedSuccessfully": "Deleted Successfully",
     "changedSuccessfully": "Status Changed Successfully",
     "changeActivation": "Activation Status Changed Successfully",
+    "changeAvailable" : "Availability status changed successfully",
     "changeVerification": "Verification Status Changed Successfully",
     "changeHaveContainer": "Have Container Status Changed Successfully",
     "changeDraft": "Draft Status Changed Successfully",

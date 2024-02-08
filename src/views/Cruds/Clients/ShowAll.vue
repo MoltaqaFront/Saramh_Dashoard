@@ -267,7 +267,7 @@ export default {
       tableHeaders: [
         {
           text: this.$t("TABLES.Clients.serialNumber"),
-          value: "user.id",
+          value: "serialNumber",
           align: "center",
           width: "80",
           sortable: false,
@@ -396,7 +396,10 @@ export default {
           },
         });
         this.loading = false;
-         console.log("All Data ==>", res.data.data);
+         res.data.data.forEach((item, index) => {
+          item.serialNumber = (this.paginations.current_page - 1) * this.paginations.items_per_page + index + 1;
+        });
+        // console.log("All Data ==>", res.data.data);
         this.tableRows = res.data.data;
         this.paginations.last_page = res.data.meta.last_page;
         this.paginations.items_per_page = res.data.meta.per_page;;

@@ -223,7 +223,7 @@
             <div class="home_route" @click="$emit('fireToggleNavDrawerEmit')">
               <router-link to="/Certificates/all">
                 <span class="route_icon">
-                  <img src="@/assets/media/icons/ui_icons/exchange.png" alt="icon" width="40" height="40" />
+                  <img src="@/assets/media/icons/ui_icons/certificate.png" alt="icon" width="40" height="40" />
                 </span>
                 <span class="route_text">
                   {{ $t("SIDENAV.Certificates.title") }}

@@ -22,38 +22,6 @@
 
           <!-- End:: Name Input -->
 
-          <div v-if="(data.field_type && data.field_type.value == 'checkbox')
-            || (data.field_type && data.field_type.value == 'radio')
-            || (data.field_type && data.field_type.value == 'dropdown')">
-
-            <span class="add_another" @click="addRow(index)">
-              <i class="fas fa-plus"></i>
-            </span>
-
-            <div class="row align-items-center" v-for="(item, index) in field_values" :key="'o' + index">
-
-              <div class="col-lg-5 col-12">
-                <base-input col="12" type="text" :placeholder="$t('PLACEHOLDERS.nameAr')" v-model.trim="item.field_ar"
-                  @input="validateInput" required />
-              </div>
-              <div class="col-lg-5 col-12">
-                <base-input col="12" type="text" :placeholder="$t('PLACEHOLDERS.nameEn')" v-model.trim="item.field_en"
-                  @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
-              </div>
-
-              <div class="col-2">
-                <div class="all_actions">
-                  <span class="add_another" @click="removeRow(index)">
-                    <i class="fas fa-minus"></i>
-                  </span>
-
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
           <!-- Start:: Status Input -->
           <base-select-input col="6" :optionsList="is_show" :placeholder="$t('PLACEHOLDERS.status')"
             v-model="data.status"  />
@@ -73,8 +41,6 @@
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
   name: "CreateMainSpecializations",
 
@@ -93,17 +59,6 @@ export default {
         status: null,
       },
       allVehicleTypes: [],
-
-      field_values: [
-        {
-          field_ar: "",
-          field_en: ""
-        },
-        {
-          field_ar: "",
-          field_en: ""
-        }
-      ],
       // End:: Data Collection To Send
 
       arabicRegex: /^[\u0600-\u06FF\s]+$/,
@@ -118,78 +73,25 @@ export default {
         {
           id: 1,
           name: this.$t("PLACEHOLDERS.active"),
-          value: 1,
+          value: true,
         },
         {
           id: 0,
           name: this.$t("PLACEHOLDERS.notActive"),
-          value: 0,
+          value: false,
         }
       ];
     },
-
-    Fields_type() {
-      return [
-        {
-          id: 1,
-          name: this.$t("PLACEHOLDERS.textbox"),
-          value: "textbox",
-        },
-        {
-          id: 2,
-          name: this.$t("PLACEHOLDERS.numberbox"),
-          value: "number",
-        },
-        {
-          id: 3,
-          name: this.$t("PLACEHOLDERS.textarea"),
-          value: "textarea",
-        },
-        {
-          id: 4,
-          name: this.$t("PLACEHOLDERS.checkbox"),
-          value: "checkbox",
-        },
-        {
-          id: 5,
-          name: this.$t("PLACEHOLDERS.Radio_Button"),
-          value: "radio",
-        },
-        {
-          id: 6,
-          name: this.$t("PLACEHOLDERS.drop_down"),
-          value: "dropdown",
-        }
-      ];
-    },
-
   },
 
   methods: {
-    disabledDate(current) {
-      return current && current < moment().startOf("day");
-    },
-
-    onCopy(event) {
+   
+   onCopy(event) {
       event.preventDefault();
     },
     onPaste(event) {
       event.preventDefault();
     },
-
-    addRow() {
-      this.field_values.push(
-        {
-          field_ar: "",
-          field_en: ""
-        }
-      )
-    },
-
-    removeRow(index) {
-      this.field_values.splice(index, 1)
-    },
-
     validateInput() {
       // Remove non-Arabic characters from the input
       this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
@@ -201,7 +103,6 @@ export default {
     // Start:: validate Form Inputs
     validateFormInputs() {
       this.isWaitingRequest = true;
-
       if (!this.data.nameAr) {
         this.isWaitingRequest = false;
         this.$message.error(this.$t("VALIDATION.nameAr"));
@@ -227,19 +128,7 @@ export default {
       // Start:: Append Request Data
       REQUEST_DATA.append("name[ar]", this.data.nameAr);
       REQUEST_DATA.append("name[en]", this.data.nameEn);
-      REQUEST_DATA.append("is_active", +this.data.status == true ? 0 : 1 );
-      if (this.field_values) {
-        this.field_values.forEach((element, index) => {
-
-          if (element.field_ar) {
-            REQUEST_DATA.append(`value[${index}][ar]`, element.field_ar);
-          }
-          if (element.field_ar) {
-            REQUEST_DATA.append(`value[${index}][en]`, element.field_en);
-          }
-        });
-      }
-
+      REQUEST_DATA.append("is_active", +this.data.status?.value );
       // Start:: Append Request Data
 
       try {
@@ -261,9 +150,6 @@ export default {
   },
 
   created() {
-    // Start:: Fire Methods
-    //this.showVehicleTypes()
-    // End:: Fire Methods
   },
 };
 </script>

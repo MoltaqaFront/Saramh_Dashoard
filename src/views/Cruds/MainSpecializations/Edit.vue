@@ -43,7 +43,7 @@
 import moment from "moment";
 
 export default {
-  name: "CreateAdditionalFields",
+  name: "EditMainSpecializations",
 
   data() {
     return {
@@ -73,12 +73,12 @@ export default {
         {
           id: 1,
           name: this.$t("PLACEHOLDERS.active"),
-          value: 1,
+          value: true,
         },
         {
           id: 0,
           name: this.$t("PLACEHOLDERS.notActive"),
-          value: 0,
+          value: false,
         }
       ];
     },
@@ -97,20 +97,6 @@ export default {
     onPaste(event) {
       event.preventDefault();
     },
-
-    addRow() {
-      this.field_values.push(
-        {
-          value_ar: "",
-          value_en: ""
-        }
-      )
-    },
-
-    removeRow(index) {
-      this.field_values.splice(index, 1)
-    },
-
     validateInput() {
       // Remove non-Arabic characters from the input
       this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
@@ -118,13 +104,6 @@ export default {
     removeArabicCharacters() {
       this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
     },
-
-    // Start:: Select Upload Image
-    selectImage(selectedImage) {
-      this.data.image = selectedImage;
-    },
-    // End:: Select Upload Image
-
     // Start:: validate Form Inputs
     validateFormInputs() {
       this.isWaitingRequest = true;
@@ -148,7 +127,7 @@ export default {
       const REQUEST_DATA = new FormData();
       REQUEST_DATA.append("name[ar]", this.data.nameAr);
       REQUEST_DATA.append("name[en]", this.data.nameEn);
-      REQUEST_DATA.append("is_active", +this.data.status == true ? 0 : 1);
+      REQUEST_DATA.append("is_active", +this.data.status?.value);
       REQUEST_DATA.append("_method", "PUT");
 
       // Start:: Append Request Data
