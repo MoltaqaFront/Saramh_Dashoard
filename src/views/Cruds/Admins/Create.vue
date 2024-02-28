@@ -178,6 +178,7 @@ export default {
       // Start:: Append Request Data
       //REQUEST_DATA.append("image", this.data.image.file);
       REQUEST_DATA.append("name", this.data.name);
+      REQUEST_DATA.append("avatar", this.data.image.file);
       REQUEST_DATA.append("email", this.data.email);
       REQUEST_DATA.append("mobile", this.data.phone);
       REQUEST_DATA.append("role_id", this.data.role.id);
@@ -189,7 +190,7 @@ export default {
       try {
         await this.$axios({
           method: "POST",
-          url: `users`,
+          url: `admins`,
           data: REQUEST_DATA,
         });
         this.isWaitingRequest = false;

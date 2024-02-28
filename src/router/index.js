@@ -27,6 +27,7 @@ import ClientsHome from "../views/Cruds/Clients/Home.vue";
 import CoachesHome from "../views/Cruds/Coaches/Home.vue";
 import ContactMessagesHome from "../views/Cruds/ContactMessages/Home.vue";
 import CreateAdmin from "../views/Cruds/Admins/Create.vue";
+import CreateAdvertisements from "../views/Cruds/Advertisements/Create.vue";
 import CreateCertificates from "../views/Cruds/Certificates/Create.vue";
 import CreateCoaches from "../views/Cruds/Coaches/Create.vue";
 import CreateMainSpecializations from "../views/Cruds/MainSpecializations/Create.vue";
@@ -307,6 +308,19 @@ const routes = [
               middleware: [auth],
               requiresPermission: {
                 action: "advertisements show",
+                subject: "advertisements",
+              },
+            },
+          },
+          {
+            path: "create",
+            name: "CreateAdvertisements",
+            component: CreateAdvertisements,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "advertisements create",
                 subject: "advertisements",
               },
             },

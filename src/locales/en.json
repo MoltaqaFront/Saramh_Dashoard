@@ -65,7 +65,7 @@
        "edit": "Edit credentials"
      },
    "Admins": {
-       "title": "System administrators/ Managers",
+       "title": "Managers",
        "showAll": "All Managers",
        "add": "Add a new Manager",
        "show": "show user data",
@@ -86,8 +86,10 @@
       "noteAr": "About the trainer in Arabic",
        "noteEn": "About the trainer in English",
        "program": "Coache programs",
-       "program_name": "program name",
-       "description": "program description",
+       "program_nameAr": "Program name in Arabic",
+       "program_nameEn": "Program name in English",
+       "descriptionAr": "Description of the program in Arabic",
+       "descriptionEn": "Description of the program in English",
        "price_sub": "Subscription price without tax",
        "show": "Coaches Show",
        "edit": "Edit Coaches"
@@ -113,6 +115,19 @@
        "title" : "Manage Subscriptions",
        "showAll": "Show customer subscriptions"
      },
+      "advertisement": {
+      "title": "Advertising Space",
+      "name": "Ad Name",
+      "image": "Advertising Image",
+      "Start_publich": "Publish Start Date",
+      "End_publich": "Publication End Date",
+      "date": "Creation Date",
+      "showAll": "All Orders",
+      "type": "type of news",
+      "add": "Add a New Ad",
+      "show": "Show Advertisement Data",
+      "edit": "Edit Ad Data"
+    },
      "Certificates": {
        "title" : "Certificates",
        "name" : "Certificate Name",

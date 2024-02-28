@@ -2,62 +2,61 @@
   <div class="crud_form_wrapper">
     <!-- Start:: Title -->
     <div class="form_title_wrapper">
-      <h4>{{ $t("SIDENAV.advertisement.edit") }}</h4>
+      <h4>{{ $t("SIDENAV.advertisement.add") }}</h4>
     </div>
     <!-- End:: Title -->
 
     <!-- Start:: Single Step Form Content -->
     <div class="single_step_form_content_wrapper">
-       <form @submit.prevent="validateFormInputs">
-          <div class="row">
-            <!-- Start:: Image Upload Input -->
-            <base-image-upload-input 
-              col="12" 
-              identifier="admin_image" 
-              :preSelectedImage="data.image.path"
-              :placeholder="$t('PLACEHOLDERS.image')"
-              @selectImage="selectImage" required />
-            <!-- End:: Image Upload Input -->
+      <form @submit.prevent="validateFormInputs">
+        <div class="row">
+          <!-- Start:: Image Upload Input -->
+          <base-image-upload-input 
+            col="12" 
+            identifier="admin_image" 
+            :placeholder="$t('PLACEHOLDERS.image')"
+            @selectImage="selectImage" required />
+          <!-- End:: Image Upload Input -->
 
-            <!-- Start:: Name Input -->
-            <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameAr')" v-model.trim="data.nameAr"
-              @input="validateInput" required />
-            <!-- End:: Name Input -->
+          <!-- Start:: Name Input -->
+          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameAr')" v-model.trim="data.nameAr"
+            @input="validateInput" required />
+          <!-- End:: Name Input -->
 
-            <!-- Start:: Name Input -->
-            <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameEn')" v-model.trim="data.nameEn"
-              @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+          <!-- Start:: Name Input -->
+          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameEn')" v-model.trim="data.nameEn"
+            @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
 
-            <!-- End:: Name Input -->
-             <base-input 
+          <!-- End:: Name Input -->
+           <base-input 
+              col="6" 
+              type="date" 
+              :placeholder="$t('SIDENAV.advertisement.Start_publich')"
+              v-model.trim="data.startDate"
+              required/>
+
+               <base-input 
                 col="6" 
                 type="date" 
-                :placeholder="$t('SIDENAV.advertisement.Start_publich')"
-                v-model.trim="data.startDate"
+                :placeholder="$t('SIDENAV.advertisement.End_publich')"
+                v-model.trim="data.endtDate"
                 required/>
 
-                 <base-input 
-                  col="6" 
-                  type="date" 
-                  :placeholder="$t('SIDENAV.advertisement.End_publich')"
-                  v-model.trim="data.endtDate"
-                  required/>
-
-              <!-- Start:: Status Input -->
-                <base-select-input 
-                  col="6" 
-                  :optionsList="activeStatuses" 
-                  :placeholder="$t('PLACEHOLDERS.status')"
-                 v-model ="data.is_active" required/>
-                    <!-- End:: Status Input -->
-            <!-- Start:: Submit Button Wrapper -->
-            <div class="btn_wrapper">
-              <base-button class="mt-2" styleType="primary_btn" :btnText="$t('BUTTONS.save')" :isLoading="isWaitingRequest"
-                :disabled="isWaitingRequest" />
-            </div>
-            <!-- End:: Submit Button Wrapper -->
+            <!-- Start:: Status Input -->
+              <base-select-input 
+                col="6" 
+                :optionsList="activeStatuses" 
+                :placeholder="$t('PLACEHOLDERS.status')"
+               v-model ="data.is_active" required/>
+                  <!-- End:: Status Input -->
+          <!-- Start:: Submit Button Wrapper -->
+          <div class="btn_wrapper">
+            <base-button class="mt-2" styleType="primary_btn" :btnText="$t('BUTTONS.save')" :isLoading="isWaitingRequest"
+              :disabled="isWaitingRequest" />
           </div>
-        </form>
+          <!-- End:: Submit Button Wrapper -->
+        </div>
+      </form>
     </div>
     <!-- END:: Single Step Form Content -->
   </div>
@@ -85,7 +84,7 @@ export default {
         nameEn: null,
         startDate: null,
         endtDate: null,
-        is_active: null
+       is_active: null
       },
       // End:: Data Collection To Send
 
@@ -96,7 +95,7 @@ export default {
 
   computed: {
 
-    activeStatuses() {
+      activeStatuses() {
       return [
         {
           id: 1,
@@ -135,39 +134,6 @@ export default {
       this.data.image = selectedImage;
     },
 
-    async getDataToEdit() {
-      try {
-        let res = await this.$axios({
-          method: "GET",
-          url: `advertisements/${this.$route.params.id}`,
-        });
-
-        // const data = res.data.data.GoldenOffer;
-        this.data.nameAr = res.data.data.Advertisement.name_ar;
-        this.data.nameEn = res.data.data.Advertisement.name_en;
-        this.data.image.path = res.data.data.Advertisement.advertisement;
-        this.data.startDate = res.data.data.Advertisement.start_at.split(" ")[0];
-        this.data.endtDate = res.data.data.Advertisement.end_at.split(" ")[0];
-        this.data.is_active = res.data.data.Advertisement.is_active;
-        if (!this.data.is_active) {
-          this.data.is_active =
-          {
-            id: 0,
-            name: this.$t("STATUS.notActive"),
-            value: 0,
-          }
-        } else {
-          this.data.is_active =
-          {
-            id: 1,
-            name: this.$t("STATUS.active"),
-            value: 1,
-          }
-        }
-      } catch (error) {
-        console.log(error.response.data.message);
-      }
-    },
     // Start:: validate Form Inputs
     validateFormInputs() {
       this.isWaitingRequest = true;
@@ -188,7 +154,7 @@ export default {
     // End:: validate Form Inputs
 
     // Start:: Submit Form
-   async submitForm() {
+    async submitForm() {
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
       REQUEST_DATA.append("advertisement", this.data.image.file);
@@ -196,19 +162,18 @@ export default {
       REQUEST_DATA.append("name[en]", this.data.nameEn);
       REQUEST_DATA.append("start_at", this.data.startDate);
       REQUEST_DATA.append("end_at", this.data.endtDate);
-      REQUEST_DATA.append("is_active", this.data.is_active?.value);
-      REQUEST_DATA.append("type", "image")
-      REQUEST_DATA.append("_method", "PUT")
+      REQUEST_DATA.append("is_active", this.data.is_active?.value); 
+      REQUEST_DATA.append("type", "image");
       // Start:: Append Request Data
 
       try {
         await this.$axios({
           method: "POST",
-          url: `advertisements/${this.$route.params.id}`,
+          url: `advertisements`,
           data: REQUEST_DATA,
         });
         this.isWaitingRequest = false;
-        this.$message.success(this.$t("MESSAGES.editedSuccessfully"));
+        this.$message.success(this.$t("MESSAGES.addedSuccessfully"));
         this.$router.push({ path: "/advertisements/all" });
       } catch (error) {
         this.isWaitingRequest = false;
@@ -221,7 +186,7 @@ export default {
 
   created() {
     // Start:: Fire Methods
-    this.getDataToEdit();
+    // this.showVehicleTypes();
     // End:: Fire Methods
   },
 };

@@ -35,6 +35,9 @@
               <base-select-input col="4" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
                 v-model="filterOptions.isActive" />
               <!-- End:: Status Input -->
+               <base-select-input col="4" :optionsList="is_show" :placeholder="$t('TABLES.coaches.isAvailable')"
+                  v-model="filterOptions.available" />
+                <!-- End:: Status Input -->
             </div>
 
             <div class="btns_wrapper">
@@ -249,6 +252,20 @@ export default {
 
       ];
     },
+     is_show() {
+      return [
+        {
+          id: 1,
+          name: this.$t("BUTTONS.available"),
+          value: 1,
+        },
+        {
+          id: 0,
+          name: this.$t("BUTTONS.disavailable"),
+          value: 0,
+        }
+      ];
+    },
   },
 
   data() {
@@ -417,6 +434,7 @@ export default {
             specialty: this.filterOptions.specialty,
             subspecialty: this.filterOptions.subspecialty,
             is_active: this.filterOptions.isActive?.value,
+            available: this.filterOptions.available?.value,
           },
         });
         this.loading = false;

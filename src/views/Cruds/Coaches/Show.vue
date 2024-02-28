@@ -1,214 +1,365 @@
 <template>
-  <div class="crud_form_wrapper single_show_content_wrapper">
+  <div class="crud_form_wrapper">
     <!-- Start:: Title -->
     <div class="form_title_wrapper">
-      <h4>{{ $t("TITLES.showClient", { name: data.name }) }}</h4>
+      <h4>{{ $t("SIDENAV.Coaches.show") }}</h4>
     </div>
     <!-- End:: Title -->
 
-
     <!-- Start:: Single Step Form Content -->
     <div class="single_step_form_content_wrapper">
-      <!-- ==== Start:: Status Badges ==== -->
-      <div class="badges_wrapper justify-content-between">
-        <div class="wrapper">
-          <v-chip color="amber darken-2" text-color="white">
-            {{ $t("TITLES.numberOfVisits", { number: data.numberOfVisits }) }}
-          </v-chip>
-          <v-chip color="amber darken-2" text-color="white">
-            {{ $t("TITLES.lastVisit", { date: data.lastVisit }) }}
-          </v-chip>
-        </div>
-
-        <v-chip :color="data.active ? 'green' : 'red'" text-color="white">
-          {{ data.active ? $t("STATUS.active") : $t("STATUS.notActive") }}
-        </v-chip>
-      </div>
-      <!-- ==== End:: Status Badges ==== -->
-
-      <!-- ==== Start:: Client Main Data ==== -->
-      <form>
+      <form @submit.prevent="validateFormInputs">
         <div class="row">
           <!-- Start:: Image Upload Input -->
-          <base-image-upload-input col="12" identifier="client_image" :placeholder="$t('PLACEHOLDERS.personalImage')"
-            :preSelectedImage="data.image" disabled class="disabled_input" />
+          <base-image-upload-input col="12" identifier="admin_image" :preSelectedImage="data.image.path"
+            :placeholder="$t('PLACEHOLDERS.image')" @selectImage="selectImage" disabled />
           <!-- End:: Image Upload Input -->
 
-          <!-- Start:: Ar Name Input -->
-          <base-input col="3" type="text" :placeholder="$t('TABLES.Clients.name')" v-model.trim="data.name" disabled
-            class="disabled_input" />
-          <!-- End:: Ar Name Input -->
+           <!-- Start:: Name Input -->
+              <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameAr')" v-model.trim="data.nameAr" @input="validateInput" disabled />
+              <!-- End:: Name Input -->
 
-          <!-- Start:: Phone Input -->
-          <base-input col="3" type="tel" :placeholder="$t('TABLES.Clients.phone')" v-model.trim="data.phone" readonly
-            class="disabled_input" />
-          <!-- End:: Phone Input -->
+               <!-- Start:: Name Input -->
+                <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameEn')" v-model.trim="data.nameEn"  @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" disabled />
+                <!-- End:: Name Input -->
+               <!-- Start:: Phone Input -->
+              <base-input ref="phoneInput" col="6" type="tel" :placeholder="$t('TABLES.coaches.phone')"
+                v-model.trim="data.phone" disabled autocomplete="new-password" />
+              <!-- End:: Phone Input -->
 
-          <!-- Start:: Email Input -->
-          <base-input col="3" type="email" :placeholder="$t('TABLES.Clients.email')" v-model.trim="data.email" readonly
-            class="disabled_input" />
-          <!-- End:: Email Input -->
+              <!-- Start:: whatsapp Input -->
+                <base-input ref="phoneInput" col="6" type="tel" :placeholder="$t('TABLES.coaches.moblie')"
+                  v-model.trim="data.mobile" disabled autocomplete="new-password" />
+                <!-- End:: whatsapp Input -->
 
-          <!-- Start:: age  Input -->
-          <base-input col="3" type="text" :placeholder="$t('TABLES.Clients.age')" v-model.trim="data.age" readonly
-            class="disabled_input" />
-          <!-- End:: age Input -->
+                <!-- Start:: Name Input -->
+                <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr" @input="validateInput" disabled />
+                <!-- End:: Name Input -->
 
-          <!-- Start:: widght  Input -->
-          <base-input col="3" type="text" :placeholder="$t('TABLES.Clients.widght')" v-model.trim="data.weight" readonly
-            class="disabled_input" />
-          <!-- End:: widght  Input -->
+                <!-- Start:: Name Input -->
+                  <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"  @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" disabled />
+                  <!-- End:: Name Input -->
 
-          <!-- Start:: height Input -->
-          <base-input col="3" type="text" :placeholder="$t('TABLES.Clients.height')" v-model.trim="data.height" readonly
-            class="disabled_input" />
-          <!-- End:: height Input -->
+                  <!-- Start:: main Input -->
+                  <base-select-input col="6" :optionsList="Mainspescial"  :placeholder="$t('TABLES.coaches.main')"
+                      v-model="data.main" disabled />
+                  <!-- End:: main Input -->
 
-          <!-- Start:: diseases Input -->
-          <base-input col="3" type="text" :placeholder="$t('TABLES.Clients.diseases')" v-model.trim="data.diseases"
-            readonly class="disabled_input" />
-          <!-- End:: diseases Input -->
+                  <!-- Start:: sub Input -->
+                    <base-select-input  col="6" :optionsList="Subspecail" :placeholder="$t('TABLES.coaches.sub')"
+                      v-model="data.sub" disabled />
+                    <!-- End:: sub Input -->
 
-          <!-- Start:: Joining Date Input -->
-          <base-input col="3" type="text" :placeholder="$t('TABLES.Clients.joiningDate')" v-model.trim="data.joiningDate"
-            readonly class="disabled_input" />
-          <!-- End:: Joining Date Input -->
+                     <!-- Start experiences Input -->
+                    <base-input col="6" type="number" :placeholder="$t('TABLES.coaches.experience')" v-model.trim="data.experience" disabled />
+                    <!-- End experience Input -->
 
-          <!-- Start:: surgeries Input -->
-          <base-input col="4" type="text" :placeholder="$t('TABLES.Clients.surgeries')" v-model.trim="data.surgeries"
-            readonly class="disabled_input" />
-          <!-- End:: surgeries  Input -->
+                    <div class="title_text_wrapper mt-10">
+                      <h5 style="color: #57009B;">{{ $t("SIDENAV.Coaches.program") }}</h5>
+                    </div>
+                    <div>
+                      <div class="row align-items-center" v-for="(item, index) in field_values" :key="'o' + index">
+              
+                              <div class="col-lg-6 col-12">
+                                  <base-input 
+                                    col="12" 
+                                    type="text" 
+                                    :placeholder="$t('SIDENAV.Coaches.program_nameAr')" 
+                                    v-model.trim="item.program_nameAr"
+                                    @input="validateInput" 
+                                    disabled />
+                              </div>
+                              <div class="col-lg-6 col-12">
+                                <base-input 
+                                  col="12" 
+                                  type="text" 
+                                  :placeholder="$t('SIDENAV.Coaches.program_nameEn')" 
+                                  v-model.trim="item.program_nameEn"
+                                  input="removeArabicCharacters"
+                                  @copy="onCopy" 
+                                  @paste="onPaste" 
+                                  disabled />
+                              </div>
 
-          <!-- Start:: surgeries_what  Input -->
-          <base-input col="4" type="text" :placeholder="$t('TABLES.Clients.surgeries_what')"
-            v-model.trim="data.surgeries_what" readonly class="disabled_input" />
-          <!-- End:: surgeries_what  Input -->
+                              <div class="col-lg-6 col-12">
+                                    <base-input 
+                                      col="12" 
+                                      type="text" 
+                                      :placeholder="$t('SIDENAV.Coaches.descriptionAr')" 
+                                      v-model.trim="item.descriptionAr"
+                                      @input="validateInput" 
+                                      disabled />
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                  <base-input 
+                                    col="12" 
+                                    type="text" 
+                                    :placeholder="$t('SIDENAV.Coaches.descriptionEn')" 
+                                    v-model.trim="item.descriptionEn"
+                                    input="removeArabicCharacters"
+                                    @copy="onCopy" 
+                                    @paste="onPaste" 
+                                    disabled />
+                                </div>
 
-          <!-- Start:: surgeries_when Input -->
-          <base-input col="4" type="text" :placeholder="$t('TABLES.Clients.surgeries_when')"
-            v-model.trim="data.surgeries_when" readonly class="disabled_input" />
-          <!-- End:: surgeries_when Input -->
+                              <div class="col-lg-6 col-12">
+                                <base-input col="12" type="number" :placeholder="$t('SIDENAV.Coaches.price_sub')" v-model.trim="item.price_sub" disabled />
+                              </div>
 
-          <!-- Start:: playing_sports Input -->
-          <base-input col="6" type="text" :placeholder="$t('TABLES.Clients.playing_sports')"
-            v-model.trim="data.playing_sports" readonly class="disabled_input" />
-          <!-- End:: playing_sports Input -->
+                              <!-- Start:: Deactivate Switch Input -->
+                            <div class="input_wrapper switch_wrapper col-lg-6 col-12  my-5">
+                              <v-switch color="green" :label="item.active_pro ? $t('PLACEHOLDERS.active') : $t('PLACEHOLDERS.notActive')"
+                                v-model="item.active_pro" hide-details></v-switch>
+                            </div>
+              <!-- End:: Deactivate Switch Input -->
 
-          <!-- Start:: practice_duration Input -->
-          <base-input col="6" type="text" :placeholder="$t('TABLES.Clients.practice_duration')"
-            v-model.trim="data.practice_duration" readonly class="disabled_input" />
-          <!-- End:: practice_duration Input -->
 
-          <!-- Start:: goal Input -->
-          <base-input col="6" type="text" :placeholder="$t('TABLES.Clients.goal')" v-model.trim="data.goal" readonly
-            class="disabled_input" />
-          <!-- End:: goal  Input -->
+                      </div>
+                    </div>
 
-          <!-- Start:: playing_days Input -->
-          <base-input col="8" type="text" :placeholder="$t('TABLES.Clients.playing_days')"
-            v-model.trim="data.playing_days" readonly class="disabled_input" />
-          <!-- End:: playing_days Input -->
 
-          <!-- Start:: playing_place Input -->
-          <base-input col="8" type="text" :placeholder="$t('TABLES.Clients.playing_place')"
-            v-model.trim="data.playing_place" readonly class="disabled_input" />
-          <!-- End:: playing_place Input -->
+              <!-- Start:: Status Input -->
+                <base-select-input col="6" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
+                  v-model="data.is_status" disabled />
+                <!-- End:: Status Input -->
 
+                <!-- Start:: Status Input -->
+                <base-select-input col="6" :optionsList="is_show" :placeholder="$t('TABLES.coaches.isAvailable')"
+                  v-model="data.is_available" disabled />
+                <!-- End:: Status Input -->
         </div>
       </form>
-      <!-- ==== End:: Client Main Data ==== -->
     </div>
-    <!-- End:: Single Step Form Content -->
+    <!-- END:: Single Step Form Content -->
   </div>
 </template>
 
 <script>
-export default {
-  name: "SingleClient",
+import moment from "moment";
 
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-  },
+export default {
+  name: "CreateAdditionalFields",
 
   data() {
     return {
-      // Start:: Loading Data
+      // Start:: Loader Control Data
       isWaitingRequest: false,
-      // End:: Loading Data
+      // End:: Loader Control Data
 
-      // Start:: Data
-      data: {
-        image: null,
-        name: null,
+      // Start:: Data Collection To Send
+     data: {
+        image: {
+          path: null,
+          file: null,
+        },
+        nameAr: null,
+        nameEn: null,
         phone: null,
-        registration_otp_status: null,
-        secondPhone: null,
-        email: null,
-        age: null,
-        weight: null,
-        height: null,
-        diseases: null,
-        surgeries: null,
-        playing_sports: null,
-        playing_place: null,
-        goal: null,
-        tools: null,
-        practice_duration: null,
-        joiningDate: null,
-        currentPackage: null,
-        addresses: [],
-        active: false,
+        mobile: null,
+        noteAr: null,
+        noteEn: null,
+        main: null,
+        sub: null,
+        experience: null,
+        is_status: null,
+        is_available: null,
+        active: null
       },
-      // End:: Data
+      Mainspescial: [],
+      Subspecail: [],
+
+      field_values: [
+        {
+          program_nameAr: "",
+          program_nameEn: "",
+          descriptionAr: "",
+          descriptionEn: "",
+          price_sub: "",
+          active_pro: ""
+        },
+      ],
+      // End:: Data Collection To Send
+
+      arabicRegex: /^[\u0600-\u06FF\s]+$/,
+      EnRegex: /[\u0600-\u06FF]/,
     };
   },
 
+  computed: {
+
+    activeStatuses() {
+      return [
+        {
+          id: 1,
+          name: this.$t("STATUS.active"),
+          value: 1,
+        },
+        {
+          id: 2,
+          name: this.$t("STATUS.notActive"),
+          value: 0,
+        },
+      ];
+    },
+     is_show() {
+      return [
+        {
+          id: 1,
+          name: this.$t("BUTTONS.available"),
+          value: 1,
+        },
+        {
+          id: 0,
+          name: this.$t("BUTTONS.disavailable"),
+          value: 0,
+        }
+      ];
+    },
+  },
+
   methods: {
-    // Start:: Get Data To Show
-    async getDataToShow() {
+    disabledDate(current) {
+      return current && current < moment().startOf("day");
+    },
+
+    onCopy(event) {
+      event.preventDefault();
+    },
+    onPaste(event) {
+      event.preventDefault();
+    },
+
+    addRow() {
+      this.field_values.push(
+       {
+          program_nameAr: "",
+          program_nameEn: "",
+          descriptionAr: "",
+          descriptionEn: "",
+          price_sub: "",
+          active_pro: ""
+        }
+      )
+    },
+
+    removeRow(index) {
+      this.field_values.splice(index, 1)
+    },
+
+    validateInput() {
+      // Remove non-Arabic characters from the input
+      this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
+      this.data.des_ar = this.data.des_ar.replace(/[^\u0600-\u06FF\s]/g, "");
+    },
+    removeArabicCharacters() {
+      this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
+      this.data.des_en = this.data.des_en.replace(this.EnRegex, "");
+    },
+
+    selectImage(selectedImage) {
+      this.data.image = selectedImage;
+    },
+
+    async getDataToEdit() {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `clients/${this.$route.params.id}`,
+          url: `coaches/${this.$route.params.id}`,
         });
-        // console.log("DATA =>", res.data.data);
-        this.data.image = res.data.data.Client.user.image.path;
-        this.data.name = res.data.data.Client.user.name;
-        this.data.phone = res.data.data.Client.user.mobile;
-        this.data.registration_otp_status = res.data.data.Client.user.is_verified;
-        this.data.email = res.data.data.Client.user.email;
-        this.data.joiningDate = res.data.data.Client.user.created_at;
-        this.data.numberOfVisits = res.data.data.Client.user.login_count;
-        this.data.lastVisit = res.data.data.Client.user.last_login;
-        this.data.active = res.data.data.Client.user.is_active;
-        this.data.age = res.data.data.Client.user.pesonalInfo.age;
-        this.data.weight = res.data.data.Client.user.pesonalInfo.weight;
-        this.data.height = res.data.data.Client.user.pesonalInfo.height;
-        this.data.diseases = res.data.data.Client.user.pesonalInfo.diseases_bool == 1 ? "نعم" : "لا"
-        this.data.surgeries = res.data.data.Client.user.pesonalInfo.surgeries_bool == 1 ? "نعم" : "لا";
-        this.data.surgeries_what = res.data.data.Client.user.pesonalInfo.surgeries;
-        this.data.surgeries_when = res.data.data.Client.user.pesonalInfo.surgeries_date;
-        this.data.playing_sports = res.data.data.Client.user.pesonalInfo.playing_sports_bool == 1 ? "نعم" : "لا";
-        this.data.playing_place = res.data.data.Client.user.pesonalInfo.playing_place;
-        this.data.playing_days = res.data.data.Client.user.pesonalInfo.playing_days_count;
-        this.data.goal = res.data.data.Client.user.pesonalInfo.goal;
-        this.data.tools = res.data.data.Client.user.pesonalInfo.tools;
-        this.data.practice_duration = res.data.data.Client.user.pesonalInfo.practice_duration;
 
+        // const data = res.data.data.GoldenOffer;
+        this.data.image.path = res.data.data.Coach.image;
+        this.data.nameAr = res.data.data.Coach.name_ar;
+        this.data.nameEn = res.data.data.Coach.name_en;
+        this.data.phone = res.data.data.Coach.mobile;
+        this.data.mobile = res.data.data.Coach.whatsapp;
+        this.data.noteAr = res.data.data.Coach.description_ar;
+        this.data.noteEn = res.data.data.Coach.description_en;
+        this.data.main = res.data.data.Coach.specialty;
+        this.data.sub = res.data.data.Coach.subspecialty;
+        this.data.experience = res.data.data.Coach.experience;
+        this.data.is_status = res.data.data.Coach.is_active;
+        this.data.is_available = res.data.data.Coach.available;
+
+        // Populate the field_values array
+        this.field_values = res.data.data.Coach.programs.map((item) => ({
+          program_nameAr: item.name_ar,
+          program_nameEn: item.name_en,
+          descriptionAr: item.description_ar,
+          descriptionEn: item.description_en,
+          price_sub: item.price.toString(),
+          active_pro: +item.is_active
+        }));
+
+        if (!this.data.is_status) {
+          this.data.is_status =
+          {
+            id: 0,
+            name: this.$t("STATUS.notActive"),
+            value: 0,
+          }
+        } else {
+          this.data.is_status =
+          {
+            id: 1,
+            name: this.$t("STATUS.active"),
+            value: 1,
+          }
+        }
+        if (!this.data.is_available) {
+          this.data.is_available =
+          {
+            id: 0,
+            name: this.$t("BUTTONS.disavailable"),
+            value: 0,
+          }
+        } else {
+          this.data.is_available =
+          {
+            id: 1,
+            name: this.$t("BUTTONS.available"),
+            value: 1,
+          }
+        }
       } catch (error) {
         console.log(error.response.data.message);
       }
     },
-    // End:: Get Data To Show
+    // Start:: validate Form Inputs
+
   },
 
   created() {
     // Start:: Fire Methods
-    this.getDataToShow();
+    this.getDataToEdit();
     // End:: Fire Methods
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.all_action {
+  display: flex;
+  gap: 15px
+}
+
+.add_another {
+  border: none;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--light_gray_clr);
+  border-radius: 50%;
+  font-size: 18px;
+  color: var(--light_gray_clr);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .fa-trash {
+    color: #ff2159;
+    cursor: pointer
+  }
+}
+</style>

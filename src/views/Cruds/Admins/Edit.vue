@@ -11,8 +11,13 @@
       <form @submit.prevent="validateFormInputs">
         <div class="row">
           <!-- Start:: Image Upload Input -->
-          <base-image-upload-input col="12" identifier="admin_image" :preSelectedImage="data.image.path"
-            :placeholder="$t('PLACEHOLDERS.personalImage')" @selectImage="selectImage" required />
+         <base-image-upload-input 
+                col="12" 
+                identifier="admin_image" 
+                :preSelectedImage="data.image.path"
+                :placeholder="$t('PLACEHOLDERS.personalImage')"
+                @selectImage="selectImage" required />
+              <!-- End:: Image Upload Input -->
           <!-- End:: Image Upload Input -->
 
           <!-- Start:: Name Input -->
@@ -135,15 +140,15 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `users/${this.id}`,
+          url: `admins/${this.id}`,
         });
 
         // Start:: Set Data
-        this.data.image.path = res.data.data.user.image;
-        this.data.name = res.data.data.user.name;
-        this.data.email = res.data.data.user.email;
-        this.data.phone = res.data.data.user.mobile;
-        this.data.role = res.data.data.user.roles.map((item) => ({ name: item }));
+       this.data.image.path = res.data.data.Admin.user.image;
+        this.data.name = res.data.data.Admin.user.name;
+        this.data.email = res.data.data.Admin.user.email;
+        this.data.phone = res.data.data.Admin.user.mobile;
+        this.data.role = res.data.data.Admin.user.roles[0];
         this.data.active = res.data.data.user.is_active;
         // End:: Set Data
       } catch (error) {
@@ -217,32 +222,30 @@ export default {
     // End:: validate Form Inputs
 
     // Start:: Submit Form
-    async submitForm() {
+   async submitForm() {
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
-      if (this.data.image.file) {
-        REQUEST_DATA.append("image", this.data.image.file);
+     REQUEST_DATA.append("name", this.data.name);
+      if (this.data.image.file != null) {
+        REQUEST_DATA.append("avatar", this.data.image.file);
       }
-      REQUEST_DATA.append("name", this.data.name);
       REQUEST_DATA.append("email", this.data.email);
       REQUEST_DATA.append("mobile", this.data.phone);
-      REQUEST_DATA.append("role_id", this.data.role);
-      if (this.data.enableEditPassword) {
-        REQUEST_DATA.append("password", this.data.password);
-        REQUEST_DATA.append("password_confirmation", this.data.passwordConfirmation);
-      }
-      REQUEST_DATA.append("is_active", +this.data.active);
-      REQUEST_DATA.append("_method", "PUT");
+      REQUEST_DATA.append("role_id", this.data.role.id);
+      REQUEST_DATA.append("password", this.data.password);
+      REQUEST_DATA.append("password_confirmation", this.data.passwordConfirmation);
+      REQUEST_DATA.append("is_active", this.data.active);
+     REQUEST_DATA.append("_method", "PUT")
       // Start:: Append Request Data
 
       try {
         await this.$axios({
           method: "POST",
-          url: `users/${this.id}`,
+          url: `admins/${this.id}`,
           data: REQUEST_DATA,
         });
         this.isWaitingRequest = false;
-        this.$message.success(this.$t("MESSAGES.editedSuccessfully"));
+        this.$message.success(this.$t("MESSAGES.addedSuccessfully"));
         this.$router.push({ path: "/admins/all" });
       } catch (error) {
         this.isWaitingRequest = false;

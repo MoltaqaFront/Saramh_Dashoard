@@ -2,7 +2,7 @@
   <div class="crud_form_wrapper">
     <!-- Start:: Title -->
     <div class="form_title_wrapper">
-      <h4>{{ $t("TITLES.editAdmin") }}</h4>
+      <h4>{{ $t("SIDENAV.Admins.show") }}</h4>
     </div>
     <!-- End:: Title -->
 
@@ -85,17 +85,17 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `users/${this.id}`,
+          url: `admins/${this.id}`,
         });
         // console.log( "DATA TO EDIT =>", res.data.data.region );
 
         // Start:: Set Data
-        this.data.image.path = res.data.data.user.image;
-        this.data.name = res.data.data.user.name;
-        this.data.email = res.data.data.user.email;
-        this.data.phone = res.data.data.user.mobile;
-        this.data.role = res.data.data.user.roles[0];
-        this.data.active = res.data.data.user.is_active;
+        this.data.image.path = res.data.data.Admin.user.image;
+        this.data.name = res.data.data.Admin.user.name;
+        this.data.email = res.data.data.Admin.user.email;
+        this.data.phone = res.data.data.Admin.user.mobile;
+        this.data.role = res.data.data.Admin.user.roles[0].name;
+        this.data.active = res.data.data.Admin.user.is_active;
         // End:: Set Data
       } catch (error) {
         console.log(error.response.data.message);
