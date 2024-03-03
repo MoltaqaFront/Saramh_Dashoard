@@ -392,7 +392,7 @@ export default {
             page: this.paginations.current_page,
             name: nameParam,
             mobile: this.filterOptions.phone,
-            status: this.filterOptions.isActive?.value,
+            is_active: this.filterOptions.isActive?.value,
           },
         });
         this.loading = false;
