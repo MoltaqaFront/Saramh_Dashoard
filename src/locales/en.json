@@ -109,7 +109,9 @@
      },
      "SubscriptionsPrice": {
        "title" : "Manage Subscriptions",
-       "showAll": "Show customer subscriptions"
+       "showAll": "Show customer subscriptions" ,
+       "show": "Show Subscription",
+       "fatora": "Electronic Invoice"
      },
       "advertisement": {
       "title": "Advertising Space",
@@ -183,14 +185,17 @@
       "actions": "Actions"
     },
     "FinancialReports": {
-      "serialNumber": "Serial",
-      "driverName": "Driver Name",
-      "driverPhone": "Driver Phone",
-      "totalServicesInProcessing": "Total Orders In Progress",
-      "totalServicesEnded": "Total Finished Orders",
-      "totalProductsInProcessing": "Total Orders In Progress",
-      "totalProductsEnded": "Total Finished Orders"
-    },
+       "serialNumber": "serial",
+       "name" : "Provider" ,
+       "driverName": "Provider name",
+       "driverPhone": "Provider's mobile number",
+       "providerPhone": "service provider's mobile number",
+       "totalProductsInProcessing": "Total unfinished orders",
+       "totalServicesEnded": "Total finished orders",
+       "profit_provider": "Provider's gross profit",
+       "totalapp": "Total app profit",
+       "total_salaey": "Total added tax"
+     },
     "Notifications": {
       "serialNumber": "Serial",
       "title": "Title",
@@ -378,21 +383,35 @@
       "sendDate": "Send Date",
       "publishStatus": "Publish Status"
     },
-    "subscriptions": {
-      "serialNumber": "Serial",
-      "name": "Name",
-      "phone": "Phone Name",
-      "packagePrice": "Package price",
-      "AddedTax": "added tax",
-      "totalSubscription" : "Total including tax",
-      "SubscriptionPeriod" : "Subscription period",
-      "starSubscription": "Beginning subscription",
-      "endSubscription" : "End  subscription",
-      "UserBalance" : "User Balance" ,
-      "verified": "Verified",
-      "active": "Active",
-      "actions": "Actions"
-    }
+   "subscriptions": {
+       "serialNumber": "serial",
+       "name": "name",
+       "nameclient": "client name",
+       "phone": "customer's mobile number",
+       "coach": "coach's name",
+       "coachNumber": "coach's mobile number",
+       "WhatsApp": "WhatsApp number",
+       "dataPrice" : "price data",
+       "number": "subscription number",
+       "program": "program name",
+       "packagePrice": "Package Price",
+       "Totalorder": "Total order price",
+       "AddedTax": "added tax",
+       "programPrice": "program price without tax",
+       "totalPriceOrder": "Total order price with tax",
+       "vatApp": "application commission",
+       "priceCoach": "Coach's net profit",
+       "totalSubscription": "Total including tax",
+       "SubscriptionPeriod": "Subscription period",
+       "starSubscription": "Start of subscription period",
+       "endSubscription" : "end of subscription period",
+       "rateCoach": "Coach Rating",
+       "date" : "creation date",
+       "UserBalance": "User Balance",
+       "verified": "verified",
+       "active": "activated",
+       "actions": "control"
+     }
   },
 
   "TOOLTIPS": {
@@ -780,10 +799,11 @@
     "Indoor": "Indoor",
     "Outdoor": "Outdoor",
     "session_type": "Session Type",
-
+     "export_pdf": "Export as PDF",
+    "export_excel": "Export as Excel",
     "opend": "Opened",
     "closed": "closed",
-
+    "Overall_statistics": "Overall statistics",
     "Children_allowed": "Children are allowed",
     "number_of_people": "Number Of People",
     "item_name": "Item Type",

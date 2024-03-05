@@ -110,7 +110,9 @@
     },
     "SubscriptionsPrice" : {
       "title" : "إدارة الاشتراكات",
-      "showAll" : "عرض اشتراكات العملاء "
+      "showAll" : "عرض اشتراكات العملاء " ,
+      "show" : "عرض اشتراك" ,
+      "fatora" : "الفاتورة الالكترونية"
     },
     "advertisement": {
       "title": "المساحة الإعلانية",
@@ -173,6 +175,18 @@
     "DeactivateReasons": {
       "serialNumber": "المسلسل",
       "reason": "سبب إلغاء التفعيل"
+    },
+     "FinancialReports": {
+      "serialNumber": "المسلسل",
+      "name" : "المورد" ,
+      "driverName": "اسم المدرب",
+      "driverPhone": "رقم جوال المدرب",
+      "providerPhone": "رقم جوال مقدم الخدمة",
+      "totalProductsInProcessing": "إجمالي الاشتراكات بالضريبة",
+      "totalServicesEnded": "إجمالي الطلبات المنتهية",
+      "profit_provider": "إجمالي ربح المدرب",
+      "totalapp": "إجمالي ربح التطبيق" ,
+      "total_salaey" : "إجمالي الضريبة المضافة"
     },
     "Notifications": {
       "serialNumber": "المسلسل",
@@ -358,14 +372,28 @@
     },
     "subscriptions": {
       "serialNumber": "المسلسل",
-      "name": "الإسم",
-      "phone": "رقم الجوال",
+      "name" : "الإسم",
+      "nameclient": "اسم العميل",
+      "phone": "رقم جوال العميل",
+      "coach" : "اسم المدرب",
+      "coachNumber" : "رقم جوال المدرب",
+      "WhatsApp" : "رقم الواتس اب",
+      "dataPrice" : "بيانات السعر",
+      "number" : "رقم الاشتراك",
+      "program" : "اسم البرنامج" ,
       "packagePrice": "سعر الباقة",
+      "Totalorder" : "إجمالي سعر الطلب" ,
       "AddedTax": "الضريبة المضافة",
+      "programPrice" : "سعر البرنامج بدون الضريبة",
+      "totalPriceOrder" : "إجمالي سعر الطلب بالضريبة",
+      "vatApp" : "عمولة التطبيق",
+      "priceCoach" : "صافي ربح المدرب",
+      "rateCoach" : "تقييم المدرب",
       "totalSubscription" : "الاجمالى  شامل الضريبة",
       "SubscriptionPeriod" : "فترة الاشتراك",
       "starSubscription": "بداية فتره الاشتراك",
       "endSubscription" : "نهاية فترة الاشتراك",
+      "date" : "تاريخ الإنشاء",
       "UserBalance" : "رصيد المستخدم" ,
       "verified": "تم التحقق",
       "active": "مفعل",
@@ -726,6 +754,8 @@
     "section": "القسم",
     "state": "المنطقه",
     "deliveryPrice": "سعر التوصيل",
+    "export_pdf": "تصدير ك بي دي إف",
+    "export_excel": "تصدير ك اكسيل",
     "drivers": "السائقين",
     "driverDailyOrdersAmount": "عدد طلبات السائق فى اليوم",
     "appointmentOrdersAmount": "عدد الطلبات على كل موعد",
@@ -749,7 +779,7 @@
     "occasions_add": "اضافة مناسبة",
     "occasions_update": "تعديل مناسبة",
     "occasions_show": "عرض مناسبة",
-
+    "Overall_statistics": "الاحصائيات الاجمالية",
     "main_category": "الفئة الرئيسية",
     "store_address": "عنوان المتجر",
     "starting_price_reservation": "السعر المبدئي للحجز",

@@ -550,8 +550,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "SubscriptionsPrice index",
-                subject: "SubscriptionsPrice",
+                action: "subscriptions index",
+                subject: "subscriptions",
               },
             },
           },
@@ -563,8 +563,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "SubscriptionsPrice show",
-                subject: "SubscriptionsPrice",
+                action: "subscriptions show",
+                subject: "subscriptions",
               },
             },
           },
@@ -575,10 +575,10 @@ const routes = [
             props: true,
             meta: {
               middleware: [auth],
-              requiresPermission: {
-                action: "SubscriptionsPrice price",
-                subject: "SubscriptionsPrice",
-              },
+              // requiresPermission: {
+              //   action: "subscriptions price",
+              //   subject: "subscriptions",
+              // },
             },
           },
         ],
