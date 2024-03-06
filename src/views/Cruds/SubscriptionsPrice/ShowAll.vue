@@ -110,53 +110,18 @@
                 <i class="fal fa-eye"></i>
               </button>
             </a-tooltip>
-
-            <a-tooltip placement="bottom">
+               <a-tooltip placement="bottom">
               <template slot="title">
-                <span>{{ $t("BUTTONS.subscriptions") }}</span>
+                <span>{{ $t("BUTTONS.download_invoice") }}</span>
               </template>
-
-              <button class="btn_edit" @click="subscription(item)">
-                <i class="fas fa-cash-register"></i>
+              <!-- @click="DownloadInvoice(item)" -->
+              <button class="btn_show" @click="downloadPdf(item)">
+                <i class="fal fa-download"></i>
               </button>
             </a-tooltip>
-           
           </div>
         </template>
         <!-- End:: Actions -->
-
-        <!-- ======================== Start:: Dialogs ======================== -->
-        <template v-slot:top>
-
-          <!-- Start:: Balance Modal -->
-          <!-- <v-dialog v-model="dialogBalance">
-            <v-card>
-              <v-card-title class="text-h5 justify-center" v-if="itemToBalance">
-                <span>{{ $t('PLACEHOLDERS.current_balance') }} : </span>
-                <span>{{ itemToBalance.balance }}</span>
-              </v-card-title>
-
-              <form class="w-100">
-
-                <base-input col="12" type="text" :placeholder="$t('PLACEHOLDERS.current_balance')"
-                  v-model.trim="balance_package" required />
-              </form>
-
-              <v-card-actions>
-                <v-btn class="modal_confirm_btn" @click="confirmAcceptItem">{{
-                  $t("BUTTONS.ok")
-                }}</v-btn>
-
-                <v-btn class="modal_cancel_btn" @click="dialogBalance = false">{{ $t("BUTTONS.cancel") }}</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog> -->
-          <!-- End:: Balance Modal -->
-
-        </template>
-        <!-- ======================== End:: Dialogs ======================== -->
-
       </v-data-table>
       <!--  =========== End:: Data Table =========== -->
     </main>
@@ -172,15 +137,102 @@
       </div>
     </template>
     <!-- End:: Pagination -->
+
+     <!-- Start:: Generate PDF Template Content -->
+    <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="true"
+      filename="report" :pdf-quality="2" pdf-format="a4" :manual-pagination="false" :paginate-elements-by-height="1400"
+      pdf-content-width="100%" @progress="bdfDownloadBtnIsLoading = true"
+      @hasGenerated="$message.success($t('MESSAGES.generatedSuccessfully'))" ref="html2Pdf">
+      <section slot="pdf-content">
+        <div class="pdf_file_content">
+          <!-- <tr v-for="(value, key) in itemReport" :key="key">
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+              </tr> -->
+
+          <table class="table table-striped">
+            <tbody>
+               <tr class="text-center">
+                <td>
+                  <span v-html="qr" ></span>
+                  <span>{{ $t("PLACEHOLDERS.qr") }}</span>
+                </td>
+              </tr>
+                <tr class="text-center">
+                  <td>{{ $t("TABLES.subscriptions.number") }}</td>
+                  <td>{{ serialNumber }}</td>
+                </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.date") }}</td>
+                <td>{{ date }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.nameclient") }}</td>
+                <td>{{ nameclient }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.coach") }}</td>
+                <td>{{ coach }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.program") }}</td>
+                <td>{{ program }}</td>
+              </tr>
+
+              <!-- <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.dataPrice") }}</td>
+                <td>{{ dataPrice }}</td>
+              </tr> -->
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.programPrice") }}</td>
+                <td>{{ programPrice }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.AddedTax") }}</td>
+                <td>{{ AddedTax }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.totalPriceOrder") }}</td>
+                <td>{{ totalPriceOrder }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.vatApp") }}</td>
+                <td>{{ vatApp }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.priceCoach") }}</td>
+                <td>{{ priceCoach }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </section>
+    </vue-html2pdf>
+    <!-- End:: Generate PDF Template Content -->
   </div>
 </template>
 
 <script>
+import VueHtml2pdf from 'vue-html2pdf';
 import { mapGetters } from "vuex";
+import moment from 'moment';
 
 export default {
-  name: "AllClients",
+  name: "AllOrders",
 
+ components: {
+    VueHtml2pdf
+  },
   computed: {
     ...mapGetters({
       getAppLocale: "AppLangModule/getAppLocale",
@@ -289,18 +341,20 @@ export default {
         last_page: 1,
         items_per_page: 6,
       },
-      // End:: Pagination Data
-
-      dialogDeactivate: false,
-      itemToChangeActivationStatus: null,
-      deactivateReason: null,
-
-      dialogBalance: false,
-      itemToBalance: null,
-      // Start:: Page Permissions
        permissions: null,
-      // Start:: Page Permissions
-
+      file: null,
+      date: null,
+      serialNumber: null,
+      qr:null,
+      nameclient: null,
+      coach: null,
+      program: null,
+      dataPrice: null,
+      programPrice: null,
+      AddedTax: null,
+      totalPriceOrder: null,
+      vatApp: null,
+      priceCoach: null
     };
   },
 
@@ -350,12 +404,6 @@ export default {
     async setTableRows() {
       this.loading = true;
       try {
-
-        let nameParam = this.filterOptions.name;
-        if (!nameParam) {
-          nameParam = null;
-        }
-
         let res = await this.$axios({
           method: "GET",
           url: "subscriptions",
@@ -391,34 +439,37 @@ export default {
     showItem(item) {
       this.$router.push({ path: `/SubscriptionsPrice/show/${item.user.id}` });
     },
-    subscription(item) {
-      this.$router.push({path: `/SubscriptionsPrice/price/${item.user.id}`})
-    },
+    // subscription(item) {
+    //   this.$router.push({path: `/SubscriptionsPrice/price/${item.user.id}`})
+    // },
     // ===== End:: End
 
     // ===== Start:: Delete
-    selectDeleteItem(item) {
-      this.dialogDelete = true;
-      this.itemToDelete = item;
-    },
-    async confirmDeleteItem() {
-      try {
-        await this.$axios({
-          method: "DELETE",
-          url: `clients/${this.itemToDelete.id}`,
-        });
-        this.dialogDelete = false;
-        this.tableRows = this.tableRows.filter((item) => {
-          return item.id != this.itemToDelete.id;
-        });
-        this.setTableRows();
-        this.$message.success(this.$t("MESSAGES.deletedSuccessfully"));
-      } catch (error) {
-        this.dialogDelete = false;
-        this.$message.error(error.response.data.message);
+    async downloadPdf(item) {
+      // console.log(item);
+     if (item) {
+        this.serialNumber = item.id;
+        this.date = item.created_at;
+        this.nameclient = item.user.name;
+        this.coach = item.coach.name;
+        this.program = item.program.name;
+        this.qr = item.qrcode;
+        this.programPrice = item.net_price;
+        this.AddedTax = item.tax;
+        this.totalPriceOrder = item.total;
+        this.vatApp = item.commission;
+        this.priceCoach = item.net_profit;
+
+        await this.$refs.html2Pdf.generatePdf();
+        this.pdfDownloadBtnIsLoading = false;
+      } else {
+        console.error("Item is undefined or null.");
       }
     },
     // ===== End:: Delete
+    handleFileUpload(event) {
+      this.file = event.target.files[0];
+    },
     // ==================== End:: Crud ====================
   },
 

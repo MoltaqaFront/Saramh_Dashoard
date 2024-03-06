@@ -50,7 +50,6 @@ import LoginForm from "../views/Auth/LoginForm.vue";
 import MainSpecializationsHome from "../views//Cruds/MainSpecializations/Home.vue";
 import NotFoundPage from "../pages/NotFound.vue";
 import NotificationsHome from "../views/Cruds/Notifications/Home.vue";
-import PriceSubscriptionsPrice from "../views/Cruds/SubscriptionsPrice/Price.vue";
 import PrivacyPolicy from "../views/Cruds/AppContent/PrivacyPolicy.vue";
 import RatesHome from "../views/Cruds/Rates/Home.vue";
 import ResetPasswordEmailForm from "../views/Auth/ResetPasswordEmailForm.vue";
@@ -566,19 +565,6 @@ const routes = [
                 action: "subscriptions show",
                 subject: "subscriptions",
               },
-            },
-          },
-          {
-            path: "price/:id",
-            name: "priceSubscriptionsPrice",
-            component: PriceSubscriptionsPrice,
-            props: true,
-            meta: {
-              middleware: [auth],
-              // requiresPermission: {
-              //   action: "subscriptions price",
-              //   subject: "subscriptions",
-              // },
             },
           },
         ],

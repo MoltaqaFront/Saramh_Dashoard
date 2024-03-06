@@ -717,6 +717,7 @@
     "gender": "Gender",
     "country": "Country",
     "address": "Address",
+    "qr" : "QR Code",
     "longitude": "Longitude",
     "latitude": "Longitude",
     "area": "States",
