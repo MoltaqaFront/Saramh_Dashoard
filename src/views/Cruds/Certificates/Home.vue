@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: "GoldenDealsHome",
+  name: "CertificatesHome",
 };
 </script>

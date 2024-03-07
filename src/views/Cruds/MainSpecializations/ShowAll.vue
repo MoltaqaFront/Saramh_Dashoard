@@ -14,41 +14,22 @@
           <form @submit.prevent="submitFilterForm">
             <div class="row justify-content-center align-items-center w-100">
               <!-- Start:: Name Input -->
-              <base-input col="4" type="text" :placeholder="$t('PLACEHOLDERS.name')" v-model.trim="filterOptions.name" />
+              <base-input col="6" type="text" :placeholder="$t('SIDENAV.MainSpecializations.nametitle')" v-model.trim="filterOptions.name" />
               <!-- End:: Name Input -->
 
-              <!-- Start:: Phone Input -->
-              <base-input col="4" type="tel" :placeholder="$t('PLACEHOLDERS.phone')" v-model.trim="filterOptions.phone" />
-              <!-- End:: Phone Input -->
-
               <!-- Start:: Status Input -->
-              <base-select-input col="4" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
+              <base-select-input col="6" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
                 v-model="filterOptions.isActive" />
               <!-- End:: Status Input -->
             </div>
 
-
-
             <div class="btns_wrapper">
-
-              <a-tooltip placement="bottom">
-                <template slot="title">
-                  <span>{{ $t("BUTTONS.search") }}</span>
-                </template>
-                <span class="submit_btn" @click="submitFilterForm" :disabled="isWaitingRequest">
-                  <i class="fal fa-search"></i>
-                </span>
-              </a-tooltip>
-
-              <a-tooltip placement="bottom">
-                <template slot="title">
-                  <span>{{ $t("BUTTONS.rseet_search") }}</span>
-                </template>
-                <span class="reset_btn" :disabled="isWaitingRequest" @click="resetFilter">
-                  <i class="fal fa-redo"></i>
-                </span>
-              </a-tooltip>
-
+              <button class="submit_btn" :disabled="isWaitingRequest">
+                <i class="fal fa-search"></i>
+              </button>
+              <button class="reset_btn" type="button" :disabled="isWaitingRequest" @click="resetFilter">
+                <i class="fal fa-redo"></i>
+              </button>
             </div>
           </form>
         </div>
@@ -58,11 +39,17 @@
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
-          <h5>{{ $t("TITLES.clients") }}</h5>
+          <h5>{{ $t("TITLES.MainSpecializations") }}</h5>
           <button v-if="!filterFormIsActive" class="filter_toggler"
             @click.stop="filterFormIsActive = !filterFormIsActive">
             <i class="fal fa-search"></i>
           </button>
+        </div>
+
+        <div class="title_route_wrapper" >
+          <router-link to="/MainSpecializations/create">
+            {{ $t("BUTTONS.MainSpecializations") }}
+          </router-link>
         </div>
       </div>
       <!--  =========== End:: Table Title =========== -->
@@ -77,54 +64,33 @@
         </template>
         <!-- Start:: No Data State -->
 
-        <template v-slot:[`item.id`]="{ item, index }">
+        <!-- Start:: Item Image -->
+        <template v-slot:[`item.image`]="{ item }">
           <div class="table_image_wrapper">
-            <h6 class="text-danger" v-if="!item.id"> {{ $t("TABLES.noData") }} </h6>
-            <p v-else>{{ (paginations.current_page - 1) * paginations.items_per_page + index + 1 }}</p>
+            <h6 class="text-danger" v-if="!item.image"> {{ $t("TABLES.noData") }} </h6>
+
+            <button class="my-1" @click="showImageModal(item.image)" v-else>
+              <img class="rounded" :src="item.image" :alt="item.name" width="60" height="60" />
+            </button>
           </div>
         </template>
+        <!-- End:: Item Image -->
 
-        <!-- Start:: Name -->
-        <template v-slot:[`item.name`]="{ item }">
-          <h6 class="text-danger" v-if="!item.name"> {{ $t("TABLES.noData") }} </h6>
-          <h6 v-else> {{ item.name }} </h6>
-        </template>
-        <!-- End:: Name -->
-
-        <!-- Start:: email -->
-        <template v-slot:[`item.email`]="{ item }">
-          <h6 class="text-danger" v-if="!item.email"> - </h6>
-          <h6 v-else> {{ item.email }} </h6>
-        </template>
-        <!-- End:: email -->
-
-        <template v-slot:[`item.is_verified`]="{ item }">
-          <v-chip :color="item.is_verified ? 'green' : 'red'" text-color="white" small>
-            <template v-if="item.is_verified">
-              {{ $t("STATUS.active") }}
-            </template>
-            <template v-else>
-              {{ $t("STATUS.notActive") }}
-            </template>
-          </v-chip>
-        </template>
-
-       
-        <!-- Start:: Activation Status -->
-        <template v-slot:[`item.is_active`]="{ item }">
-          <span class="text-success text-h5" v-if="item.user.is_active">
-            <i class="far fa-check"></i>
-          </span>
-          <span class="text-danger text-h5" v-else>
-            <i class="far fa-times"></i>
-          </span>
-        </template>
-        <!-- End:: Activation Status -->
+       <!-- Start:: Activation Status -->
+          <template v-slot:[`item.is_active`]="{ item }">
+            <span class="text-success text-h5" v-if="item.is_active">
+              <i class="far fa-check"></i>
+            </span>
+            <span class="text-danger text-h5" v-else>
+              <i class="far fa-times"></i>
+            </span>
+          </template>
+          <!-- End:: Activation Status -->
 
         <!-- Start:: Actions -->
         <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
-            <a-tooltip placement="bottom" v-if="$can('clients show', 'clients')">
+            <a-tooltip placement="bottom" >
               <template slot="title">
                 <span>{{ $t("BUTTONS.show") }}</span>
               </template>
@@ -133,73 +99,67 @@
               </button>
             </a-tooltip>
 
-            <a-tooltip placement="bottom">
+            <a-tooltip placement="bottom" >
               <template slot="title">
-                <span>{{ $t("BUTTONS.subscriptions") }}</span>
+                <span>{{ $t("BUTTONS.edit") }}</span>
               </template>
-
-              <button class="btn_edit" @click="subscription(item)">
-                <i class="fas fa-cash-register"></i>
+              <button class="btn_edit" @click="editItem(item)">
+                <i class="fal fa-edit"></i>
               </button>
             </a-tooltip>
-            <template v-if="$can('clients activate', 'clients') && item.user.id !== 1">
-              <a-tooltip placement="bottom" v-if="!item.user.is_active">
-                <template slot="title">
-                  <span>{{ $t("BUTTONS.activate") }}</span>
-                </template>
-                <button class="btn_activate" @click="changeActivationStatus(item)">
-                  <i class="fad fa-check-circle"></i>
-                </button>
-              </a-tooltip>
-              <a-tooltip placement="bottom" v-if="item.user.is_active">
-                <template slot="title">
-                  <span>{{ $t("BUTTONS.deactivate") }}</span>
-                </template>
-                <button class="btn_deactivate" @click="changeActivationStatus(item)">
-                  <i class="fad fa-times-circle"></i>
-                </button>
-              </a-tooltip>
-            </template>
-            
-            <template v-else>
-              <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
-            </template>
+
+            <a-tooltip placement="bottom" >
+              <template slot="title">
+                <span>{{ $t("BUTTONS.delete") }}</span>
+              </template>
+              <button class="btn_delete" @click="selectDeleteItem(item)">
+                <i class="fal fa-trash-alt"></i>
+              </button>
+            </a-tooltip>
+
+             <template>
+                <a-tooltip placement="bottom" v-if="!item.is_active">
+                  <template slot="title">
+                    <span>{{ $t("BUTTONS.activate") }}</span>
+                  </template>
+                  <button class="btn_activate" @click="changeActivationStatus(item)">
+                    <i class="fad fa-check-circle"></i>
+                  </button>
+                </a-tooltip>
+                <a-tooltip placement="bottom" v-if="item.is_active">
+                  <template slot="title">
+                    <span>{{ $t("BUTTONS.deactivate") }}</span>
+                  </template>
+                  <button class="btn_deactivate" @click="changeActivationStatus(item)">
+                    <i class="fad fa-times-circle"></i>
+                  </button>
+                </a-tooltip>
+              </template>
           </div>
         </template>
         <!-- End:: Actions -->
 
         <!-- ======================== Start:: Dialogs ======================== -->
         <template v-slot:top>
-
-          <!-- Start:: Balance Modal -->
-          <v-dialog v-model="dialogBalance">
+          <!-- Start:: Delete Modal -->
+          <v-dialog v-model="dialogDelete">
             <v-card>
-              <v-card-title class="text-h5 justify-center" v-if="itemToBalance">
-                <span>{{ $t('PLACEHOLDERS.current_balance') }} : </span>
-                <span>{{ itemToBalance.balance }}</span>
+              <v-card-title class="text-h5 justify-center" v-if="itemToDelete">
+                {{ $t("TITLES.DeleteConfirmingMessage", { name: itemToDelete.name }) }}
               </v-card-title>
-
-              <form class="w-100">
-
-                <base-input col="12" type="text" :placeholder="$t('PLACEHOLDERS.current_balance')"
-                  v-model.trim="balance_package" required />
-              </form>
-
               <v-card-actions>
-                <v-btn class="modal_confirm_btn" @click="confirmAcceptItem">{{
+                <v-btn class="modal_confirm_btn" @click="confirmDeleteItem">{{
                   $t("BUTTONS.ok")
                 }}</v-btn>
 
-                <v-btn class="modal_cancel_btn" @click="dialogBalance = false">{{ $t("BUTTONS.cancel") }}</v-btn>
+                <v-btn class="modal_cancel_btn" @click="dialogDelete = false">{{ $t("BUTTONS.cancel") }}</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
           </v-dialog>
-          <!-- End:: Balance Modal -->
-
+          <!-- End:: Delete Modal -->
         </template>
         <!-- ======================== End:: Dialogs ======================== -->
-
       </v-data-table>
       <!--  =========== End:: Data Table =========== -->
     </main>
@@ -222,7 +182,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "AllClients",
+  name: "AllMainSpecializations",
 
   computed: {
     ...mapGetters({
@@ -241,6 +201,7 @@ export default {
           name: this.$t("STATUS.notActive"),
           value: 0,
         },
+
       ];
     },
   },
@@ -256,8 +217,6 @@ export default {
       filterFormIsActive: false,
       filterOptions: {
         name: null,
-        phone: null,
-        email: null,
         isActive: null,
       },
       // End:: Filter Data
@@ -266,46 +225,27 @@ export default {
       searchValue: "",
       tableHeaders: [
         {
-          text: this.$t("TABLES.Clients.serialNumber"),
+          text: this.$t("TABLES.MainSpecializations.serialNumber"),
           value: "serialNumber",
           align: "center",
           width: "80",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.Clients.name"),
-          value: "user.name",
+          text: this.$t("TABLES.MainSpecializations.name"),
+          value: "name",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.Clients.code"),
-          value: "user.country_key",
-          align: "center",
-          sortable: false,
-        },
-        {
-          text: this.$t("TABLES.Clients.phone"),
-          value: "user.mobile",
-          align: "center",
-          sortable: false,
-        },
-        {
-          text: this.$t("TABLES.Clients.joiningDate"),
-          value: "user.created_at",
-          align: "center",
-          width: "120",
-          sortable: false,
-        },
-        {
-          text: this.$t("TABLES.Clients.active"),
+          text: this.$t("PLACEHOLDERS.status"),
           value: "is_active",
           align: "center",
           width: "120",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.Clients.actions"),
+          text: this.$t("TABLES.Admins.actions"),
           value: "actions",
           sortable: false,
           align: "center",
@@ -313,6 +253,16 @@ export default {
       ],
       tableRows: [],
       // End:: Table Data
+
+      // Start:: Dialogs Control Data
+      dialogImage: false,
+      selectedItemImage: null,
+      dialogDeactivate: false,
+      itemToChangeActivationStatus: null,
+      deactivateReason: null,
+      dialogDelete: false,
+      itemToDelete: null,
+      // End:: Dialogs Control Data
 
       // Start:: Pagination Data
       paginations: {
@@ -322,16 +272,9 @@ export default {
       },
       // End:: Pagination Data
 
-      dialogDeactivate: false,
-      itemToChangeActivationStatus: null,
-      deactivateReason: null,
-
-      dialogBalance: false,
-      itemToBalance: null,
       // Start:: Page Permissions
-       permissions: null,
+      permissions: null,
       // Start:: Page Permissions
-
     };
   },
 
@@ -348,16 +291,17 @@ export default {
     // Start:: Handel Filter
     async submitFilterForm() {
       if (this.$route.query.page !== '1') {
-        await this.$router.push({ path: '/clients/all', query: { page: 1 } });
+        await this.$router.push({ path: '/MainSpecializations/all', query: { page: 1 } });
       }
       this.setTableRows();
     },
     async resetFilter() {
       this.filterOptions.name = null;
       this.filterOptions.phone = null;
+      this.filterOptions.email = null;
       this.filterOptions.isActive = null;
       if (this.$route.query.page !== '1') {
-        await this.$router.push({ path: '/clients/all', query: { page: 1 } });
+        await this.$router.push({ path: '/MainSpecializations/all', query: { page: 1 } });
       }
       this.setTableRows();
     },
@@ -379,19 +323,12 @@ export default {
     async setTableRows() {
       this.loading = true;
       try {
-
-        let nameParam = this.filterOptions.name;
-        if (!nameParam) {
-          nameParam = null;
-        }
-
         let res = await this.$axios({
           method: "GET",
-          url: "clients",
+          url: "specialties",
           params: {
             page: this.paginations.current_page,
-            name: nameParam,
-            mobile: this.filterOptions.phone,
+            name: this.filterOptions.name,
             is_active: this.filterOptions.isActive?.value,
           },
         });
@@ -402,7 +339,8 @@ export default {
         // console.log("All Data ==>", res.data.data);
         this.tableRows = res.data.data;
         this.paginations.last_page = res.data.meta.last_page;
-        this.paginations.items_per_page = res.data.meta.per_page;;
+        this.paginations.items_per_page = res.data.meta.per_page;
+
       } catch (error) {
         this.loading = false;
         console.log(error.response.data.message);
@@ -410,14 +348,14 @@ export default {
     },
     // End:: Set Table Rows
 
-   // Start:: Control Modals
-   showImageModal(image) {
+    // Start:: Control Modals
+    showImageModal(image) {
       this.dialogImage = true;
       this.selectedItemImage = image;
     },
     // End:: Control Modals
 
-    // ===== Start:: Handling Activation & Deactivation
+   // ===== Start:: Handling Activation & Deactivation
     selectDeactivateItem(item) {
       this.dialogDeactivate = true;
       this.itemToChangeActivationStatus = item;
@@ -426,7 +364,7 @@ export default {
       try {
         await this.$axios({
           method: "POST",
-          url: `clients/activate/${item.user.id}`,
+          url: `specialties/activate/${item.id}`,
         });
         this.setTableRows();
         this.$message.success(this.$t("MESSAGES.changeActivation"));
@@ -439,13 +377,10 @@ export default {
     // ==================== Start:: Crud ====================
     // ===== Start:: End
     editItem(item) {
-      this.$router.push({ path: `/clients/edit/${item.user.id}` });
+      this.$router.push({ path: `/MainSpecializations/edit/${item.id}` });
     },
     showItem(item) {
-      this.$router.push({ path: `/clients/show/${item.user.id}` });
-    },
-    subscription(item) {
-      this.$router.push({path: `/clients/subscriptions/${item.user.id}`})
+      this.$router.push({ path: `/MainSpecializations/show/${item.id}` });
     },
     // ===== End:: End
 
@@ -458,7 +393,7 @@ export default {
       try {
         await this.$axios({
           method: "DELETE",
-          url: `clients/${this.itemToDelete.id}`,
+          url: `specialties/${this.itemToDelete.id}`,
         });
         this.dialogDelete = false;
         this.tableRows = this.tableRows.filter((item) => {
@@ -488,17 +423,3 @@ export default {
   },
 };
 </script>
-<style>
-span.submit_btn {
-  width: 45px;
-  height: 45px;
-  font-size: 16px;
-  border-radius: 10px;
-  color: var(--white_clr);
-  transition: all 0.3s linear;
-  background-color: #F6A513;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>

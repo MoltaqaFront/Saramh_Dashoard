@@ -1,5 +1,5 @@
 <template>
-  <div class="show_all_content_wrapper" v-if="permissions">
+  <div class="show_all_content_wrapper">
     <!-- Start:: Main Section -->
     <main>
       <!--  =========== Start:: Filter Form =========== -->
@@ -14,16 +14,19 @@
           <form @submit.prevent="submitFilterForm">
             <div class="row justify-content-center align-items-center w-100">
 
-              <base-select-input col="4" :optionsList="allStores" :placeholder="$t('PLACEHOLDERS.store')"
-                v-model="filterOptions.store_id" required />
+              <base-select-input col="6" :optionsList="allproviders" :placeholder="$t('TABLES.FinancialReports.driverName')"
+                v-model="filterOptions.provider_name" />
+
+              <base-input col="6" type="text" :placeholder="$t('TABLES.FinancialReports.driverPhone')"
+                v-model="filterOptions.driverPhone" />
 
               <!-- Start:: Start Date Input -->
-              <base-picker-input col="4" type="date" :placeholder="$t('PLACEHOLDERS.startDate')"
+              <base-picker-input col="6" type="date" :placeholder="$t('PLACEHOLDERS.startDate')"
                 v-model.trim="filterOptions.from_date" />
               <!-- End:: Start Date Input -->
 
               <!-- Start:: End Date Input -->
-              <base-picker-input col="4" type="date" :placeholder="$t('PLACEHOLDERS.endDate')"
+              <base-picker-input col="6" type="date" :placeholder="$t('PLACEHOLDERS.endDate')"
                 v-model.trim="filterOptions.to_date" />
               <!-- End:: End Date Input -->
 
@@ -45,7 +48,7 @@
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
-          <h5>{{ $t("PLACEHOLDERS.order_report") }}</h5>
+          <h5>{{ $t("SIDENAV.financialreports.title") }}</h5>
           <button v-if="!filterFormIsActive" class="filter_toggler"
             @click.stop="filterFormIsActive = !filterFormIsActive">
             <i class="fal fa-search"></i>
@@ -53,22 +56,15 @@
         </div>
 
         <div class="title_route_wrapper">
-          <!-- <base-button class="mt-0 pdf_btn" styleType="solid_btn" :btnText="$t('BUTTONS.downloadPdf')"
-            @fireClick="downloadPdf" :disabled="pdfDownloadBtnIsLoading">
-            <template v-slot:btn_icon>
-              <i class="fal fa-file-pdf"></i>
-            </template>
-          </base-button> -->
 
-          <!-- <base-button
-            class="mt-0 excel_btn"
-            styleType="solid_btn"
-            :btnText="$t('BUTTONS.downloadExcel')"
-          >
-            <template v-slot:btn_icon>
-              <i class="fal fa-file-excel"></i>
-            </template>
-          </base-button> -->
+
+          <button class="btn_delete" @click="selectPdfItem()">
+            {{ $t("PLACEHOLDERS.export_pdf") }}
+          </button>
+
+          <button class="btn_delete" @click="selectExcelItem()">
+            {{ $t("PLACEHOLDERS.export_excel") }}
+          </button>
         </div>
       </div>
       <!--  =========== End:: Table Title =========== -->
@@ -90,74 +86,86 @@
           </div>
         </template>
 
-        <!-- Start:: Total Services In Progress -->
-        <!-- <template v-slot:[`item.bookingServicesInProcessing`]="{ item }">
-          <router-link :to="{
-            path: `/main/report-details`, query: {
-              driver_id: item.driver,
-              booking_type: 'service',
-              status: 'processing',
-              from_date: filterOptions.from_date,
-              to_date: filterOptions.to_date
-            }
-          }" :disabled="item.bookingServicesInProcessing == '0.00' || item.bookingServicesInProcessing == '0'">
-            {{ item.bookingServicesInProcessing }} {{ $t("SYSTEM_CURRENCY") }}
+        <template v-slot:[`item.total`]="{ item }">
+           <router-link :to="`/orders/all?page=1&provider=${item.id}&type=not_finished`">
+            {{ item.total }}
           </router-link>
-        </template> -->
-        <!-- End:: Total Services In Progress -->
+        </template>
 
-        <!-- Start:: Total Finished Services -->
-        <!-- <template v-slot:[`item.bookingServicesEnded`]="{ item }">
-          <router-link :to="{
-            path: `/main/report-details`,
-            query: {
-              driver_id: item.driver,
-              booking_type: 'service',
-              status: 'ended',
-              from_date: filterOptions.from_date,
-              to_date: filterOptions.to_date
-            }
-          }" :disabled="item.bookingServicesEnded == '0.00' || item.bookingServicesEnded == '0'">
-            {{ item.bookingServicesEnded }} {{ $t("SYSTEM_CURRENCY") }}
-          </router-link>
-        </template> -->
-        <!-- End:: Total Finished Services -->
+        <!-- ======================== Start:: Dialogs ======================== -->
+        <template v-slot:top>
+          <!-- Start:: pdf Modal -->
+          <v-dialog v-model="dialogPdf">
+            <v-card>
+              <button class="ex-btn-s" @click="clickedDownload"> {{ $t("PLACEHOLDERS.export_pdf") }}</button>
 
-        <!-- Start:: Total Products In Progress -->
-        <!-- <template v-slot:[`item.bookingProductsInProcessing`]="{ item }">
-          <router-link :to="{
-            path: `/main/report-details`,
-            query: {
-              driver_id: item.driver,
-              order_type: 'product',
-              status: 'processing',
-              from_date: filterOptions.from_date,
-              to_date: filterOptions.to_date
-            }
-          }" :disabled="item.bookingProductsInProcessing == '0.00' || item.bookingProductsInProcessing == '0'">
-            {{ item.bookingProductsInProcessing }} {{ $t("SYSTEM_CURRENCY") }}
-          </router-link>
-        </template> -->
-        <!-- End:: Total Products In Progress -->
+              <v-card-actions>
+                <v-btn class="modal_cancel_btn" @click="dialogPdf = false">{{ $t("BUTTONS.cancel") }}</v-btn>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <!-- End:: pdf Modal -->
 
-        <!-- Start:: Total Finished Products -->
-        <!-- <template v-slot:[`item.bookingProductsEnded`]="{ item }">
-          <router-link :to="{
-            path: `/main/report-details`,
-            query: {
-              driver_id: item.driver,
-              order_type: 'product',
-              status: 'ended',
-              from_date: filterOptions.from_date,
-              to_date: filterOptions.to_date
-            }
-          }" :disabled="item.bookingProductsEnded == '0.00' || item.bookingProductsEnded == '0'">
-            {{ item.bookingProductsEnded }} {{ $t("SYSTEM_CURRENCY") }}
-          </router-link>
-        </template> -->
-        <!-- End:: Total Finished Products -->
+          <!-- Start:: excel Modal -->
+          <v-dialog v-model="dialogExcel">
+            <v-card>
+              <a class="ex-btn-s" :href="excel" download>
+                {{ $t("PLACEHOLDERS.export_excel") }}
+              </a>
+              <v-card-actions>
+                <v-btn class="modal_cancel_btn" @click="dialogExcel = false">{{ $t("BUTTONS.cancel") }}</v-btn>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <!-- End:: excel Modal -->
+
+
+        </template>
+        <!-- ======================== End:: Dialogs ======================== -->
+
       </v-data-table>
       <!--  =========== End:: Data Table =========== -->
+      <!-- ==== Start:: Client Addresses ==== -->
+      <div class="table_content">
+        <div class="table_title_wrapper">
+          <div class="title_text_wrapper">
+            <h5>{{ $t("PLACEHOLDERS.Overall_statistics") }}</h5>
+          </div>
+        </div>
+        <v-simple-table class="stat-table">
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-center">
+                  {{ $t("TABLES.FinancialReports.totalProductsInProcessing") }}
+                </th>
+                <th class="text-center">
+                  {{ $t("TABLES.FinancialReports.profit_provider") }}
+                </th>
+                <th class="text-center">
+                  {{ $t("TABLES.FinancialReports.totalapp") }}
+                </th>
+                <th class="text-center">
+                  {{ $t("TABLES.FinancialReports.total_salaey") }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <template>
+                <tr class="text-center all-stat">
+                  <td>{{ statistic.total }}</td>
+                  <td>{{ statistic.total_profit }}</td>
+                  <td>{{ statistic.total_commission }}</td>
+                  <td>{{ statistic.total_vat }}</td>
+                </tr>
+              </template>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </div>
+      <!-- ==== End:: Client Addresses ==== -->
     </main>
     <!-- End:: Main Section -->
 
@@ -170,43 +178,6 @@
     " />
       </div>
     </template>
-    <!-- End:: Pagination -->
-
-    <!-- Start:: Generate PDF Template Content -->
-    <!-- <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="true"
-      :filename="$t('TITLES.financialReports')" :pdf-quality="2" pdf-format="a4" :manual-pagination="false"
-      :paginate-elements-by-height="1400" pdf-content-width="100%" @progress="bdfDownloadBtnIsLoading = true"
-      @hasGenerated="$message.success($t('MESSAGES.generatedSuccessfully'))" ref="html2Pdf">
-      <section slot="pdf-content">
-        <div class="pdf_file_content">
-          <h1 class="file_title"> {{ $t('TITLES.financialReports') }} </h1>
-
-          <v-simple-table>
-            <template v-slot:default>
-              <thead>
-                <tr>
-                  <th v-for="header in tableHeaders" :key="header.value">
-                    {{ header.text }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="row in tableRows" :key="row.id">
-                  <td>{{ row.id }}</td>
-                  <td>{{ row.driver_name }}</td>
-                  <td>{{ row.phone_number }}</td>
-                  <td>{{ row.bookingServicesInProcessing }} {{ $t("SYSTEM_CURRENCY") }}</td>
-                  <td>{{ row.bookingServicesEnded }} {{ $t("SYSTEM_CURRENCY") }}</td>
-                  <td>{{ row.bookingProductsInProcessing }} {{ $t("SYSTEM_CURRENCY") }}</td>
-                  <td>{{ row.bookingProductsEnded }} {{ $t("SYSTEM_CURRENCY") }}</td>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
-        </div>
-      </section>
-    </vue-html2pdf> -->
-    <!-- End:: Generate PDF Template Content -->
   </div>
 </template>
 
@@ -229,6 +200,13 @@ export default {
 
   data() {
     return {
+      statistic: {
+        total: null,
+        total_profit: null,
+        total_commission: null,
+        total_vat: null,
+      },
+
       // Start:: Loading Data
       loading: false,
       isWaitingRequest: false,
@@ -239,11 +217,12 @@ export default {
       // Start:: Filter Data
       filterFormIsActive: false,
       filterOptions: {
-        store_id: null,
+        provider_name: null,
+        driverPhone: null,
         from_date: null,
         to_date: null
       },
-      allStores: [],
+      allproviders: [],
       // End:: Filter Data
 
       // Start:: Table Data
@@ -257,26 +236,38 @@ export default {
           sortable: false,
         },
         {
-          text: this.$t("PLACEHOLDERS.store"),
-          value: "store.name",
+          text: this.$t("TABLES.FinancialReports.driverName"),
+          value: "name",
+          sortable: false,
+          align: "center",
+        },
+        {
+          text: this.$t("TABLES.FinancialReports.driverPhone"),
+          value: "mobile",
           sortable: false,
           align: "center",
         },
         {
           text: this.$t("TABLES.FinancialReports.totalProductsInProcessing"),
-          value: "order_not_finished_count",
+          value: "total",
           sortable: false,
           align: "center",
         },
         {
-          text: this.$t("TABLES.FinancialReports.totalProductsEnded"),
-          value: "order_finished_count",
+          text: this.$t("TABLES.FinancialReports.profit_provider"),
+          value: "total_profit",
           sortable: false,
           align: "center",
         },
         {
-          text: this.$t("TABLES.Orders.totalPrice"),
-          value: "total_price",
+          text: this.$t("TABLES.FinancialReports.totalapp"),
+          value: "total_commission",
+          sortable: false,
+          align: "center",
+        },
+        {
+          text: this.$t("TABLES.FinancialReports.total_salaey"),
+          value: "total_vat",
           sortable: false,
           align: "center",
         },
@@ -291,10 +282,22 @@ export default {
         items_per_page: 6,
       },
       // End:: Pagination Data
+      // Start:: Dialogs Control Data
+      dialogImage: false,
+      selectedItemImage: null,
+      dialogDescription: false,
+      selectedDescriptionTextToShow: "",
+      dialogPdf: false,
+      itemToPdf: null,
+      dialogExcel: false,
+      itemToExcel: null,
+      // End:: Dialogs Control Data
 
       // Start:: Page Permissions
       permissions: null,
       // Start:: Page Permissions
+      pdf: null,
+      excel: null,
     };
   },
 
@@ -316,7 +319,8 @@ export default {
       this.setTableRows();
     },
     async resetFilter() {
-      this.filterOptions.store_id = null;
+      this.filterOptions.provider_name = null;
+      this.filterOptions.driverPhone = null;
       this.filterOptions.from_date = null;
       this.filterOptions.to_date = null;
       if (this.$route.query.page !== '1') {
@@ -344,20 +348,22 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "admin/orders-report",
+          url: "financials",
           params: {
             page: this.paginations.current_page,
-            store_id: this.filterOptions.store_id?.id,
-            from: this.filterOptions.from_date,
-            to: this.filterOptions.to_date,
+            name: this.filterOptions.provider_name?.id,
+            mobile: this.filterOptions.driverPhone,
+            from_date: this.filterOptions.from_date,
+            to_date: this.filterOptions.to_date,
           },
         });
         this.loading = false;
         // console.log("All Data ==>", res.data.data);
-        this.tableRows = res.data.body.reports;
-        this.paginations.last_page = res.data.body.meta.last_page;
-        this.paginations.items_per_page = res.data.body.meta.per_page;
-        this.permissions = res.data.body.permissions;
+        this.loading = false;
+        this.tableRows = res.data.data.Financials;
+        this.statistic = res.data.data.totals;
+        this.paginations.last_page = res.data.pagination.lastPageNumber;
+        this.paginations.items_per_page = res.data.pagination.pageCount;
       } catch (error) {
         this.loading = false;
         console.log(error.response.data.message);
@@ -375,26 +381,53 @@ export default {
     // ==================== Start:: Crud ====================
     // ===== Start:: Show
     showItem(item) {
-      this.$router.push({ path: `/financial-reports/show/${item.id}` });
+      this.$router.push({ path: `/financial-not-finshed-reports/show/${item.id}` });
     },
     // ===== End:: Show
 
-    async getAllStores() {
-      this.loading = true;
-      try {
-        let res = await this.$axios({
-          method: "GET",
-          url: "admin/stores",
-        });
-        this.allStores = res.data.body.stores;
-        this.allStores.unshift({ name: this.$t('STATUS.all'), id: null, value: null });
-        console.log(res.data.body.stores)
-      } catch (error) {
-        this.loading = false;
-        console.log(error.response.data.message);
-      }
+    // ===== Start:: Delete
+    selectPdfItem() {
+      this.dialogPdf = true;
+      this.confirmPdf();
     },
-
+    // async confirmPdf() {
+    //   try {
+    //     let res = await this.$axios({
+    //       method: "GET",
+    //       url: `financials/export-pdf`,
+    //     });
+    //     this.pdf = res.data.data.pdf;
+    //     // this.dialogPdf = false;
+    //   } catch (error) {
+    //     this.dialogPdf = false;
+    //     this.$message.error(error.response.data.message);
+    //   }
+    // },
+    selectExcelItem() {
+      this.dialogExcel = true;
+      this.confirmExcel();
+    },
+    // async confirmExcel() {
+    //   try {
+    //     let res = await this.$axios({
+    //       method: "GET",
+    //       url: `financials/export-excel`,
+    //     });
+    //     this.excel = res.data.data.excel;
+    //     // this.dialogPdf = false;
+    //   } catch (error) {
+    //     this.dialogExcel = false;
+    //     this.$message.error(error.response.data.message);
+    //   }
+    // },
+    clickedDownload() {
+      const link = document.createElement('a');
+      link.href = this.pdf;
+      link.setAttribute('download', 'file.pdf'); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+    },
+    // ===== End:: Delete
     // ==================== End:: Crud ====================
   },
 
@@ -407,8 +440,30 @@ export default {
       this.paginations.current_page = +this.$route.query.page;
     }
     this.setTableRows();
-    this.getAllStores()
     // End:: Fire Methods
   },
 };
 </script>
+
+<style scoped>
+.ex-btn-s {
+  color: black !important;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline !important;
+}
+
+.all-stat {
+  background: var(--main_theme_clr);
+}
+
+.all-stat td {
+  color: white;
+  font-size: 21px !important;
+  font-weight: 800;
+}
+
+.show_all_content_wrapper .v-data-table .v-data-table__wrapper table tbody tr:hover {
+  background: var(--main_theme_clr) !important;
+}
+</style>

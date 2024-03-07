@@ -3,12 +3,17 @@ import AdminsHome from "../views/Cruds/Admins/Home.vue";
 import AdvertisementsHome from "../views/Cruds/Advertisements/Home.vue";
 import AllAdmins from "../views/Cruds/Admins/ShowAll.vue";
 import AllAdvertisements from "../views/Cruds/Advertisements/ShowAll.vue";
+import AllCertificates from "../views/Cruds/Certificates/ShowAll.vue";
 import AllClients from "../views/Cruds/Clients/ShowAll.vue";
+import AllCoaches from "../views/Cruds/Coaches/ShowAll.vue";
 import AllContactMessages from "../views/Cruds/ContactMessages/ShowAll.vue";
 import AllFinancialReports from "../views/Cruds/FinancialReports/Show.vue";
+import AllMainSpecializations from "../views/Cruds/MainSpecializations/ShowAll.vue";
 import AllNotifications from "../views/Cruds/Notifications/ShowAll.vue";
 import AllRates from "../views/Cruds/Rates/ShowAll.vue";
 import AllRoles from "../views/Cruds/Roles/ShowAll.vue";
+import AllSubscriptionsPrice from "../views/Cruds/SubscriptionsPrice/ShowAll.vue";
+import AllSubspecialties from "../views/Cruds/Subspecialties/ShowAll.vue";
 import AppContentHome from "../views/Cruds/AppContent/Home.vue";
 import AppContentWrapper from "../pages/AppContentWrapper.vue";
 import AppSettings from "../views/Cruds/AppSettings/AppSettings.vue";
@@ -16,21 +21,33 @@ import AqarConditions from "../views/Cruds/AppContent/AqarConditions.vue";
 import AqarUses from "../views/Cruds/AppContent/AqarUses.vue";
 import Authentication from "../pages/Authentication.vue";
 import BankAccounts from "../views/Cruds/AppContent/BankAccounts.vue";
+import CertificatesHome from "../views/Cruds/Certificates/Home.vue";
 import ChangePhoneNumberForm from "../views/Auth/ChangePhoneNumber.vue";
 import ClientsHome from "../views/Cruds/Clients/Home.vue";
+import CoachesHome from "../views/Cruds/Coaches/Home.vue";
 import ContactMessagesHome from "../views/Cruds/ContactMessages/Home.vue";
 import CreateAdmin from "../views/Cruds/Admins/Create.vue";
+import CreateAdvertisements from "../views/Cruds/Advertisements/Create.vue";
+import CreateCertificates from "../views/Cruds/Certificates/Create.vue";
+import CreateCoaches from "../views/Cruds/Coaches/Create.vue";
+import CreateMainSpecializations from "../views/Cruds/MainSpecializations/Create.vue";
 import CreateNotifications from "../views/Cruds/Notifications/Create.vue";
 import CreateRole from "../views/Cruds/Roles/Create.vue";
+import CreateSubspecialties from "../views/Cruds/Subspecialties/Create.vue";
 import EditAdmin from "../views/Cruds/Admins/Edit.vue";
 import EditAdvertisements from "../views/Cruds/Advertisements/Edit.vue";
+import EditCertificates from "../views/Cruds/Certificates/Edit.vue";
+import EditCoaches from "../views/Cruds/Coaches/Edit.vue";
+import EditMainSpecializations from "../views/Cruds/MainSpecializations/Edit.vue";
 import EditRole from "../views/Cruds/Roles/Edit.vue";
+import EditSubspecialties from "../views/Cruds/Subspecialties/Edit.vue";
 import EmailVerificationForm from "../views/Auth/EmailVerificationForm.vue";
 import FinancialReportsHome from "../views/Cruds/FinancialReports/ShowAll.vue";
 import ForbiddenPage from "../pages/ForbiddenPage.vue";
 import GeneralSettings from "../views/Cruds/AppSettings/GeneralSettings.vue";
 import HomePage from "../pages/HomePage.vue";
 import LoginForm from "../views/Auth/LoginForm.vue";
+import MainSpecializationsHome from "../views//Cruds/MainSpecializations/Home.vue";
 import NotFoundPage from "../pages/NotFound.vue";
 import NotificationsHome from "../views/Cruds/Notifications/Home.vue";
 import PrivacyPolicy from "../views/Cruds/AppContent/PrivacyPolicy.vue";
@@ -40,9 +57,16 @@ import ResetPasswordForm from "../views/Auth/ResetPasswordForm.vue";
 import RolesHome from "../views/Cruds/Roles/Home.vue";
 import ShowAdmin from "../views/Cruds/Admins/Show.vue";
 import ShowAdvertisements from "../views/Cruds/Advertisements/Show.vue";
+import ShowCertificates from "../views/Cruds/Certificates/Show.vue";
 import ShowClient from "../views/Cruds/Clients/Show.vue";
+import ShowCoaches from "../views/Cruds/Coaches/Show.vue";
+import ShowMainSpecializations from "../views/Cruds/MainSpecializations/Show.vue";
 import ShowNotifications from "../views/Cruds/Notifications/Show.vue";
 import ShowRates from "../views/Cruds/Rates/Show.vue";
+import ShowSubscriptionsPrice from "../views/Cruds/SubscriptionsPrice/Show.vue";
+import ShowSubspecialties from "../views/Cruds/Subspecialties/Show.vue";
+import SubscriptionsPriceHome from "../views/Cruds/SubscriptionsPrice/Home.vue";
+import SubspecialtiesHome from "../views/Cruds/Subspecialties/Home.vue";
 import Terms from "../views/Cruds/AppContent/Terms.vue";
 import Vue from "vue";
 import VueRouter from "vue-router";
@@ -288,6 +312,19 @@ const routes = [
             },
           },
           {
+            path: "create",
+            name: "CreateAdvertisements",
+            component: CreateAdvertisements,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "advertisements create",
+                subject: "advertisements",
+              },
+            },
+          },
+          {
             path: "edit/:id",
             name: "EditAdvertisements",
             component: EditAdvertisements,
@@ -303,6 +340,300 @@ const routes = [
         ],
       },
       // End:: advertisements Routes Config
+
+      // Start Main specializations Routes config
+      {
+        path: "/MainSpecializations",
+        name: "MainSpecializationsHome",
+        component: MainSpecializationsHome,
+        meta: {
+          middleware: [auth],
+        },
+        children: [
+          {
+            path: "all",
+            name: "AllMainSpecializations",
+            component: AllMainSpecializations,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "MainSpecializations index",
+                subject: "MainSpecializations",
+              },
+            },
+          },
+          {
+            path: "show/:id",
+            name: "ShowMainSpecializations",
+            component: ShowMainSpecializations,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "MainSpecializations show",
+                subject: "MainSpecializations",
+              },
+            },
+          },
+          {
+            path: "create",
+            name: "CreateMainSpecializations",
+            component: CreateMainSpecializations,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "MainSpecializations create",
+                subject: "MainSpecializations",
+              },
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "EditMainSpecializations",
+            component: EditMainSpecializations,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "MainSpecializations edit",
+                subject: "MainSpecializations",
+              },
+            },
+          },
+        ],
+      },
+      // End Main specializations Routes config
+
+      // Start Subspecialties Routes config
+      {
+        path: "/Subspecialties",
+        name: "SubspecialtiesHome",
+        component: SubspecialtiesHome,
+        meta: {
+          middleware: [auth],
+        },
+        children: [
+          {
+            path: "all",
+            name: "AllSubspecialties",
+            component: AllSubspecialties,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Subspecialties index",
+                subject: "Subspecialties",
+              },
+            },
+          },
+          {
+            path: "show/:id",
+            name: "ShowSubspecialties",
+            component: ShowSubspecialties,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Subspecialties show",
+                subject: "Subspecialties",
+              },
+            },
+          },
+          {
+            path: "create",
+            name: "CreateSubspecialties",
+            component: CreateSubspecialties,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Subspecialties create",
+                subject: "Subspecialties",
+              },
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "EditSubspecialties",
+            component: EditSubspecialties,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Subspecialties edit",
+                subject: "Subspecialties",
+              },
+            },
+          },
+        ],
+      },
+      // End Subspecialties Routes config
+
+      // Start Coaches Routes config
+      {
+        path: "/Coaches",
+        name: "CoachesHome",
+        component: CoachesHome,
+        meta: {
+          middleware: [auth],
+        },
+        children: [
+          {
+            path: "all",
+            name: "AllCoaches",
+            component: AllCoaches,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Coaches index",
+                subject: "Coaches",
+              },
+            },
+          },
+          {
+            path: "show/:id",
+            name: "ShowCoaches",
+            component: ShowCoaches,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Coaches show",
+                subject: "Coaches",
+              },
+            },
+          },
+          {
+            path: "create",
+            name: "CreateCoaches",
+            component: CreateCoaches,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Coaches create",
+                subject: "Coaches",
+              },
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "EditCoaches",
+            component: EditCoaches,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Coaches edit",
+                subject: "Coaches",
+              },
+            },
+          },
+        ],
+      },
+      // End Coaches Routes config
+
+      // Start SubscriptionsPrice Routes config
+      {
+        path: "/SubscriptionsPrice",
+        name: "SubscriptionsPriceHome",
+        component: SubscriptionsPriceHome,
+        meta: {
+          middleware: [auth],
+        },
+        children: [
+          {
+            path: "all",
+            name: "AllSubscriptionsPrice",
+            component: AllSubscriptionsPrice,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "subscriptions index",
+                subject: "subscriptions",
+              },
+            },
+          },
+          {
+            path: "show/:id",
+            name: "ShowSubscriptionsPrice",
+            component: ShowSubscriptionsPrice,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "subscriptions show",
+                subject: "subscriptions",
+              },
+            },
+          },
+        ],
+      },
+      // End SubscriptionsPrice Routes config
+
+      // Start Certificates Routes config
+      {
+        path: "/Coaches",
+        name: "CertificatesHome",
+        component: CertificatesHome,
+        meta: {
+          middleware: [auth],
+        },
+        children: [
+          {
+            path: "all",
+            name: "AllCertificates",
+            component: AllCertificates,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Certificates index",
+                subject: "Certificates",
+              },
+            },
+          },
+          {
+            path: "show/:id",
+            name: "ShowCertificates",
+            component: ShowCertificates,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Certificates show",
+                subject: "Certificates",
+              },
+            },
+          },
+          {
+            path: "create/:id",
+            name: "CreateCertificates",
+            component: CreateCertificates,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Certificates create",
+                subject: "Certificates",
+              },
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "EditCertificates",
+            component: EditCertificates,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "Certificates edit",
+                subject: "Certificates",
+              },
+            },
+          },
+        ],
+      },
+      // End Certificates Routes config
 
       // Start:: Rates Routes Config
       {
@@ -720,7 +1051,7 @@ function nextFactory(context, middleware, index) {
 // Authentication and Permission Check Middleware
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem(
-    "Aqar_admin_dashboard_user_token"
+    "Saramh_admin_dashboard_user_token"
   );
 
   if (to.meta.middleware) {
@@ -747,7 +1078,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresPermission) {
     const { action, subject } = to.meta.requiresPermission;
     const storedPermissions = JSON.parse(
-      localStorage.getItem("Sramah_admin_roles")
+      localStorage.getItem("Saramh_admin_roles")
     )?.permissions;
 
     if (

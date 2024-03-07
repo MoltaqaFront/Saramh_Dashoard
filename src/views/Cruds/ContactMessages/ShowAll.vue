@@ -91,11 +91,11 @@
         </template>
         <!-- Start:: Phone -->
 
-        <template v-slot:[`item.message`]="{ item }">
+        <template v-slot:[`item.body`]="{ item }">
           <template>
-            <h6 class="text-danger" v-if="item.message.length === 0"> {{ $t("TABLES.noData") }} </h6>
+            <h6 class="text-danger" v-if="item.body.length === 0"> {{ $t("TABLES.noData") }} </h6>
             <div class="actions" v-else>
-              <button class="btn_show" @click="showReplayModal(item.message)">
+              <button class="btn_show" @click="showReplayModal(item.body)">
                 <i class="fal fa-file-alt"></i>
               </button>
             </div>
@@ -103,36 +103,36 @@
         </template>
 
         <!-- Start:: Message Reply -->
-        <template v-slot:[`item.reply_message`]="{ item }">
+        <template v-slot:[`item.reply`]="{ item }">
 
-          <template v-if="$can('contactuses reply', 'contactuses')">
-            <h6 class="text-danger" v-if="!item.reply_message"> {{ $t("TABLES.noData") }} </h6>
+          <template >
+            <h6 class="text-danger" v-if="!item.reply"> {{ $t("TABLES.noData") }} </h6>
             <div class="actions" v-else>
-              <button class="btn_show" @click="showReplayModal(item.reply_message)">
+              <button class="btn_show" @click="showReplayModal(item.reply)">
                 <i class="fal fa-file-alt"></i>
               </button>
             </div>
           </template>
 
-          <template v-else>
+          <!-- <template v-else>
             <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
-          </template>
+          </template> -->
         </template>
         <!-- End:: Message Reply -->
 
         <!-- Start:: Message Type -->
-        <template v-slot:[`item.message_type`]="{ item }">
-          <h6 class="text-danger" v-if="!item.message_type"> {{ $t("TABLES.noData") }} </h6>
+        <template v-slot:[`item.type`]="{ item }">
+          <h6 class="text-danger" v-if="!item.type"> {{ $t("TABLES.noData") }} </h6>
           <v-chip v-else color="blue-grey darken-3" text-color="white" small>
-            {{ item.message_type }}
+            {{ item.type }}
           </v-chip>
         </template>
         <!-- End:: Message Type -->
 
         <!-- Start:: Message Status -->
-        <template v-slot:[`item.is_reply`]="{ item }">
-          <v-chip :color="item.is_reply ? 'green' : 'red'" text-color="white" small>
-            <template v-if="item.is_reply">
+        <template v-slot:[`item.status`]="{ item }">
+          <v-chip :color="item.reply ? 'green' : 'red'" text-color="white" small>
+            <template v-if="item.reply">
               {{ $t("STATUS.replied") }}
             </template>
             <template v-else>
@@ -146,8 +146,8 @@
         <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
             <!-- v-if="permissions.reply" -->
-            <template v-if="$can('contactuses reply', 'contactuses')">
-              <span class="blue-grey--text text--darken-1" v-if="item.is_reply">
+            <template >
+              <span class="blue-grey--text text--darken-1" v-if="item.reply">
                 <i class="far fa-horizontal-rule"></i>
               </span>
               <a-tooltip placement="bottom" v-else>
@@ -160,9 +160,7 @@
               </a-tooltip>
             </template>
 
-            <template v-else>
-              <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
-            </template>
+           
           </div>
         </template>
         <!-- End:: Actions -->
@@ -266,19 +264,14 @@ export default {
     messageStatuses() {
       return [
         {
-          id: 3,
-          name: this.$t("STATUS.all"),
-          value: null,
-        },
-        {
           id: 1,
           name: this.$t("STATUS.replied"),
-          value: 1,
+          value: "answered",
         },
         {
           id: 2,
           name: this.$t("STATUS.notReplied"),
-          value: 0,
+          value: "noresponse",
         }
       ];
     },
@@ -322,7 +315,7 @@ export default {
         },
         {
           text: this.$t("TABLES.ContactMessages.phone"),
-          value: "phone",
+          value: "mobile",
           align: "center",
           width: "140",
           sortable: false,
@@ -342,28 +335,28 @@ export default {
         },
         {
           text: this.$t("TABLES.ContactMessages.message"),
-          value: "message",
+          value: "body",
           align: "center",
           width: "80",
           sortable: false,
         },
         {
           text: this.$t("TABLES.ContactMessages.replay"),
-          value: "reply_message",
+          value: "reply",
           align: "center",
           width: "1l20",
           sortable: false,
         },
         {
           text: this.$t("TABLES.ContactMessages.type"),
-          value: "message_type",
+          value: "type",
           align: "center",
           width: "80",
           sortable: false,
         },
         {
           text: this.$t("TABLES.ContactMessages.status"),
-          value: "is_reply",
+          value: "status",
           align: "center",
           width: "80",
           sortable: false,
@@ -418,7 +411,6 @@ export default {
       this.filterOptions.name = null;
       this.filterOptions.phone = null;
       this.filterOptions.email = null;
-      // this.filterOptions.date = null;
       this.filterOptions.status = null;
       this.filterOptions.messageType = null;
       if (this.$route.query.page !== '1') {
@@ -446,15 +438,14 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "contactUs",
+          url: "contacts",
           params: {
             page: this.paginations.current_page,
-            name: this.filterOptions.name,
-            phone: this.filterOptions.phone,
+           name: this.filterOptions.name,
+            mobile: this.filterOptions.phone,
             email: this.filterOptions.email,
-            // date: this.filterOptions.date,
-            message_type: this.filterOptions.messageType?.value,
-            is_reply: this.filterOptions.status?.value,
+            type: this.filterOptions.messageType?.value,
+            status: this.filterOptions.status?.value,
           },
         });
         this.loading = false;
@@ -484,13 +475,13 @@ export default {
     async sendReplay() {
       this.dialogSendReplay = false;
       const REQUEST_DATA = {
-        reply_message: this.messageReplay,
+        reply: this.messageReplay,
       };
 
       try {
         await this.$axios({
           method: "POST",
-          url: `contactUs/reply/${this.itemToSendReplay.id}`,
+          url: `contacts/reply/${this.itemToSendReplay.id}`,
           data: REQUEST_DATA,
         });
         this.$message.success(this.$t("MESSAGES.sentSuccessfully"));

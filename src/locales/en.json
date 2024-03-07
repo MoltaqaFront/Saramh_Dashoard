@@ -44,27 +44,6 @@
       "showAll": "All Clients",
       "add": "Add New Client"
     },
-    "Drivers": {
-      "title": "Drivers",
-      "showAll": "All Drivers",
-      "add": "Add New Driver"
-    },
-    "StoresTypes": {
-      "title": "Stores Types",
-      "showAll": "All Stores Types",
-      "add": "Add New Type",
-      "joinRequest": "join request"
-    },
-    "Stores": {
-      "title": "Stores",
-      "showAll": "All Stores",
-      "add": "Add New Store"
-    },
-    "Coupons": {
-      "title": "Coupons",
-      "showAll": "All Coupons",
-      "add": "Add New Coupon"
-    },
     "ContactMessages": {
       "title": "Contact Messages",
       "showAll": "All Contact Messages"
@@ -78,52 +57,86 @@
     "settings": {
       "title": "App Settings"
     },
-    "Roles": {
-      "title": "Roles and Permissions",
-      "showAll": "All Roles",
-      "add": "Add New Role"
-    },
-    "Admins": {
-      "title": "Admins",
-      "showAll": "All Admins",
-      "add": "Add New Admin"
-    },
+   "Roles": {
+       "title": "Roles and Permissions",
+       "showAll": "All roles",
+       "add": "Add a new permission",
+       "show": "Show credentials",
+       "edit": "Edit credentials"
+     },
+   "Admins": {
+       "title": "Managers",
+       "showAll": "All Managers",
+       "add": "Add a new Manager",
+       "show": "show user data",
+       "edit": "Edit Manager data"
+     },
     "ImagesSpaces": {
       "title": "Ads Spaces",
       "showAll": "All Ads Spaces",
       "add": "Add New Ad Space"
     },
-    "Areas": {
-      "areas": "Areas",
-      "title": "Areas",
-      "showAll": "All Areas",
-      "add": "Add New Area",
-      "show": "Show New Area",
-      "edit": "Edit New Area"
+   "Coaches": {
+       "title": "Coaches",
+       "name": "coach name",
+       "showAll": "All trainers",
+       "add": "Add a new coach",
+       "program": "trainer programs",
+       "program_nameAr": "Program name in Arabic",
+       "program_nameEn": "Program name in English",
+       "descriptionAr": "Description of the program in Arabic",
+       "descriptionEn": "Description of the program in English",
+       "price_sub": "Subscription price without tax",
+       "show": "trainer show",
+       "edit": "edit trainer"
+     },
+     "MainSpecializations": {
+       "title": "Main Specialties",
+       "nametitle": "Name of specialty",
+       "name": "Name of major specialization",
+       "showAll": "All majors",
+       "add": "Add a new major",
+       "show": "Display specialization data",
+       "edit": "Edit specialty data"
+     },
+     "Subspecialties": {
+       "title": "Subspecialties",
+       "showAll": "All subspecialties",
+       "name": "Name of the subspecialty",
+       "add": "Add a new subspecialty",
+       "show": "Display specialization data",
+       "edit": "Edit specialty data"
+     },
+     "SubscriptionsPrice": {
+       "title" : "Manage Subscriptions",
+       "showAll": "Show customer subscriptions" ,
+       "show": "Show Subscription",
+       "fatora": "Electronic Invoice"
+     },
+      "advertisement": {
+      "title": "Advertising Space",
+      "name": "Ad Name",
+      "image": "Advertising Image",
+      "Start_publich": "Publish Start Date",
+      "End_publich": "Publication End Date",
+      "date": "Creation Date",
+      "showAll": "All Orders",
+      "type": "type of news",
+      "add": "Add a New Ad",
+      "show": "Show Advertisement Data",
+      "edit": "Edit Ad Data"
     },
-    "Countries": {
-      "title": "Countries",
-      "name": "Country Name",
-      "showAll": "Show All Countries",
-      "add": "Add a New Country",
-      "show": "Show Country",
-      "edit": "Edit Country"
-    },
-    "Cities": {
-      "title": "Cities",
-      "name": "Cities Name",
-      "showAll": "Show All Cities",
-      "add": "Add a New Cities",
-      "show": "Show Cities",
-      "edit": "Edit Cities"
-    },
-    "Districts": {
-      "title": "Districts",
-      "showAll": "All Districts",
-      "add": "Add New District",
-      "show": "Show New District",
-      "edit": "Edit New District"
-    },
+     "Certificates": {
+       "title" : "Certificates",
+       "name" : "Certificate Name",
+       "date": "the date the certificate was added",
+       "add": "Add a new certificate",
+       "show": "display certificate data",
+       "edit": "Edit certificate data"
+     },
+     "financialreports": {
+       "title" : "Financial Reports"
+     },
     "ServicesTypes": {
       "title": "Services Types",
       "showAll": "All Services Types",
@@ -172,14 +185,17 @@
       "actions": "Actions"
     },
     "FinancialReports": {
-      "serialNumber": "Serial",
-      "driverName": "Driver Name",
-      "driverPhone": "Driver Phone",
-      "totalServicesInProcessing": "Total Orders In Progress",
-      "totalServicesEnded": "Total Finished Orders",
-      "totalProductsInProcessing": "Total Orders In Progress",
-      "totalProductsEnded": "Total Finished Orders"
-    },
+       "serialNumber": "serial",
+       "name" : "Provider" ,
+       "driverName": "Provider name",
+       "driverPhone": "Provider's mobile number",
+       "providerPhone": "service provider's mobile number",
+       "totalProductsInProcessing": "Total unfinished orders",
+       "totalServicesEnded": "Total finished orders",
+       "profit_provider": "Provider's gross profit",
+       "totalapp": "Total app profit",
+       "total_salaey": "Total added tax"
+     },
     "Notifications": {
       "serialNumber": "Serial",
       "title": "Title",
@@ -247,18 +263,24 @@
       "actions": "Actions"
     },
     "coaches": {
-      "serialNumber": "Serial",
-      "image": "Image",
-      "name": "Name",
-      "phone": "Phone",
-      "main": "Main specialty",
-      "sub": "Subspecialty",
-      "isAvailable": "Availablity",
-      "number" : "Number of coaches",
-      "totalnum" : "Number of subscriptions with trainers",
-      "active": "Activation",
-      "actions": "Actions"
-    },
+       "serialNumber": "serial",
+       "image": "image",
+       "name": "Coach Name",
+       "nameAr": "Name in Arabic",
+       "nameEn": "Name in English",
+       "phone": "Coach's mobile number",
+       "moblie": "WhatsApp number",
+       "main": "Main Specialty",
+       "sub": "Subspecialty",
+       "noteAr": "About the trainer in Arabic",
+       "noteEn": "About the trainer in English",
+       "experience": "number of years of experience",
+       "isAvailable": "Availability status",
+       "number" : "number of trainers",
+       "totalnum": "number of subscriptions with trainers",
+       "active": "activated",
+       "actions": "control"
+     },
     "ContactMessages": {
       "serialNumber": "Serial",
       "clientName": "Client Name",
@@ -313,12 +335,11 @@
       "activation": "Activation",
       "actions": "Actions"
     },
-    "Products": {
+    "MainSpecializations": {
       "serialNumber": "Serial",
-      "image": "Product Image",
-      "name": "Product Name",
-      "nameAr": "Arabic Product Type Name",
-      "nameEn": "English Product Type Name",
+      "name": "Name of major specialization",
+      "nameAr": "Name of the specialty in Arabic",
+      "nameEn": "Name of the specialty in English",
       "descriptionAr": "Arabic Description",
       "descriptionEn": "English Description",
       "price": "Price",
@@ -326,19 +347,18 @@
       "actions": "Actions",
       "created_at": "Creadted At"
     },
-    "Offers": {
-      "serialNumber": "Serial",
-      "startDate": "Start",
-      "endDate": "End",
-      "product": "Product",
-      "service": "Service",
-      "percentage": "Percentage",
-      "priceBeforeDiscount": "Before Discount",
-      "priceAfterDiscount": "After Discount",
-      "discountValue": "Value",
-      "activation": "Activation",
-      "actions": "Actions"
-    },
+   "Subspecialties": {
+       "serialNumber": "serial",
+       "name": "Name of the subspecialty",
+       "nameAr": "Name of the specialty in Arabic",
+       "nameEn": "Name of the specialty in English",
+       "main": "main specialty",
+       "descriptionAr": "Description in Arabic",
+       "descriptionEN": "Description in English",
+       "activation": "activation",
+       "actions": "control",
+       "created_at": "Creation date"
+     },
     "Orders": {
       "serialNumber": "Serial",
       "orderNumber": "Order Number",
@@ -352,7 +372,7 @@
       "actions": "Actions"
     },
     "Rates": {
-      "rates": "Rates",
+      "rates": "Customer Opinions",
       "serialNumber": "Serial",
       "clientName": "Client Name",
       "rate": "Rate",
@@ -363,21 +383,35 @@
       "sendDate": "Send Date",
       "publishStatus": "Publish Status"
     },
-    "subscriptions": {
-      "serialNumber": "Serial",
-      "name": "Name",
-      "phone": "Phone Name",
-      "packagePrice": "Package price",
-      "AddedTax": "added tax",
-      "totalSubscription" : "Total including tax",
-      "SubscriptionPeriod" : "Subscription period",
-      "starSubscription": "Beginning subscription",
-      "endSubscription" : "End  subscription",
-      "UserBalance" : "User Balance" ,
-      "verified": "Verified",
-      "active": "Active",
-      "actions": "Actions"
-    }
+   "subscriptions": {
+       "serialNumber": "serial",
+       "name": "name",
+       "nameclient": "client name",
+       "phone": "customer's mobile number",
+       "coach": "coach's name",
+       "coachNumber": "coach's mobile number",
+       "WhatsApp": "WhatsApp number",
+       "dataPrice" : "price data",
+       "number": "subscription number",
+       "program": "program name",
+       "packagePrice": "Package Price",
+       "Totalorder": "Total order price",
+       "AddedTax": "added tax",
+       "programPrice": "program price without tax",
+       "totalPriceOrder": "Total order price with tax",
+       "vatApp": "application commission",
+       "priceCoach": "Coach's net profit",
+       "totalSubscription": "Total including tax",
+       "SubscriptionPeriod": "Subscription period",
+       "starSubscription": "Start of subscription period",
+       "endSubscription" : "end of subscription period",
+       "rateCoach": "Coach Rating",
+       "date" : "creation date",
+       "UserBalance": "User Balance",
+       "verified": "verified",
+       "active": "activated",
+       "actions": "control"
+     }
   },
 
   "TOOLTIPS": {
@@ -538,7 +572,9 @@
     "noNotifications": "Notifications Center Is Empty Now!",
     "copyRights": "All Rights Reserved For Moltaqa © {year}",
     "madeWithLove": "Made With ❤️ By Moltaqa",
-    "show_store": "Show Store Data"
+    "show_store": "Show Store Data",
+    "MainSpecializations": "Main Specializations" ,
+    "Subspecialties": "Subspecialties"
   },
 
   "BUTTONS": {
@@ -607,6 +643,8 @@
     "rseet_search": "Reset Search",
     "activate": "Activate",
     "deactivate": "Deactivate",
+    "available": "Available",
+    "disavailable": "Not Available",
     "replay": "Replay",
     "addStoreEmployee": "add Store Employee",
     "addSection": "Add Section",
@@ -626,10 +664,8 @@
     "product_section": "Product Categories",
     "additions": "Additions",
     "components": "Components",
-    "AllSections": "All Sections",
-    "show_offer": "Show Offer",
-    "download_invoice": "Download invoice",
-    "addStore": "Add Store",
+    "MainSpecializations": "Add a main specialization",
+    "Subspecialties": "Add a subspecialty",
     "subscriptions": "Subscription history" 
   },
 
@@ -681,6 +717,7 @@
     "gender": "Gender",
     "country": "Country",
     "address": "Address",
+    "qr" : "QR Code",
     "longitude": "Longitude",
     "latitude": "Longitude",
     "area": "States",
@@ -763,10 +800,11 @@
     "Indoor": "Indoor",
     "Outdoor": "Outdoor",
     "session_type": "Session Type",
-
+     "export_pdf": "Export as PDF",
+    "export_excel": "Export as Excel",
     "opend": "Opened",
     "closed": "closed",
-
+    "Overall_statistics": "Overall statistics",
     "Children_allowed": "Children are allowed",
     "number_of_people": "Number Of People",
     "item_name": "Item Type",
@@ -1218,7 +1256,7 @@
     "region": "The area Name field is required",
     "field_type": "Additional field type is required",
     "estate_depart": "Estate depart field is required",
-    "is_show_map": "show map field not choose" ,
+    "is_show_map": "Active field not choose" ,
     "package_duration" : "The number of days must be positive" ,
     "dissount" : "The discount percentage cannot be higher than 100" ,
     "discount_field" : "The discount percentage field is required"
@@ -1235,6 +1273,7 @@
     "deletedSuccessfully": "Deleted Successfully",
     "changedSuccessfully": "Status Changed Successfully",
     "changeActivation": "Activation Status Changed Successfully",
+    "changeAvailable" : "Availability status changed successfully",
     "changeVerification": "Verification Status Changed Successfully",
     "changeHaveContainer": "Have Container Status Changed Successfully",
     "changeDraft": "Draft Status Changed Successfully",

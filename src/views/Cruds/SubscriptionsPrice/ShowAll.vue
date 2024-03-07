@@ -14,20 +14,28 @@
           <form @submit.prevent="submitFilterForm">
             <div class="row justify-content-center align-items-center w-100">
               <!-- Start:: Name Input -->
-              <base-input col="4" type="text" :placeholder="$t('PLACEHOLDERS.name')" v-model.trim="filterOptions.name" />
+              <base-input col="4" type="text" :placeholder="$t('TABLES.subscriptions.nameclient')" v-model.trim="filterOptions.name" />
               <!-- End:: Name Input -->
 
               <!-- Start:: Phone Input -->
-              <base-input col="4" type="tel" :placeholder="$t('PLACEHOLDERS.phone')" v-model.trim="filterOptions.phone" />
+              <base-input col="4" type="tel" :placeholder="$t('TABLES.subscriptions.phone')" v-model.trim="filterOptions.phone" />
               <!-- End:: Phone Input -->
 
-              <!-- Start:: Status Input -->
-              <base-select-input col="4" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
-                v-model="filterOptions.isActive" />
-              <!-- End:: Status Input -->
+                <!-- Start:: Phone Input -->
+              <base-input col="4" type="text" :placeholder="$t('TABLES.subscriptions.coach')" v-model.trim="filterOptions.coach" />
+              <!-- End:: Phone Input -->
+
+             <!-- Start:: Start Date Input -->
+              <base-picker-input col="4" type="date" :placeholder="$t('TABLES.subscriptions.starSubscription')"
+                v-model.trim="filterOptions.from_date" />
+              <!-- End:: Start Date Input -->
+
+              <!-- Start:: End Date Input -->
+              <base-picker-input col="4" type="date" :placeholder="$t('TABLES.subscriptions.endSubscription')"
+                v-model.trim="filterOptions.to_date" />
+              <!-- End:: End Date Input -->
+
             </div>
-
-
 
             <div class="btns_wrapper">
 
@@ -58,7 +66,7 @@
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
-          <h5>{{ $t("TITLES.clients") }}</h5>
+          <h5>{{ $t("SIDENAV.SubscriptionsPrice.title") }}</h5>
           <button v-if="!filterFormIsActive" class="filter_toggler"
             @click.stop="filterFormIsActive = !filterFormIsActive">
             <i class="fal fa-search"></i>
@@ -77,9 +85,9 @@
         </template>
         <!-- Start:: No Data State -->
 
-        <template v-slot:[`item.id`]="{ item, index }">
+        <template v-slot:[`item.serialNumber`]="{ item, index }">
           <div class="table_image_wrapper">
-            <h6 class="text-danger" v-if="!item.id"> {{ $t("TABLES.noData") }} </h6>
+            <h6 class="text-danger" v-if="!item.serialNumber"> {{ $t("TABLES.noData") }} </h6>
             <p v-else>{{ (paginations.current_page - 1) * paginations.items_per_page + index + 1 }}</p>
           </div>
         </template>
@@ -91,40 +99,10 @@
         </template>
         <!-- End:: Name -->
 
-        <!-- Start:: email -->
-        <template v-slot:[`item.email`]="{ item }">
-          <h6 class="text-danger" v-if="!item.email"> - </h6>
-          <h6 v-else> {{ item.email }} </h6>
-        </template>
-        <!-- End:: email -->
-
-        <template v-slot:[`item.is_verified`]="{ item }">
-          <v-chip :color="item.is_verified ? 'green' : 'red'" text-color="white" small>
-            <template v-if="item.is_verified">
-              {{ $t("STATUS.active") }}
-            </template>
-            <template v-else>
-              {{ $t("STATUS.notActive") }}
-            </template>
-          </v-chip>
-        </template>
-
-       
-        <!-- Start:: Activation Status -->
-        <template v-slot:[`item.is_active`]="{ item }">
-          <span class="text-success text-h5" v-if="item.user.is_active">
-            <i class="far fa-check"></i>
-          </span>
-          <span class="text-danger text-h5" v-else>
-            <i class="far fa-times"></i>
-          </span>
-        </template>
-        <!-- End:: Activation Status -->
-
         <!-- Start:: Actions -->
         <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
-            <a-tooltip placement="bottom" v-if="$can('clients show', 'clients')">
+            <a-tooltip placement="bottom" >
               <template slot="title">
                 <span>{{ $t("BUTTONS.show") }}</span>
               </template>
@@ -132,74 +110,18 @@
                 <i class="fal fa-eye"></i>
               </button>
             </a-tooltip>
-
-            <a-tooltip placement="bottom">
+               <a-tooltip placement="bottom">
               <template slot="title">
-                <span>{{ $t("BUTTONS.subscriptions") }}</span>
+                <span>{{ $t("BUTTONS.download_invoice") }}</span>
               </template>
-
-              <button class="btn_edit" @click="subscription(item)">
-                <i class="fas fa-cash-register"></i>
+              <!-- @click="DownloadInvoice(item)" -->
+              <button class="btn_show" @click="downloadPdf(item)">
+                <i class="fal fa-download"></i>
               </button>
             </a-tooltip>
-            <template v-if="$can('clients activate', 'clients') && item.user.id !== 1">
-              <a-tooltip placement="bottom" v-if="!item.user.is_active">
-                <template slot="title">
-                  <span>{{ $t("BUTTONS.activate") }}</span>
-                </template>
-                <button class="btn_activate" @click="changeActivationStatus(item)">
-                  <i class="fad fa-check-circle"></i>
-                </button>
-              </a-tooltip>
-              <a-tooltip placement="bottom" v-if="item.user.is_active">
-                <template slot="title">
-                  <span>{{ $t("BUTTONS.deactivate") }}</span>
-                </template>
-                <button class="btn_deactivate" @click="changeActivationStatus(item)">
-                  <i class="fad fa-times-circle"></i>
-                </button>
-              </a-tooltip>
-            </template>
-            
-            <template v-else>
-              <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
-            </template>
           </div>
         </template>
         <!-- End:: Actions -->
-
-        <!-- ======================== Start:: Dialogs ======================== -->
-        <template v-slot:top>
-
-          <!-- Start:: Balance Modal -->
-          <v-dialog v-model="dialogBalance">
-            <v-card>
-              <v-card-title class="text-h5 justify-center" v-if="itemToBalance">
-                <span>{{ $t('PLACEHOLDERS.current_balance') }} : </span>
-                <span>{{ itemToBalance.balance }}</span>
-              </v-card-title>
-
-              <form class="w-100">
-
-                <base-input col="12" type="text" :placeholder="$t('PLACEHOLDERS.current_balance')"
-                  v-model.trim="balance_package" required />
-              </form>
-
-              <v-card-actions>
-                <v-btn class="modal_confirm_btn" @click="confirmAcceptItem">{{
-                  $t("BUTTONS.ok")
-                }}</v-btn>
-
-                <v-btn class="modal_cancel_btn" @click="dialogBalance = false">{{ $t("BUTTONS.cancel") }}</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <!-- End:: Balance Modal -->
-
-        </template>
-        <!-- ======================== End:: Dialogs ======================== -->
-
       </v-data-table>
       <!--  =========== End:: Data Table =========== -->
     </main>
@@ -215,15 +137,102 @@
       </div>
     </template>
     <!-- End:: Pagination -->
+
+     <!-- Start:: Generate PDF Template Content -->
+    <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="true"
+      filename="report" :pdf-quality="2" pdf-format="a4" :manual-pagination="false" :paginate-elements-by-height="1400"
+      pdf-content-width="100%" @progress="bdfDownloadBtnIsLoading = true"
+      @hasGenerated="$message.success($t('MESSAGES.generatedSuccessfully'))" ref="html2Pdf">
+      <section slot="pdf-content">
+        <div class="pdf_file_content">
+          <!-- <tr v-for="(value, key) in itemReport" :key="key">
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+              </tr> -->
+
+          <table class="table table-striped">
+            <tbody>
+               <tr class="text-center">
+                <td>
+                  <span v-html="qr" ></span>
+                  <span>{{ $t("PLACEHOLDERS.qr") }}</span>
+                </td>
+              </tr>
+                <tr class="text-center">
+                  <td>{{ $t("TABLES.subscriptions.number") }}</td>
+                  <td>{{ serialNumber }}</td>
+                </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.date") }}</td>
+                <td>{{ date }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.nameclient") }}</td>
+                <td>{{ nameclient }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.coach") }}</td>
+                <td>{{ coach }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.program") }}</td>
+                <td>{{ program }}</td>
+              </tr>
+
+              <!-- <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.dataPrice") }}</td>
+                <td>{{ dataPrice }}</td>
+              </tr> -->
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.programPrice") }}</td>
+                <td>{{ programPrice }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.AddedTax") }}</td>
+                <td>{{ AddedTax }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.totalPriceOrder") }}</td>
+                <td>{{ totalPriceOrder }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.vatApp") }}</td>
+                <td>{{ vatApp }}</td>
+              </tr>
+
+              <tr class="text-center">
+                <td>{{ $t("TABLES.subscriptions.priceCoach") }}</td>
+                <td>{{ priceCoach }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </section>
+    </vue-html2pdf>
+    <!-- End:: Generate PDF Template Content -->
   </div>
 </template>
 
 <script>
+import VueHtml2pdf from 'vue-html2pdf';
 import { mapGetters } from "vuex";
+import moment from 'moment';
 
 export default {
-  name: "AllClients",
+  name: "AllOrders",
 
+ components: {
+    VueHtml2pdf
+  },
   computed: {
     ...mapGetters({
       getAppLocale: "AppLangModule/getAppLocale",
@@ -257,7 +266,9 @@ export default {
       filterOptions: {
         name: null,
         phone: null,
-        email: null,
+        coach: null,
+        to_date: null,
+        from_date: null,
         isActive: null,
       },
       // End:: Filter Data
@@ -273,35 +284,45 @@ export default {
           sortable: false,
         },
         {
-          text: this.$t("TABLES.Clients.name"),
+          text: this.$t("TABLES.subscriptions.number"),
+          value: "id",
+          align: "center",
+          sortable: false,
+        },
+        {
+          text: this.$t("TABLES.subscriptions.nameclient"),
           value: "user.name",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.Clients.code"),
-          value: "user.country_key",
-          align: "center",
-          sortable: false,
-        },
-        {
-          text: this.$t("TABLES.Clients.phone"),
+          text: this.$t("TABLES.subscriptions.phone"),
           value: "user.mobile",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.Clients.joiningDate"),
-          value: "user.created_at",
+          text: this.$t("TABLES.subscriptions.coach"),
+          value: "coach.name",
           align: "center",
-          width: "120",
+          sortable: false,
+        },
+         {
+          text: this.$t("TABLES.subscriptions.program"),
+          value: "program.name",
+          align: "center",
+          sortable: false,
+        },
+         {
+          text: this.$t("TABLES.subscriptions.Totalorder"),
+          value: "total",
+          align: "center",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.Clients.active"),
-          value: "is_active",
+          text: this.$t("TABLES.subscriptions.date"),
+          value: "created_at",
           align: "center",
-          width: "120",
           sortable: false,
         },
         {
@@ -320,18 +341,20 @@ export default {
         last_page: 1,
         items_per_page: 6,
       },
-      // End:: Pagination Data
-
-      dialogDeactivate: false,
-      itemToChangeActivationStatus: null,
-      deactivateReason: null,
-
-      dialogBalance: false,
-      itemToBalance: null,
-      // Start:: Page Permissions
        permissions: null,
-      // Start:: Page Permissions
-
+      file: null,
+      date: null,
+      serialNumber: null,
+      qr:null,
+      nameclient: null,
+      coach: null,
+      program: null,
+      dataPrice: null,
+      programPrice: null,
+      AddedTax: null,
+      totalPriceOrder: null,
+      vatApp: null,
+      priceCoach: null
     };
   },
 
@@ -348,16 +371,18 @@ export default {
     // Start:: Handel Filter
     async submitFilterForm() {
       if (this.$route.query.page !== '1') {
-        await this.$router.push({ path: '/clients/all', query: { page: 1 } });
+        await this.$router.push({ path: '/SubscriptionsPrice/all', query: { page: 1 } });
       }
       this.setTableRows();
     },
     async resetFilter() {
       this.filterOptions.name = null;
       this.filterOptions.phone = null;
-      this.filterOptions.isActive = null;
+      this.filterOptions.from_date = null;
+      this.filterOptions.to_date = null;
+      this.filterOptions.coach = null;
       if (this.$route.query.page !== '1') {
-        await this.$router.push({ path: '/clients/all', query: { page: 1 } });
+        await this.$router.push({ path: '/SubscriptionsPrice/all', query: { page: 1 } });
       }
       this.setTableRows();
     },
@@ -379,20 +404,16 @@ export default {
     async setTableRows() {
       this.loading = true;
       try {
-
-        let nameParam = this.filterOptions.name;
-        if (!nameParam) {
-          nameParam = null;
-        }
-
         let res = await this.$axios({
           method: "GET",
-          url: "clients",
+          url: "subscriptions",
           params: {
             page: this.paginations.current_page,
-            name: nameParam,
+            user: this.filterOptions.name,
             mobile: this.filterOptions.phone,
-            is_active: this.filterOptions.isActive?.value,
+            coach: this.filterOptions.coach,
+            from: this.filterOptions.from_date,
+            to: this.filterOptions.to_date,
           },
         });
         this.loading = false;
@@ -410,68 +431,45 @@ export default {
     },
     // End:: Set Table Rows
 
-   // Start:: Control Modals
-   showImageModal(image) {
-      this.dialogImage = true;
-      this.selectedItemImage = image;
-    },
+  
     // End:: Control Modals
-
-    // ===== Start:: Handling Activation & Deactivation
-    selectDeactivateItem(item) {
-      this.dialogDeactivate = true;
-      this.itemToChangeActivationStatus = item;
-    },
-    async changeActivationStatus(item) {
-      try {
-        await this.$axios({
-          method: "POST",
-          url: `clients/activate/${item.user.id}`,
-        });
-        this.setTableRows();
-        this.$message.success(this.$t("MESSAGES.changeActivation"));
-      } catch (error) {
-        this.$message.error(error.response.data.message);
-      }
-    },
-    // ===== End:: Handling Activation & Deactivation
 
     // ==================== Start:: Crud ====================
     // ===== Start:: End
-    editItem(item) {
-      this.$router.push({ path: `/clients/edit/${item.user.id}` });
-    },
     showItem(item) {
-      this.$router.push({ path: `/clients/show/${item.user.id}` });
+      this.$router.push({ path: `/SubscriptionsPrice/show/${item.user.id}` });
     },
-    subscription(item) {
-      this.$router.push({path: `/clients/subscriptions/${item.user.id}`})
-    },
+    // subscription(item) {
+    //   this.$router.push({path: `/SubscriptionsPrice/price/${item.user.id}`})
+    // },
     // ===== End:: End
 
     // ===== Start:: Delete
-    selectDeleteItem(item) {
-      this.dialogDelete = true;
-      this.itemToDelete = item;
-    },
-    async confirmDeleteItem() {
-      try {
-        await this.$axios({
-          method: "DELETE",
-          url: `clients/${this.itemToDelete.id}`,
-        });
-        this.dialogDelete = false;
-        this.tableRows = this.tableRows.filter((item) => {
-          return item.id != this.itemToDelete.id;
-        });
-        this.setTableRows();
-        this.$message.success(this.$t("MESSAGES.deletedSuccessfully"));
-      } catch (error) {
-        this.dialogDelete = false;
-        this.$message.error(error.response.data.message);
+    async downloadPdf(item) {
+      // console.log(item);
+     if (item) {
+        this.serialNumber = item.id;
+        this.date = item.created_at;
+        this.nameclient = item.user.name;
+        this.coach = item.coach.name;
+        this.program = item.program.name;
+        this.qr = item.qrcode;
+        this.programPrice = item.net_price;
+        this.AddedTax = item.tax;
+        this.totalPriceOrder = item.total;
+        this.vatApp = item.commission;
+        this.priceCoach = item.net_profit;
+
+        await this.$refs.html2Pdf.generatePdf();
+        this.pdfDownloadBtnIsLoading = false;
+      } else {
+        console.error("Item is undefined or null.");
       }
     },
     // ===== End:: Delete
+    handleFileUpload(event) {
+      this.file = event.target.files[0];
+    },
     // ==================== End:: Crud ====================
   },
 

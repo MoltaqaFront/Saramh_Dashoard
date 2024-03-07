@@ -34,11 +34,6 @@
       "showAll": "كل العملاء",
       "add": "إضافة مستخدم جديد"
     },
-    "Drivers": {
-      "title": "السائقين",
-      "showAll": "كل السائقين",
-      "add": "إضافة سائق جديد"
-    },
     "StoresTypes": {
       "title": "أنواع المتاجر",
       "showAll": "كل أنواع المتاجر",
@@ -49,21 +44,6 @@
       "title": "الإشعارات",
       "showAll": "كل الإشعارات",
       "add": "إرسال إشعار جديد"
-    },
-    "Offers": {
-      "title": "العروض",
-      "showAll": "كل العروض",
-      "add": "إضافة عرض جديد"
-    },
-    "Stores": {
-      "title": "المتاجر",
-      "showAll": "كل المتاجر",
-      "add": "إضافة متجر جديد"
-    },
-    "Coupons": {
-      "title": "الكوبونات",
-      "showAll": "كل الكوبونات",
-      "add": "إضافة كوبون جديد"
     },
     "ContactMessages": {
       "title": "رسائل التواصل",
@@ -79,49 +59,84 @@
       "title": "إعدادات التطبيق"
     },
     "Roles": {
-      "title": "الأدوار والصلاحيات",
+      "title": "الصلاحيات والمهام",
       "showAll": "كل الأدوار",
-      "add": "إضافة دور جديد"
+      "add": "إضافة صلاحية جديدة" ,
+      "show" : "عرض بيانات الصلاحية",
+      "edit" : "تعديل بيانات الصلاحية"
     },
     "Admins": {
-      "title": "المديرين",
+      "title": "مديري النظام",
       "showAll": "كل المديرين",
-      "add": "إضافة مدير جديد"
+      "add": "إضافة مدير جديد",
+      "show" : "عرض بيانات المدير",
+      "edit" : " تعديل بيانات المدير"
     },
     "ImagesSpaces": {
       "title": "المساحات الإعلانية",
       "showAll": "كل المساحات الإعلانية",
       "add": "إضافة مساحه إعلانية جديدة"
     },
-    "Areas": {
-      "title": "المناطق",
-      "showAll": "كل المناطق",
-      "add": "إضافة منطقة جديدة",
-      "show": "عرض المنطقة",
-      "edit": "تعديل المنطقة"
+    "Coaches": {
+      "title": "المدربين",
+      "name": "اسم المدرب",
+      "showAll": "كل المدربين",
+      "add": "إضافة مدرب جديد",
+      "program" :"برامج المدرب" ,
+      "program_nameAr" : "اسم البرنامج بالعربي",
+      "program_nameEn" : "اسم البرنامج باالانجليزي",
+      "descriptionAr" : "وصف البرنامج بالعربية" ,
+      "descriptionEn" : "وصف البرنامج بالانجليزية",
+      "price_sub" : "سعر الاشتراك بدون الضريبة",
+      "show": "عرض المدرب ",
+      "edit": " تعديل المدرب"
     },
-    "Countries": {
-      "title": "الدول",
-      "name": "اسم الدولة",
-      "showAll": "كل الدول",
-      "add": "إضافة دولة جديدة",
-      "show": "عرض الدولة ",
-      "edit": " تعديل الدولة"
+    "MainSpecializations": {
+      "title": "التخصصات الرئيسية",
+      "nametitle" : "اسم التخصص",
+      "name": "اسم التخصص الرئيسي",
+      "showAll": "كل التخصصات الرئيسية",
+      "add": "إضافة تخصص رئيسي جديد",
+      "show": "عرض بيانات التخصص",
+      "edit": "تعديل بيانات التخصص"
     },
-    "Cities": {
-      "title": "المدن",
-      "name": "اسم المدينة",
-      "showAll": "كل المدينة",
-      "add": "إضافة مدينة جديدة",
-      "show": "عرض المدينة ",
-      "edit": " تعديل المدينة"
+    "Subspecialties": {
+      "title": "التخصصات الفرعية",
+      "showAll": "كل التخصصات الفرعية",
+      "name" : "اسم التخصص الفرعي",
+      "add": "إضافة تخصص فرعي جديد",
+      "show": "عرض بيانات التخصص",
+      "edit": "تعديل بيانات التخصص"
     },
-    "Districts": {
-      "title": "الأحياء",
-      "showAll": "كل الأحياء",
-      "add": "إضافة حي جديد",
-      "show": "عرض الحي",
-      "edit": "تعديل حي"
+    "SubscriptionsPrice" : {
+      "title" : "إدارة الاشتراكات",
+      "showAll" : "عرض اشتراكات العملاء " ,
+      "show" : "عرض اشتراك" ,
+      "fatora" : "الفاتورة الالكترونية"
+    },
+    "advertisement": {
+      "title": "المساحة الإعلانية",
+      "name": "اسم الاعلان",
+      "image": "صورة الاعلان",
+      "Start_publich": "تاريخ بداية النشر",
+      "End_publich": "تاريخ نهاية النشر",
+      "date": "تاريخ الإنشاء",
+      "showAll": "كل الطلبات",
+      "type": "نوع الخبر",
+      "add": "اضافة إعلان جديد",
+      "show": "عرض بيانات الاعلان",
+      "edit": "تعديل بيانات الاعلان "
+    },
+    "Certificates" : {
+      "title" : "الشهادات", 
+      "name" : "اسم الشهادة",
+      "date" : "تاريخ اضافة الشهادة",
+      "add" : "إضافة شهادة جديد",
+      "show" : "عرض بيانات الشهادة",
+      "edit" : "تعديل بيانات الشهادة" 
+    },
+    "financialreports": {
+      "title" : "تقارير مالية"
     },
     "ServicesTypes": {
       "title": "أنواع الخدمات",
@@ -157,17 +172,21 @@
       "type": "النوع",
       "isDefault": "العنوان الأساسي"
     },
-    "FinancialReports": {
-      "serialNumber": "المسلسل",
-      "driverName": "إسم السائق",
-      "driverPhone": "رقم جوال السائق",
-      "totalProductsInProcessing": "إجمالي الطلبات غير المنتهية",
-      "totalServicesEnded": "إجمالي الطلبات المنتهية",
-      "totalProductsEnded": "إجمالي الطلبات المنتهية"
-    },
     "DeactivateReasons": {
       "serialNumber": "المسلسل",
       "reason": "سبب إلغاء التفعيل"
+    },
+     "FinancialReports": {
+      "serialNumber": "المسلسل",
+      "name" : "المورد" ,
+      "driverName": "اسم المدرب",
+      "driverPhone": "رقم جوال المدرب",
+      "providerPhone": "رقم جوال مقدم الخدمة",
+      "totalProductsInProcessing": "إجمالي الاشتراكات بالضريبة",
+      "totalServicesEnded": "إجمالي الطلبات المنتهية",
+      "profit_provider": "إجمالي ربح المدرب",
+      "totalapp": "إجمالي ربح التطبيق" ,
+      "total_salaey" : "إجمالي الضريبة المضافة"
     },
     "Notifications": {
       "serialNumber": "المسلسل",
@@ -235,10 +254,16 @@
       "serialNumber": "المسلسل",
       "image": "الصورة",
       "name": "اسم المدرب",
-      "phone": "رقم الجوال",
+      "nameAr" : "الاسم بالغة العربية" ,
+      "nameEn" : "الاسم باللغة الانجليزية",
+      "phone": "رقم جوال المدرب",
+      "moblie" : "رقم الواتس اب",
       "main": "التخصص الرئيسي",
       "sub": "التخصص الفرعي",
-      "isAvailable": "متاح",
+      "noteAr" : "نبذة عن المدرب باللغة العربيه",
+      "noteEn" : "نبذة عن المدرب باللغة الانجليزية" ,
+      "experience" : "عدد سنوات الخبرة",
+      "isAvailable": "حالة الاتاحة",
       "number" : "عدد المدربين",
       "totalnum" : "عدد الاشتراكات مع المدربين",
       "active": "مفعل",
@@ -298,31 +323,28 @@
       "activation": "تفعيل",
       "actions": "التحكم"
     },
-    "Products": {
+    "MainSpecializations": {
       "serialNumber": "المسلسل",
-      "image": "صورة المنتج",
-      "name": "اسم المنتج",
-      "nameAr": "اسم المنتج بالعربية",
-      "nameEn": "اسم المنتج بالإنجليزية",
+      "name": "اسم التخصص الرئيسي",
+      "nameAr": "اسم التخصص بالعربية",
+      "nameEn": "اسم التخصص بالإنجليزية",
       "descriptionAr": "الوصف بالعربية",
       "descriptionEN": "الوصف بالإنجليزية",
-      "price": "السعر",
       "activation": "تفعيل",
       "actions": "التحكم",
       "created_at": "تاريخ الانشاء"
     },
-    "Offers": {
+    "Subspecialties": {
       "serialNumber": "المسلسل",
-      "startDate": "البدء",
-      "endDate": "الإنتهاء",
-      "product": "المنتج",
-      "service": "الخدمة",
-      "percentage": "النسبة",
-      "priceBeforeDiscount": "السعر قبل الخصم",
-      "priceAfterDiscount": "السعر بعد الخصم",
-      "discountValue": "القيمة",
+      "name": "اسم التخصص الفرعى",
+      "nameAr": "اسم التخصص بالعربية",
+      "main" : "التخصص الرئيسي",
+      "nameEn": "اسم التخصص بالإنجليزية",
+      "descriptionAr": "الوصف بالعربية",
+      "descriptionEN": "الوصف بالإنجليزية",
       "activation": "تفعيل",
-      "actions": "التحكم"
+      "actions": "التحكم",
+      "created_at": "تاريخ الانشاء"
     },
     "Orders": {
       "serialNumber": "المسلسل",
@@ -337,7 +359,7 @@
       "actions": "التحكم"
     },
     "Rates": {
-      "rates": "التعليقات",
+      "rates": "اراء العملاء",
       "serialNumber": "المسلسل",
       "clientName": "إسم العميل",
       "rate": "التقييم",
@@ -350,14 +372,28 @@
     },
     "subscriptions": {
       "serialNumber": "المسلسل",
-      "name": "الإسم",
-      "phone": "رقم الجوال",
+      "name" : "الإسم",
+      "nameclient": "اسم العميل",
+      "phone": "رقم جوال العميل",
+      "coach" : "اسم المدرب",
+      "coachNumber" : "رقم جوال المدرب",
+      "WhatsApp" : "رقم الواتس اب",
+      "dataPrice" : "بيانات السعر",
+      "number" : "رقم الاشتراك",
+      "program" : "اسم البرنامج" ,
       "packagePrice": "سعر الباقة",
+      "Totalorder" : "إجمالي سعر الطلب" ,
       "AddedTax": "الضريبة المضافة",
+      "programPrice" : "سعر البرنامج بدون الضريبة",
+      "totalPriceOrder" : "إجمالي سعر الطلب بالضريبة",
+      "vatApp" : "عمولة التطبيق",
+      "priceCoach" : "صافي ربح المدرب",
+      "rateCoach" : "تقييم المدرب",
       "totalSubscription" : "الاجمالى  شامل الضريبة",
       "SubscriptionPeriod" : "فترة الاشتراك",
       "starSubscription": "بداية فتره الاشتراك",
       "endSubscription" : "نهاية فترة الاشتراك",
+      "date" : "تاريخ الإنشاء",
       "UserBalance" : "رصيد المستخدم" ,
       "verified": "تم التحقق",
       "active": "مفعل",
@@ -381,7 +417,7 @@
     "verified": "تم التحقق",
     "notVerified": "لم يتم التحقق",
     "active": "مفعل",
-    "notActive": "غير مفعل",
+    "notActive": "معطل",
     "replied": "تم الرد",
     "notReplied": "لم يتم الرد",
     "request": "طلب",
@@ -523,11 +559,8 @@
     "copyRights": "جميع الحقوق محفوظة لشركة مُلتقي للبرمجيات © {year}",
     "madeWithLove": "بواسطة مُلتقي للبرمجيات ❤️",
     "show_store": "عرض بيانات المتجر",
-
-    "drivers": "السائقين",
-    "addDriver": "إضافة سائق جديد",
-    "editDriver": "تعديل بيانات سائق",
-    "showDriver": " عرض بيانات السائق"
+    "MainSpecializations" : "التخصصات الرئيسية" ,
+    "Subspecialties" : "التخصصات الفرعية"
   },
 
   "BUTTONS": {
@@ -600,7 +633,9 @@
     "search": "بحث",
     "rseet_search": "اعادة الضبط",
     "activate": "تفعيل",
-    "deactivate": "إلغاء التفعيل",
+    "deactivate": "تعطيل",
+    "available": "متاح",
+    "disavailable" : "غير متاح",
     "replay": "رد",
     "addStoreEmployee": "إضافة موظف المتجر",
     "addSection": "اضافة قسم جديد",
@@ -617,13 +652,8 @@
     "additions": "الاضافات",
     "components": "المكونات",
 
-    "showOrder": " عرض الطلب",
-    "addOffer": "إضافة عرض جديد",
-    "editOffer": "تعديل العرض",
-    "addOrder": "إضافة طلب جديد",
-    "offer": "العرض",
-    "offers": "العروض",
-    "show_offer": "عرض بيانات العرض",
+    "MainSpecializations" : "إضافة تخصص رئيسي",
+    "Subspecialties" : "إضافة تخصص فرعي" ,
     "download_invoice": "تحميل الفاتورة"
   },
 
@@ -689,7 +719,7 @@
     "joiningDate": "تاريخ الإنضمام",
     "deactivate": "إلغاء التفعيل",
     "active": "مفعل",
-    "notActive": "غير مفعل",
+    "notActive": "معطل",
     "serviceType": "نوع الخدمة",
     "expectedTime": "الوقت المتوقع (بالدقائق)",
     "deliveringTime": "وقت التوصيل (بالدقائق)",
@@ -708,6 +738,7 @@
     "usingNumber": "عدد مرات الإستخدام",
     "store": "المتجر",
     "logo": "اللوجو",
+    "qr" : "رمز الاستجابة السريع",
     "cover": "الصورة الخلفية",
     "commercialProfileImage": "صورة الملف التجاري",
     "BankTransferManagement" : "إدارة التحويلات البنكية" ,
@@ -724,6 +755,8 @@
     "section": "القسم",
     "state": "المنطقه",
     "deliveryPrice": "سعر التوصيل",
+    "export_pdf": "تصدير ك بي دي إف",
+    "export_excel": "تصدير ك اكسيل",
     "drivers": "السائقين",
     "driverDailyOrdersAmount": "عدد طلبات السائق فى اليوم",
     "appointmentOrdersAmount": "عدد الطلبات على كل موعد",
@@ -747,7 +780,7 @@
     "occasions_add": "اضافة مناسبة",
     "occasions_update": "تعديل مناسبة",
     "occasions_show": "عرض مناسبة",
-
+    "Overall_statistics": "الاحصائيات الاجمالية",
     "main_category": "الفئة الرئيسية",
     "store_address": "عنوان المتجر",
     "starting_price_reservation": "السعر المبدئي للحجز",
@@ -1139,7 +1172,7 @@
     "bank_accounts_settings": "إعدادات الحسابات البنكية",
     "show_advertiser_image_logo": "اظهار صورة/شعار المعلن عن العقار",
 
-    "ads_management": "إدارة الإعلانات",
+    "ads_management": "المساحة الإعلانية",
     "property_details": "بيانات العقار",
     "rent_type": "نوع الإيجار",
 
@@ -1214,7 +1247,7 @@
     "can_show_image" : "حقل اظهار صورة/شعار المعلن عن العقار مطلوب" ,
     "field_type" : "نوع الحقل الاضافى مطلوب" ,
     "estate_depart" : "حقل قسم العقار مطلوب" ,
-    "is_show_map" : "لم يتم اختيار ظهور الخريطه" ,
+    "is_show_map" : "لم يتم اختيار الحالة" ,
     "package_duration" : "يجب أن يكون عدد الأيام صحيحة موجبة" ,
     "dissount" : "لايمكن أن تكون نسبة الخصم أعلى من 100" ,
     "discount_field" : "حقل نسبة الخصم مطلوب "
@@ -1231,6 +1264,7 @@
     "deletedSuccessfully": "تم الحذف بنجاح",
     "changedSuccessfully": "تم تغيير الحالة بنجاح",
     "changeActivation": "تم تغيير حالة التفعيل بنجاح",
+    "changeAvailable" : "تم تغير حالة الاتاحة بنجاح",
     "changeVerification": "تم تغيير حالة تنشيط الحساب بنجاح",
     "changeHaveContainer": "تم تغيير حالة لديه حاوية بنجاح",
     "changeDraft": "تم تغيير حالة الأرشفة بنجاح",
