@@ -390,36 +390,39 @@ export default {
       this.dialogPdf = true;
       this.confirmPdf();
     },
-    // async confirmPdf() {
-    //   try {
-    //     let res = await this.$axios({
-    //       method: "GET",
-    //       url: `financials/export-pdf`,
-    //     });
-    //     this.pdf = res.data.data.pdf;
-    //     // this.dialogPdf = false;
-    //   } catch (error) {
-    //     this.dialogPdf = false;
-    //     this.$message.error(error.response.data.message);
-    //   }
-    // },
+    async confirmPdf() {
+      window.location.href = `https://backend.saramh.co/dashboard-api/v1/financials/export-pdf`;
+      // try {
+      //   let res = await this.$axios({
+      //     method: "GET",
+      //     url: `financials/export-pdf`,
+      //   }); 
+      //   console.log("object", res);
+      //   this.pdf = res.data.data;
+      //   console.log("PDF" , res.data.data);
+      //   // this.dialogPdf = false;
+      // } catch (error) {
+      //   this.dialogPdf = false;
+      //   this.$message.error(error.response.data.message);
+      // }
+    },
     selectExcelItem() {
       this.dialogExcel = true;
       this.confirmExcel();
     },
-    // async confirmExcel() {
-    //   try {
-    //     let res = await this.$axios({
-    //       method: "GET",
-    //       url: `financials/export-excel`,
-    //     });
-    //     this.excel = res.data.data.excel;
-    //     // this.dialogPdf = false;
-    //   } catch (error) {
-    //     this.dialogExcel = false;
-    //     this.$message.error(error.response.data.message);
-    //   }
-    // },
+    async confirmExcel() {
+      try {
+        let res = await this.$axios({
+          method: "GET",
+          url: `financials/export-excel`,
+        });
+        this.excel = res.data.data;
+        // this.dialogPdf = false;
+      } catch (error) {
+        this.dialogExcel = false;
+        this.$message.error(error.response.data.message);
+      }
+    },
     clickedDownload() {
       const link = document.createElement('a');
       link.href = this.pdf;
