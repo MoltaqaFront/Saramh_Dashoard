@@ -38,7 +38,7 @@
           <span v-else> {{ item.phone }} </span>
         </template>
         <!-- End:: Phone -->
-
+      
         <!-- Start:: Actions -->
         <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
@@ -157,58 +157,40 @@ export default {
           sortable: false,
         },
         {
-          text: this.$t("TABLES.subscriptions.name"),
+          text: this.$t("TABLES.subscriptions.coach"),
           value: "user_name",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.subscriptions.phone"),
+          text: this.$t("TABLES.subscriptions.coachNumber"),
           value: "user_mobile",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.subscriptions.packagePrice"),
+          text: this.$t("TABLES.subscriptions.prgram_price"),
           value: "balance",
           align: "center",
-          width: "150",
           sortable: false,
         },
         {
           text: this.$t("TABLES.subscriptions.AddedTax"),
           value: "tax",
           align: "center",
-          width: "150",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.subscriptions.totalSubscription"),
+          text: this.$t("TABLES.subscriptions.TotalSubscription"),
           value: "total_balance",
           align: "center",
-          width: "200",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.subscriptions.starSubscription"),
+          text: this.$t("TABLES.subscriptions.date"),
           value: "start_date",
           align: "center",
-          width: "150",
           sortable: false,
-        },
-        {
-          text: this.$t("TABLES.subscriptions.endSubscription"),
-          value: "end_date",
-          align: "center",
-          width: "150",
-          sortable: false,
-        },
-        {
-          text: this.$t("TABLES.subscriptions.UserBalance"),
-          value: "actions",
-          sortable: false,
-          align: "center",
-          width: "200"
         },
       ],
       tableRows: [],
@@ -298,7 +280,7 @@ export default {
           params: {
             page: this.paginations.current_page,
             name: this.filterOptions.user_name,
-            phone: this.filterOptions.user_mobile,
+            mobile: this.filterOptions.user_mobile,
             packagePrice: this.filterOptions.balance,
             AddedTax: this.filterOptions.tax,
             totalSubscription :this.filterOptions.total_balance,

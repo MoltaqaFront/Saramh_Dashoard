@@ -52,7 +52,12 @@
       "title": "App Content",
       "aboutUs": "About Us",
       "termsAndConditions": "Terms And Conditions",
-      "privacyPolicy": "Privacy Policy"
+      "privacyPolicy": "Privacy Policy" ,
+      "section": "introductory section",
+       "message": "Vision, mission and goals",
+       "goals": "goals",
+       "mission": "message",
+       "Vision": "vision"
     },
     "settings": {
       "title": "App Settings"
@@ -134,6 +139,18 @@
        "show": "display certificate data",
        "edit": "Edit certificate data"
      },
+      "questions": {
+      "title": "FAQ",
+      "name": "Name Of Question",
+      "answer": "Answer",
+      "bodyAr": "The question is in Arabic",
+      "bodyEn": "The question is in English",
+      "answerAr": "answer in Arabic",
+      "answerEn": "Answer in English",
+      "add": "Add a new question",
+      "edit": "Edit question data",
+      "date": "Creation date"
+    },
      "financialreports": {
        "title" : "Financial Reports"
      },
@@ -199,6 +216,10 @@
     "Notifications": {
       "serialNumber": "Serial",
       "title": "Title",
+      "titleAr" : "Title in Arabic",
+       "titleEn" : "Title in English",
+       "contentAr": "Text in Arabic",
+       "contentEn": "Text in English",
       "notification": "Notification",
       "receiverType": "Receiver Type",
       "date": "Date",
@@ -398,7 +419,9 @@
        "Totalorder": "Total order price",
        "AddedTax": "added tax",
        "programPrice": "program price without tax",
+       "prgram_price" : "program price",
        "totalPriceOrder": "Total order price with tax",
+       "TotalSubscription": "Total subscription fees",
        "vatApp": "application commission",
        "priceCoach": "Coach's net profit",
        "totalSubscription": "Total including tax",
@@ -406,7 +429,7 @@
        "starSubscription": "Start of subscription period",
        "endSubscription" : "end of subscription period",
        "rateCoach": "Coach Rating",
-       "date" : "creation date",
+       "date" : "Subscribe date",
        "UserBalance": "User Balance",
        "verified": "verified",
        "active": "activated",
@@ -959,9 +982,14 @@
     "Tax_registration": "Tax registration",
     "Company_logo": "Company logo",
     "WhatsApp_contact": "WhatsApp contact",
-
+    "contact_admins": "Media",
     "phone_call": "Calling Phone",
 
+     "facebook_link": "Facebook link",
+     "insta_link": "Instagram link",
+     "snap_link": "Snapchat link",
+     "tiktok_link": "Tik Tok link",
+     "twitter_link" : "X link",
     "user_name": "User Name",
     "user_status": "User Status",
     "user_image": "User Image",
@@ -1101,6 +1129,7 @@
     "neighborhood_name": "Neighborhood Name",
 
     "number_of_reports_to_block_auto_ad": "Number of Reports to Block Auto Ad",
+    "AppVet": "Application Commission",
     "number_of_free_package_ads": "Number of Free Package Ads",
     "free_package_expiry_duration": "Free Package Expiry Duration in (Days)",
 

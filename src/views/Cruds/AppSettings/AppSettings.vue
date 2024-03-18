@@ -1,6 +1,11 @@
 <template>
   <div class="crud_form_wrapper">
     <!-- Start:: Single Step Form Content -->
+      <div class="table_title_wrapper">
+          <div class="title_text_wrapper">
+            <h5 style="color: #57009B;">{{ $t("SIDENAV.settings.title") }}</h5>
+          </div>
+    </div>
     <div class="single_step_form_content_wrapper">
       <form @submit.prevent="validateFormInputs">
         <div class="row">
@@ -11,17 +16,10 @@
           <!-- End:: Name Input -->
 
           <!-- Start:: Status Input -->
-          <base-input col="6" type="number" :placeholder="$t('PLACEHOLDERS.number_of_reports_to_block_auto_ad')"
-            v-model="data.number_of_reports_to_block_auto_ad" />
+          <base-input col="6" type="number" :placeholder="$t('PLACEHOLDERS.AppVet')"
+            v-model="data.AppVet" />
           <!-- End:: Status Input -->
 
-          <base-input col="6" type="number" :placeholder="$t('PLACEHOLDERS.number_of_free_package_ads')"
-            v-model="data.number_of_free_package_ads" />
-
-          <base-input col="6" type="number" :placeholder="$t('PLACEHOLDERS.free_package_expiry_duration')"
-            v-model="data.free_package_expiry_duration" />
-
-          <base-input col="6" type="number" :placeholder="$t('PLACEHOLDERS.search_scope')" v-model="data.Search_scope" />
 
           <!-- Start:: Submit Button Wrapper -->
           <div class="btn_wrapper">
@@ -51,10 +49,8 @@ export default {
       // Start:: Data
       data: {
         VAT_percentage: null,
-        number_of_reports_to_block_auto_ad: '',
-        number_of_free_package_ads: '',
-        free_package_expiry_duration: null,
-        Search_scope: null,
+        AppVet: null
+       
       },
       // End:: Data
 
@@ -77,14 +73,11 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `settings?key=dashboard-admin-setting`,
+          url: `settings?key=dashboard_settings`,
         });
         // console.log("DATA =>", res.data.data);
-        this.data.VAT_percentage = res.data.data[0].value.Value_added_tax_rate;
-        this.data.number_of_reports_to_block_auto_ad = res.data.data[0].value.Number_of_reports_to_block_an_automatic_ad;
-        this.data.number_of_free_package_ads = res.data.data[0].value.Number_of_ads_for_the_free_package;
-        this.data.free_package_expiry_duration = res.data.data[0].value.The_expiration_period_of_the_free_package;
-        this.data.Search_scope = res.data.data[0].value.Search_scope;
+        this.data.VAT_percentage = res.data.data[0].value.tax;
+        this.data.AppVet = res.data.data[0].value.commission;
 
       } catch (error) {
         console.log(error.response.data.message);
@@ -98,12 +91,9 @@ export default {
 
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
-      REQUEST_DATA.append("key", "dashboard-admin-setting");
-      REQUEST_DATA.append("value[Value_added_tax_rate]", this.data.VAT_percentage);
-      REQUEST_DATA.append("value[Number_of_reports_to_block_an_automatic_ad]", this.data.number_of_reports_to_block_auto_ad);
-      REQUEST_DATA.append("value[Number_of_ads_for_the_free_package]", this.data.number_of_free_package_ads);
-      REQUEST_DATA.append("value[The_expiration_period_of_the_free_package]", this.data.free_package_expiry_duration);
-      REQUEST_DATA.append("value[Search_scope]", this.data.Search_scope);
+      REQUEST_DATA.append("key", "dashboard_settings");
+      REQUEST_DATA.append("value[tax]", this.data.VAT_percentage);
+      REQUEST_DATA.append("value[commission]", this.data.AppVet);
 
       // Start:: Append Request Data
 
@@ -127,34 +117,14 @@ export default {
     validateFormInputs() {
       this.isWaitingRequest = true;
 
-      if (!this.data.number_of_free_package_ads || this.data.number_of_free_package_ads === 'null') {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.free_package_ads_field_required"));
-        return;
-      } else if (!this.data.number_of_free_package_ads || this.data.number_of_free_package_ads <= 0) {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.custom_positive_value_required"));
-        return;
-      } else if (this.data.VAT_percentage < 1 || this.data.VAT_percentage > 100) {
+      if (this.data.VAT_percentage < 1 || this.data.VAT_percentage > 100) {
         this.isWaitingRequest = false;
         this.$message.error(this.$t("VALIDATION.custom_value_range_required"));
-        } else if (!this.data.number_of_reports_to_block_auto_ad || this.data.number_of_reports_to_block_auto_ad === 'null') {
+        } else if (!this.data.AppVet || this.data.AppVet === 'null') {
         this.isWaitingRequest = false;
         this.$message.error(this.$t("VALIDATION.reports_to_block_auto_ad_required"));
         return;
-      } else if (!this.data.number_of_reports_to_block_auto_ad || this.data.number_of_reports_to_block_auto_ad <= 0) {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.custom_positive_value_required"));
-        return;
-      }else if (!this.data.free_package_expiry_duration || this.data.free_package_expiry_duration === 'null') {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.free_package_duration_field_required"));
-        return;
-      } else if (!this.data.free_package_expiry_duration || this.data.free_package_expiry_duration <= 0) {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.custom_positive_value_required"));
-        return;
-      } else {
+      }else {
         this.submitForm();
         return;
       }

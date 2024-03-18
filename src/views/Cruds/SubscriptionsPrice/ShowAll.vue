@@ -155,7 +155,7 @@
                <tr class="text-center">
                 <td>
                   <span v-html="qr" ></span>
-                  <span>{{ $t("PLACEHOLDERS.qr") }}</span>
+                  <span class="mx-5">{{ $t("PLACEHOLDERS.qr") }}</span>
                 </td>
               </tr>
                 <tr class="text-center">
@@ -499,4 +499,5 @@ span.submit_btn {
   justify-content: center;
   align-items: center;
 }
+
 </style>

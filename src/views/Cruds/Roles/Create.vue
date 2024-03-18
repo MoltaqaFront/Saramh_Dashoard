@@ -53,7 +53,21 @@
             </div>
           </div>
           <!-- End:: Permissions -->
-
+          
+        <!-- Start:: Deactivate Switch Input -->
+          <div class="input_wrapper switch_wrapper my-5">
+            <v-switch
+              color="green"
+              :label="
+                data.active
+                  ? $t('PLACEHOLDERS.active')
+                  : $t('PLACEHOLDERS.notActive')
+              "
+              v-model="data.active"
+              hide-details
+            ></v-switch>
+          </div>
+          <!-- End:: Deactivate Switch Input -->
           <!-- Start:: Submit Button Wrapper -->
           <div class="btn_wrapper">
             <base-button class="mt-2" styleType="primary_btn" :btnText="$t('BUTTONS.save')" :isLoading="isWaitingRequest"

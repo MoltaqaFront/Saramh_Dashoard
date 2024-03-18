@@ -79,6 +79,15 @@ import subscriptionsclients from "../views/Cruds/Clients/subscriptions.vue";
 
 // Start:: Importing Router Components
 
+// Start:: Questiions Router Components
+import questionsHome from "../views/Cruds/FAQ/Home.vue";
+import Allquestions from "../views/Cruds/FAQ/ShowAll.vue";
+import Createquestions from "../views/Cruds/FAQ/Create.vue";
+import Editquestions from "../views/Cruds/FAQ/Edit.vue";
+// End:: Questions Router Components
+
+import message from "../views/Cruds/AppContent/Message.vue";
+import section from "../views/Cruds/AppContent/Section.vue";
 // ============== Start:: Home Page Route
 
 // ============== End:: Home Page Route
@@ -256,7 +265,7 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "clients index",
+                action: "clients show",
                 subject: "clients",
               },
             },
@@ -269,7 +278,7 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "clients subscriptions",
+                action: "clients show",
                 subject: "clients",
               },
             },
@@ -357,8 +366,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "MainSpecializations index",
-                subject: "MainSpecializations",
+                action: "specialties index",
+                subject: "specialties",
               },
             },
           },
@@ -370,8 +379,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "MainSpecializations show",
-                subject: "MainSpecializations",
+                action: "specialties show",
+                subject: "specialties",
               },
             },
           },
@@ -383,8 +392,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "MainSpecializations create",
-                subject: "MainSpecializations",
+                action: "specialties create",
+                subject: "specialties",
               },
             },
           },
@@ -396,8 +405,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "MainSpecializations edit",
-                subject: "MainSpecializations",
+                action: "specialties edit",
+                subject: "specialties",
               },
             },
           },
@@ -421,8 +430,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Subspecialties index",
-                subject: "Subspecialties",
+                action: "subspecialties index",
+                subject: "subspecialties",
               },
             },
           },
@@ -434,8 +443,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Subspecialties show",
-                subject: "Subspecialties",
+                action: "subspecialties show",
+                subject: "subspecialties",
               },
             },
           },
@@ -447,8 +456,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Subspecialties create",
-                subject: "Subspecialties",
+                action: "subspecialties create",
+                subject: "subspecialties",
               },
             },
           },
@@ -460,8 +469,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Subspecialties edit",
-                subject: "Subspecialties",
+                action: "subspecialties edit",
+                subject: "subspecialties",
               },
             },
           },
@@ -485,8 +494,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Coaches index",
-                subject: "Coaches",
+                action: "coaches index",
+                subject: "coaches",
               },
             },
           },
@@ -498,8 +507,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Coaches show",
-                subject: "Coaches",
+                action: "coaches show",
+                subject: "coaches",
               },
             },
           },
@@ -511,8 +520,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Coaches create",
-                subject: "Coaches",
+                action: "coaches create",
+                subject: "coaches",
               },
             },
           },
@@ -524,8 +533,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Coaches edit",
-                subject: "Coaches",
+                action: "coaches edit",
+                subject: "coaches",
               },
             },
           },
@@ -570,10 +579,59 @@ const routes = [
         ],
       },
       // End SubscriptionsPrice Routes config
+      // Start:: questions Routes Config
+      {
+        path: "/questions",
+        name: "questionsHome",
+        component: questionsHome,
+        meta: {
+          middleware: [auth],
+        },
+        children: [
+          {
+            path: "all",
+            name: "Allquestions",
+            component: Allquestions,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "questions index",
+                subject: "questions",
+              },
+            },
+          },
+          {
+            path: "create",
+            name: "Createquestions",
+            component: Createquestions,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "questions create",
+                subject: "questions",
+              },
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "Editquestions",
+            component: Editquestions,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "questions edit",
+                subject: "questions",
+              },
+            },
+          },
+        ],
+      },
+      // End:: questions Routes Config
 
       // Start Certificates Routes config
       {
-        path: "/Coaches",
+        path: "/Certificates",
         name: "CertificatesHome",
         component: CertificatesHome,
         meta: {
@@ -600,8 +658,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Certificates show",
-                subject: "Certificates",
+                action: "certificates show",
+                subject: "certificates",
               },
             },
           },
@@ -613,8 +671,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Certificates create",
-                subject: "Certificates",
+                action: "certificates create",
+                subject: "certificates",
               },
             },
           },
@@ -626,8 +684,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Certificates edit",
-                subject: "Certificates",
+                action: "certificates edit",
+                subject: "certificates",
               },
             },
           },
@@ -785,6 +843,30 @@ const routes = [
             },
           },
           {
+            path: "message",
+            name: "message",
+            component: message,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "settings create",
+                subject: "settings",
+              },
+            },
+          },
+          {
+            path: "section",
+            name: "section",
+            component: section,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "settings create",
+                subject: "settings",
+              },
+            },
+          },
+          {
             path: "aqar-conditions",
             name: "AqarConditions",
             component: AqarConditions,
@@ -906,8 +988,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "users index",
-                subject: "users",
+                action: "admins index",
+                subject: "admins",
               },
             },
           },
@@ -918,8 +1000,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "users create",
-                subject: "users",
+                action: "admins create",
+                subject: "admins",
               },
             },
           },
@@ -931,8 +1013,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "users edit",
-                subject: "users",
+                action: "admins edit",
+                subject: "admins",
               },
             },
           },
@@ -944,8 +1026,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "users show",
-                subject: "users",
+                action: "admins show",
+                subject: "admins",
               },
             },
           },

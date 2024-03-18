@@ -97,7 +97,7 @@
           <h6 v-else> {{ item.email }} </h6>
         </template>
         <!-- End:: email -->
-
+     
         <template v-slot:[`item.is_verified`]="{ item }">
           <v-chip :color="item.is_verified ? 'green' : 'red'" text-color="white" small>
             <template v-if="item.is_verified">
@@ -444,8 +444,9 @@ export default {
     showItem(item) {
       this.$router.push({ path: `/clients/show/${item.user.id}` });
     },
-    subscription(item) {
-      this.$router.push({path: `/clients/subscriptions/${item.user.id}`})
+   subscription(item) {
+      const mobileNumber = item.user.mobile;  
+      this.$router.push({ path: `/SubscriptionsPrice/all`, query: { mobile: mobileNumber } });
     },
     // ===== End:: End
 

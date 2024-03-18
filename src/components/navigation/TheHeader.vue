@@ -177,24 +177,24 @@ export default {
 
     // End:: Notification Redirect
     
-     async getData() {
-      try {
-        let res = await this.$axios({
-          method: "GET",
-          url: "notification/index"
-        });
-        console.log("All Data ==>", res.data.data);
-        this.notificationCount = res.data.data.filter((item) => item.is_read == 0).length;
-      } catch (error) {
-        this.loading = false;
-        console.log(error.response.data.message);
-      }
-    }, 
+    //  async getData() {
+    //   try {
+    //     let res = await this.$axios({
+    //       method: "GET",
+    //       url: "notification/index"
+    //     });
+    //     console.log("All Data ==>", res.data.data);
+    //     this.notificationCount = res.data.data.filter((item) => item.is_read == 0).length;
+    //   } catch (error) {
+    //     this.loading = false;
+    //     console.log(error.response.data.message);
+    //   }
+    // }, 
   },
 
   created() {
 
-    this.getData();
+    // this.getData();
 
     navigator.serviceWorker.addEventListener('message', event => {
       this.notificationCount ++;

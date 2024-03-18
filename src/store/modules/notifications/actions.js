@@ -6,19 +6,19 @@ export default {
   // START:: GET NOTIFICATIONS
   getNotifications(context) {
     // START:: SEND GET REQUEST
-     axios({
+    axios({
       method: "GET",
       url: `notifications`,
     })
       .then((res) => {
         context.commit("setNotifications", {
-        notifications: res.data.data.notifications,
-           unreadNotificationsCount: res.data.data.unreadnotifications_count,
-         });
+          notifications: res.data.data.notifications,
+          unreadNotificationsCount: res.data.data.unreadnotifications_count,
+        });
       })
-    .catch((error) => {
+      .catch((error) => {
         console.log(error.response.data.message);
-       });
+      });
     // END:: SEND GET REQUEST
   },
   // END:: GET NOTIFICATIONS
@@ -41,23 +41,23 @@ export default {
   // END:: READ SINGLE NOTIFICATION
 
   // START:: READ ALL NOTIFICATIONS
-  readAllNotifications(context) {
-    // START:: SEND GET REQUEST
-    axios({
-      method: "GET",
-      url: `notification/index`,
-    })
-      .then((res) => {
-        context.commit("setAllReadiedNotifications", {
-          notifications: res.data.data.notifications,
-          unreadNotificationsCount: res.data.data.unreadnotifications_count,
-        });
-      })
-      .catch((error) => {
-        console.log(error.response.data.message);
-      });
-    // END:: SEND GET REQUEST
-  },
+  // readAllNotifications(context) {
+  //   // START:: SEND GET REQUEST
+  //   axios({
+  //     method: "GET",
+  //     url: `notification/index`,
+  //   })
+  //     .then((res) => {
+  //       context.commit("setAllReadiedNotifications", {
+  //         notifications: res.data.data.notifications,
+  //         unreadNotificationsCount: res.data.data.unreadnotifications_count,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response.data.message);
+  //     });
+  //   // END:: SEND GET REQUEST
+  // },
   // END:: READ ALL NOTIFICATIONS
 
   // START:: DELETE NOTIFICATION
