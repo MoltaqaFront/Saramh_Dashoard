@@ -645,8 +645,8 @@ const routes = [
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "Certificates index",
-                subject: "Certificates",
+                action: "certificates index",
+                subject: "certificates",
               },
             },
           },
@@ -664,7 +664,7 @@ const routes = [
             },
           },
           {
-            path: "create/:id",
+            path: "create",
             name: "CreateCertificates",
             component: CreateCertificates,
             props: true,

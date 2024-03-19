@@ -1,6 +1,6 @@
-import Antd from "ant-design-vue";
-import axios from "axios";
 import i18n from "@/plugins/i18n.js";
+import axios from "axios";
+import Antd from "ant-design-vue";
 
 export default {
   // START:: GET NOTIFICATIONS
@@ -8,12 +8,14 @@ export default {
     // START:: SEND GET REQUEST
     axios({
       method: "GET",
-      url: `notifications`,
+      url: `notification/user-notifications`,
     })
       .then((res) => {
         context.commit("setNotifications", {
           notifications: res.data.data.notifications,
-          unreadNotificationsCount: res.data.data.unreadnotifications_count,
+          unreadNotificationsCount: res.data.data.filter(
+            (item) => item.is_read == false
+          ).length,
         });
       })
       .catch((error) => {
@@ -41,23 +43,25 @@ export default {
   // END:: READ SINGLE NOTIFICATION
 
   // START:: READ ALL NOTIFICATIONS
-  // readAllNotifications(context) {
-  //   // START:: SEND GET REQUEST
-  //   axios({
-  //     method: "GET",
-  //     url: `notification/index`,
-  //   })
-  //     .then((res) => {
-  //       context.commit("setAllReadiedNotifications", {
-  //         notifications: res.data.data.notifications,
-  //         unreadNotificationsCount: res.data.data.unreadnotifications_count,
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.response.data.message);
-  //     });
-  //   // END:: SEND GET REQUEST
-  // },
+  readAllNotifications(context) {
+    // START:: SEND GET REQUEST
+    axios({
+      method: "GET",
+      url: `notification/user-notifications`,
+    })
+      .then((res) => {
+        context.commit("setAllReadiedNotifications", {
+          notifications: res.data.data.notifications,
+          unreadNotificationsCount: res.data.data.filter(
+            (item) => item.is_read == false
+          ).length,
+        });
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+    // END:: SEND GET REQUEST
+  },
   // END:: READ ALL NOTIFICATIONS
 
   // START:: DELETE NOTIFICATION

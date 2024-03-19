@@ -12,28 +12,28 @@
         <div class="row">
           <h3>{{ $t("SIDENAV.AppContent.Vision") }}</h3>
           <!-- Start:: Ar Content Text Editor -->
-          <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentAr')" v-model.trim="data.goalAr" required />
+          <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentAr')" v-model.trim="data.visionAr" required />
           <!-- End:: Ar Content Text Editor -->
 
           <!-- Start:: En Content Text Editor -->
-          <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentEn')" v-model.trim="data.goalEn" required />
+          <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentEn')" v-model.trim="data.visionEn" required />
 
           <!-- Start:: En Content Text Editor -->
           <h3>{{ $t("SIDENAV.AppContent.mission") }}</h3>
-            <!-- Start:: Ar Content Text Editor -->
-            <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentAr')" v-model.trim="data.visionAr" required />
-            <!-- End:: Ar Content Text Editor -->
-
-            <!-- Start:: En Content Text Editor -->
-            <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentEn')" v-model.trim="data.visionEn" required />
-
-            <h3>{{ $t("SIDENAV.AppContent.goals") }}</h3>
             <!-- Start:: Ar Content Text Editor -->
             <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentAr')" v-model.trim="data.missionAr" required />
             <!-- End:: Ar Content Text Editor -->
 
             <!-- Start:: En Content Text Editor -->
             <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentEn')" v-model.trim="data.missionEn" required />
+
+            <h3>{{ $t("SIDENAV.AppContent.goals") }}</h3>
+            <!-- Start:: Ar Content Text Editor -->
+            <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentAr')" v-model.trim="data.goalAr" required />
+            <!-- End:: Ar Content Text Editor -->
+
+            <!-- Start:: En Content Text Editor -->
+            <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentEn')" v-model.trim="data.goalEn" required />
 
           <!-- Start:: Submit Button Wrapper -->
           <div class="btn_wrapper">
@@ -77,15 +77,15 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `settings?key=visions`,
+          url: `settings?key=vision`,
         });
         // Start:: Set Data
-        this.data.goalAr = res.data.data[0].value.goal.ar;
-        this.data.goalEn = res.data.data[0].value.goal.en;
-        this.data.visionAr = res.data.data[0].value.vision.ar;
-        this.data.visionEn = res.data.data[0].value.vision.en;
-        this.data.missionAr = res.data.data[0].value.mission.ar;
-        this.data.missionEn = res.data.data[0].value.mission.en;
+        this.data.goalAr = res.data.data[0].value.goals.description.ar;
+        this.data.goalEn = res.data.data[0].value.goals.description.en;
+        this.data.visionAr = res.data.data[0].value.vision.description.ar;
+        this.data.visionEn = res.data.data[0].value.vision.description.en;
+        this.data.missionAr = res.data.data[0].value.mission.description.ar;
+        this.data.missionEn = res.data.data[0].value.mission.description.en;
         // End:: Set Data
       } catch (error) {
         console.log(error.response.data.message);
@@ -138,15 +138,13 @@ export default {
 
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
-      REQUEST_DATA.append("key", "visions");
-      // REQUEST_DATA.append("value[name][en]", this.data.nameEn);
-      // REQUEST_DATA.append("value[name][ar]", this.data.nameAr);
-      REQUEST_DATA.append("value[goal][ar]", this.data.goalAr);
-      REQUEST_DATA.append("value[goal][en]", this.data.goalEn);
-       REQUEST_DATA.append("value[vision][ar]", this.data.visionAr);
-      REQUEST_DATA.append("value[vision][en]", this.data.visionEn);
-       REQUEST_DATA.append("value[mission][ar]", this.data.missionAr);
-      REQUEST_DATA.append("value[mission][en]", this.data.missionEn);
+      REQUEST_DATA.append("key", "vision");
+      REQUEST_DATA.append("value[goals][description][ar]", this.data.goalAr);
+      REQUEST_DATA.append("value[goals][description][en]", this.data.goalEn);
+       REQUEST_DATA.append("value[vision][description][ar]", this.data.visionAr);
+      REQUEST_DATA.append("value[vision][description][en]", this.data.visionEn);
+       REQUEST_DATA.append("value[mission][description][ar]", this.data.missionAr);
+      REQUEST_DATA.append("value[mission][description][en]", this.data.missionEn);
       // REQUEST_DATA.append("_method", "PUT");
 
       try {

@@ -11,9 +11,9 @@ const CURRENT_LANG = store.getters["AppLangModule/getAppLocale"];
 axios.defaults.baseURL = "https://backend.saramh.co/dashboard-api/v1/";
 axios.defaults.headers.common["cache-control"] = "no-cache";
 axios.defaults.headers.common["Accept"] = "application/json";
-axios.defaults.headers.common["lang"] = CURRENT_LANG;
+axios.defaults.headers.common["Accept-Language"] = CURRENT_LANG;
 axios.defaults.headers.common["Api-Version"] = "v1";
-axios.defaults.headers.common["Api-Key"] ="apiKey";
+axios.defaults.headers.common["Api-Key"] = "apiKey";
 
 // Set Token If Exists
 if (USER_TOKEN) {

@@ -175,28 +175,28 @@ export default {
           url: `clients/${this.$route.params.id}`,
         });
         // console.log("DATA =>", res.data.data);
-        this.data.image = res.data.data.Client.user.image.path;
-        this.data.name = res.data.data.Client.user.name;
-        this.data.phone = res.data.data.Client.user.mobile;
-        this.data.registration_otp_status = res.data.data.Client.user.is_verified;
-        this.data.email = res.data.data.Client.user.email;
-        this.data.joiningDate = res.data.data.Client.user.created_at;
-        this.data.numberOfVisits = res.data.data.Client.user.login_count;
-        this.data.lastVisit = res.data.data.Client.user.last_login;
-        this.data.active = res.data.data.Client.user.is_active;
-        this.data.age = res.data.data.Client.user.pesonalInfo.age;
-        this.data.weight = res.data.data.Client.user.pesonalInfo.weight;
-        this.data.height = res.data.data.Client.user.pesonalInfo.height;
-        this.data.diseases = res.data.data.Client.user.pesonalInfo.diseases_bool ==1 ? "نعم" : "لا"
-        this.data.surgeries = res.data.data.Client.user.pesonalInfo.surgeries_bool ==1 ? "نعم" : "لا";
-        this.data.surgeries_what = res.data.data.Client.user.pesonalInfo.surgeries ;
-        this.data.surgeries_when = res.data.data.Client.user.pesonalInfo.surgeries_date ;
-        this.data.playing_sports = res.data.data.Client.user.pesonalInfo.playing_sports_bool ==1 ? "نعم" : "لا";
-        this.data.playing_place = res.data.data.Client.user.pesonalInfo.playing_place;
-        this.data.playing_days = res.data.data.Client.user.pesonalInfo.playing_days_count;
-        this.data.goal = res.data.data.Client.user.pesonalInfo.goal;
-        this.data.tools = res.data.data.Client.user.pesonalInfo.tools;
-        this.data.practice_duration = res.data.data.Client.user.pesonalInfo.practice_duration;
+        this.data.image = res.data.data.Client.image.path;
+        this.data.name = res.data.data.Client.name;
+        this.data.phone = res.data.data.Client.mobile;
+        this.data.registration_otp_status = res.data.data.Client.is_verified;
+        this.data.email = res.data.data.Client.email;
+        this.data.joiningDate = res.data.data.Client.created_at;
+        this.data.numberOfVisits = res.data.data.Client.login_count;
+        this.data.lastVisit = res.data.data.Client.last_login;
+        this.data.active = res.data.data.Client.is_active;
+        this.data.age = res.data.data.Client.pesonalInfo.age;
+        this.data.weight = res.data.data.Client.pesonalInfo.weight;
+        this.data.height = res.data.data.Client.pesonalInfo.height;
+        this.data.diseases = res.data.data.Client.pesonalInfo.diseases_bool ==1 ? "نعم" : "لا"
+        this.data.surgeries = res.data.data.Client.pesonalInfo.surgeries_bool ==1 ? "نعم" : "لا";
+        this.data.surgeries_what = res.data.data.Client.pesonalInfo.surgeries ;
+        this.data.surgeries_when = res.data.data.Client.pesonalInfo.surgeries_date ;
+        this.data.playing_sports = res.data.data.Client.pesonalInfo.playing_sports_bool ==1 ? "نعم" : "لا";
+        this.data.playing_place = res.data.data.Client.pesonalInfo.playing_place;
+        this.data.playing_days = res.data.data.Client.pesonalInfo.playing_days_count;
+        this.data.goal = res.data.data.Client.pesonalInfo.goal;
+        this.data.tools = res.data.data.Client.pesonalInfo.tools;
+        this.data.practice_duration = res.data.data.Client.pesonalInfo.practice_duration;
         
       } catch (error) {
         console.log(error.response.data.message);

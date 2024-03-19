@@ -71,7 +71,7 @@ export default {
         res.data.body.orderTypes.map((item) => {
           return {
             id: item.id,
-            name: item.title,
+            name: item.name,
           };
         })
       );

@@ -190,6 +190,12 @@ export default {
           align: "center",
           sortable: false,
         },
+         {
+          text: this.$t("TABLES.Notifications.receiverType"),
+          value: "notifiable.type",
+          align: "center",
+          sortable: false,
+        },
         {
           text: this.$t("TABLES.Notifications.date"),
           value: "created_at",
@@ -266,7 +272,7 @@ export default {
           url: "notification/index",
           params: {
             page: this.paginations.current_page,
-            title: this.filterOptions.name,
+            unread: this.filterOptions.name,
           },
         });
         this.loading = false;

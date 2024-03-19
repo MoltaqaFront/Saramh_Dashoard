@@ -119,14 +119,14 @@ export default {
 
         // Transform the API response
         console.log("object" , res.data.data[0].value);
-        this.phones = res.data.data[0].value.phones.map(phone => ({ phone: phone }));
+        this.phones = res.data.data[0].value.mobile.map(phone => ({ phone: phone }));
 
         this.data.WhatsApp_contact = res.data.data[0].value.whatsapp;
         this.data.facebook_link = res.data.data[0].value.facebook;
         this.data.snap_link = res.data.data[0].value.snapchat;
         this.data.insta_link = res.data.data[0].value.instagram;
-        //  this.data.twitter_link = res.data.data[0].value.tiktok;
-        // this.data.tiktok_link = res.data.data[0].value.x;
+         this.data.twitter_link = res.data.data[0].value.tiktok;
+        this.data.tiktok_link = res.data.data[0].value.x;
 
         // End:: Set Data
       } catch (error) {
@@ -144,13 +144,15 @@ export default {
       REQUEST_DATA.append("key", "social_contact");
 
       this.phones.forEach((element, index) => {
-        REQUEST_DATA.append(`value[phones][${index}]`, element.phone);
+        REQUEST_DATA.append(`value[mobile][${index}]`, element.phone);
       });
 
-      REQUEST_DATA.append("value[watsApp]", this.data.WhatsApp_contact);
+      REQUEST_DATA.append("value[whatsapp]", this.data.WhatsApp_contact);
       REQUEST_DATA.append("value[facebook]", this.data.facebook_link);
       REQUEST_DATA.append("value[snapchat]", this.data.snap_link);
       REQUEST_DATA.append("value[instagram]", this.data.insta_link);
+       REQUEST_DATA.append("value[x]", this.data.twitter_link);
+      REQUEST_DATA.append("value[tiktok]", this.data.tiktok_link);
 
       // Start:: Append Request Data
 

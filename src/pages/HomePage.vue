@@ -113,8 +113,9 @@ export default {
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
         .icon {
-          background: #57009B;
-          color: #FFF
+          i{
+            color: #57009B;
+          }
         }
         .info_box {
 
@@ -137,7 +138,7 @@ export default {
 
         i {
           font-size: 25px ;
-          //color: #49a956;
+          color: #000;
         }
       }
 
@@ -160,5 +161,6 @@ export default {
       }
     }
   }
+
 }
 </style>

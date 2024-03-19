@@ -205,8 +205,8 @@
         min-height: 90px;
         min-width: 200px;
         @include verticalFlexStartAlignment;
-        background-image: url("../media/logo/logo_opacity.png");
-        background-size: 70%;
+        background-image: url("../media/logo/logo.png");
+        background-size: 60%;
         background-position: -83% 0;
         padding: 10px 15px;
         background-color: var(--theme_second_bg_clr);

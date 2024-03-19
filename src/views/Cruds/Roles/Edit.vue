@@ -47,6 +47,21 @@
           </div>
           <!-- End:: Permissions -->
 
+          <!-- Start:: Deactivate Switch Input -->
+          <div class="input_wrapper switch_wrapper my-5">
+            <v-switch
+              color="green"
+              :label="
+                data.active
+                  ? $t('PLACEHOLDERS.active')
+                  : $t('PLACEHOLDERS.notActive')
+              "
+              v-model="data.active"
+              hide-details
+            ></v-switch>
+          </div>
+          <!-- End:: Deactivate Switch Input -->
+
           <!-- Start:: Submit Button Wrapper -->
           <div class="btn_wrapper">
             <base-button class="mt-2" styleType="primary_btn" :btnText="$t('BUTTONS.save')" :isLoading="isWaitingRequest"
@@ -87,6 +102,7 @@ export default {
       data: {
         name_ar: null,
         name_en: null,
+        active: null,
         permissions: [],
       },
       EnRegex: /[\u0600-\u06FF]/,
@@ -137,7 +153,7 @@ export default {
         // Start:: Set Data
         this.data.name_ar = res.data.data.role.name_ar;
         this.data.name_en = res.data.data.role.name_en;
-
+        this.data.active = res.data.data.role.is_active;
         res.data.data.role.permissions.forEach(element => {
           element.controls.forEach(item => {
             this.data.permissions.push(item.id);
