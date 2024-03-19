@@ -10,14 +10,6 @@
     <div class="single_step_form_content_wrapper">
       <form @submit.prevent="validateFormInputs">
         <div class="row">
-
-          <!-- Start:: Name Input -->
-          <!-- <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.titleAr')" v-model.trim="data.nameAr" required /> -->
-          <!-- End:: Name Input -->
-
-          <!-- Start:: Name Input -->
-          <!-- <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.titleEn')" v-model.trim="data.nameEn" required /> -->
-
           <!-- Start:: Ar Content Text Editor -->
           <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentAr')" v-model.trim="data.contentAr" required />
           <!-- End:: Ar Content Text Editor -->
@@ -66,11 +58,11 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `settings?key=privacy_policy`,
+          url: `settings?key=policy`,
         });
         // Start:: Set Data
-        this.data.contentAr = res.data.data[0].value_ar;
-        this.data.contentEn = res.data.data[0].value_en;
+        this.data.contentAr = res.data.data[0].value.ar;
+        this.data.contentEn = res.data.data[0].value.en;
         // this.data.nameAr = res.data.data[0].name.ar;
         // this.data.nameEn = res.data.data[0].name.en;
         // End:: Set Data
@@ -104,7 +96,7 @@ export default {
 
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
-      REQUEST_DATA.append("key", "privacy_policy");
+      REQUEST_DATA.append("key", "policy");
       // REQUEST_DATA.append("name[en]", this.data.nameEn);
       // REQUEST_DATA.append("name[ar]", this.data.nameAr);
       REQUEST_DATA.append("value[ar]", this.data.contentAr);

@@ -15,14 +15,14 @@
           <form @submit.prevent="submitFilterForm">
             <div class="row justify-content-center align-items-center w-100">
               <!-- Start:: Name Input -->
-              <base-input col="6" type="text" :placeholder="$t('SIDENAV.Certificates.name')"
+              <base-input col="6" type="text" :placeholder="$t('SIDENAV.questions.name')"
                 v-model.trim="filterOptions.title" />
               <!-- End:: Name Input -->
- 
-                <!-- Start:: Status Input -->
-                <base-select-input col="6" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
-                  v-model="filterOptions.is_active" />
-                <!-- End:: Status Input -->
+
+              <!-- Start:: Status Input -->
+              <base-select-input col="6" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
+                v-model="filterOptions.is_active" />
+              <!-- End:: Status Input -->
             </div>
 
             <div class="btns_wrapper">
@@ -41,16 +41,16 @@
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
-          <h5>{{ $t("SIDENAV.Certificates.title") }}</h5>
+          <h5>{{ $t("SIDENAV.questions.title") }}</h5>
           <button v-if="!filterFormIsActive" class="filter_toggler"
             @click.stop="filterFormIsActive = !filterFormIsActive">
             <i class="fal fa-search"></i>
           </button>
         </div>
 
-        <div class="title_route_wrapper" v-if="$can('certificates create', 'certificates')">
-          <router-link to="/Certificates/create">
-            {{ $t("SIDENAV.Certificates.add") }}
+        <div class="title_route_wrapper" v-if="$can('questions create', 'questions')">
+          <router-link to="/questions/create">
+            {{ $t("SIDENAV.questions.add") }}
           </router-link>
         </div>
       </div>
@@ -82,56 +82,45 @@
           </div>
         </template>
         <!-- End:: Item Image -->
-         <!-- Start:: Item Image -->
-          <template v-slot:[`item.image`]="{ item }">
-            <div class="table_image_wrapper">
-              <h6 class="text-danger" v-if="!item.image">
-                {{ $t("TABLES.noData") }}
-              </h6>
+        <!-- Start:: Item Image -->
+        <template v-slot:[`item.advertisement`]="{ item }">
+          <div class="table_image_wrapper">
+            <h6 class="text-danger" v-if="!item.advertisement">
+              {{ $t("TABLES.noData") }}
+            </h6>
 
-              <button class="my-1" @click="showImageModal(item.image)" v-else>
-                <img
-                  class="rounded"
-                  :src="item.image"
-                  :alt="item.name"
-                  width="60"
-                  height="60"
-                />
+            <button class="my-1" @click="showImageModal(item.advertisement)" v-else>
+              <img class="rounded" :src="item.advertisement" :alt="item.name" width="60" height="60" />
+            </button>
+          </div>
+        </template>
+        <!-- End:: Item Image -->
+
+          <template v-slot:[`item.answer`]="{ item }">
+          <template>
+            <h6 class="text-danger" v-if="item.answer.length === 0"> {{ $t("TABLES.noData") }} </h6>
+            <div class="actions" v-else>
+              <button class="btn_show" @click="showReplayModal(item.answer)">
+                <i class="fal fa-file-alt"></i>
               </button>
             </div>
           </template>
-          <!-- End:: Item Image -->
+        </template>
 
         <!-- Start:: Activation -->
-          <template v-slot:[`item.is_active`]="{ item }">
-            <span class="text-success text-h5" v-if="item.is_active">
-              <i class="far fa-check"></i>
-            </span>
-            <span class="text-danger text-h5" v-else>
-              <i class="far fa-times"></i>
-            </span>
-          </template>
-        <!-- <template v-slot:[`item.is_active`]="{ item }">
-          <div class="activation" dir="ltr" style="z-index: 1" v-if="$can('advertisements activate', 'advertisements')">
+        <template v-slot:[`item.is_active`]="{ item }">
+          <!-- v-if="permissions.activate" -->
+          <div class="activation" dir="ltr" style="z-index: 1" v-if="$can('questions activate', 'questions')">
             <v-switch class="mt-2" color="success" v-model="item.is_active" hide-details
               @change="changeActivationStatus(item)"></v-switch>
           </div>
-        </template> -->
+        </template>
         <!-- End:: Activation -->
 
         <!-- Start:: Actions -->
         <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
-            <a-tooltip placement="bottom" v-if="$can('certificates show', 'certificates')">
-              <template slot="title">
-                <span>{{ $t("BUTTONS.show") }}</span>
-              </template>
-              <button class="btn_show" @click="showItem(item)">
-                <i class="fal fa-eye"></i>
-              </button>
-            </a-tooltip>
-
-            <a-tooltip placement="bottom" v-if="$can('certificates edit', 'certificates')">
+            <a-tooltip placement="bottom" v-if="$can('questions edit', 'questions')">
               <template slot="title">
                 <span>{{ $t("BUTTONS.edit") }}</span>
               </template>
@@ -140,7 +129,7 @@
               </button>
             </a-tooltip>
 
-            <a-tooltip placement="bottom" v-if="$can('certificates delete', 'certificates')">
+            <a-tooltip placement="bottom" v-if="$can('questions delete', 'questions')">
               <template slot="title">
                 <span>{{ $t("BUTTONS.delete") }}</span>
               </template>
@@ -149,28 +138,9 @@
               </button>
             </a-tooltip>
 
-            <template>
-                <a-tooltip placement="bottom" v-if="!item.is_active">
-                  <template slot="title">
-                    <span>{{ $t("BUTTONS.activate") }}</span>
-                  </template>
-                  <button class="btn_activate" @click="changeActivationStatus(item)">
-                    <i class="fad fa-check-circle"></i>
-                  </button>
-                </a-tooltip>
-                <a-tooltip placement="bottom" v-if="item.is_active">
-                  <template slot="title">
-                    <span>{{ $t("BUTTONS.deactivate") }}</span>
-                  </template>
-                  <button class="btn_deactivate" @click="changeActivationStatus(item)">
-                    <i class="fad fa-times-circle"></i>
-                  </button>
-                </a-tooltip>
-              </template>
-
-            <!-- <template v-else>
+            <template v-else>
               <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
-            </template> -->
+            </template>
           </div>
         </template>
         <!-- End:: Actions -->
@@ -193,7 +163,7 @@
               <v-card-title class="text-h5 justify-center" v-if="itemToDelete">
                 {{
                   $t("TITLES.DeleteConfirmingMessage", {
-                    name: itemToDelete.name,
+                    name: itemToDelete.body,
                   })
                 }}
               </v-card-title>
@@ -231,7 +201,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "AllGoldenDeals",
@@ -295,37 +265,37 @@ export default {
       searchValue: "",
       tableHeaders: [
         {
-          text: this.$t("TABLES.Users.serialNumber"),
+          text: this.$t("TABLES.Clients.serialNumber"),
           value: "id",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t("SIDENAV.Certificates.name"),
-          value: "name",
+          text: this.$t("SIDENAV.questions.name"),
+          value: "body",
           sortable: false,
           align: "center",
         },
         {
-          text: this.$t("SIDENAV.Certificates.image"),
-          value: "image",
+          text: this.$t("SIDENAV.questions.answer"),
+          value: "answer",
           sortable: false,
           align: "center",
         },
-         {
-          text: this.$t("SIDENAV.Certificates.date"),
-          value: "created_at",
-          sortable: false,
-           align: "center",
-        },
-         {
+        {
           text: this.$t("PLACEHOLDERS.status"),
           value: "is_active",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.Users.actions"),
+          text: this.$t("SIDENAV.questions.date"),
+          value: "created_at",
+          sortable: false,
+          align: "center",
+        },
+        {
+         text: this.$t("TABLES.Clients.actions"),
           value: "actions",
           sortable: false,
           align: "center",
@@ -337,6 +307,8 @@ export default {
       // Start:: Dialogs Control Data
       dialogImage: false,
       selectedItemImage: null,
+      dialogReplay: false,
+      selectedReplayTextToShow: "",
       dialogDescription: false,
       selectedDescriptionTextToShow: "",
       dialogDelete: false,
@@ -369,7 +341,7 @@ export default {
     // Start:: Handel Filter
     async submitFilterForm() {
       if (this.$route.query.page !== "1") {
-        await this.$router.push({ path: "/Certificates/all", query: { page: 1 } });
+        await this.$router.push({ path: "/questions/all", query: { page: 1 } });
       }
       this.setTableRows();
     },
@@ -377,7 +349,7 @@ export default {
       this.filterOptions.title = null;
       this.filterOptions.is_active = null;
       if (this.$route.query.page !== "1") {
-        await this.$router.push({ path: "/Certificates/all", query: { page: 1 } });
+        await this.$router.push({ path: "/questions/all", query: { page: 1 } });
       }
       this.setTableRows();
     },
@@ -401,10 +373,10 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "certificates",
+          url: "questions",
           params: {
             page: this.paginations.current_page,
-            name: this.filterOptions.title,
+            body: this.filterOptions.title,
             is_active: this.filterOptions.is_active?.value,
           },
         });
@@ -433,7 +405,7 @@ export default {
       try {
         await this.$axios({
           method: "POST",
-          url: `certificates/activate/${item.id}`,
+          url: `questions/activate/${item.id}`,
           data: REQUEST_DATA,
         });
         this.setTableRows();
@@ -447,11 +419,7 @@ export default {
     // ==================== Start:: Crud ====================
     // ===== Start:: End
     editItem(item) {
-      this.$router.push({ path: `/Certificates/edit/${item.id}` });
-    },
-
-    showItem(item) {
-      this.$router.push({ path: `/Certificates/show/${item.id}` });
+      this.$router.push({ path: `/questions/edit/${item.id}` });
     },
     // ===== End:: End
 
@@ -460,12 +428,15 @@ export default {
       this.dialogDelete = true;
       this.itemToDelete = item;
     },
-
+     showReplayModal(replay) {
+      this.dialogDescription = true;
+      this.selectedDescriptionTextToShow = replay;
+    },
     async confirmDeleteItem() {
       try {
         await this.$axios({
           method: "DELETE",
-          url: `certificates/${this.itemToDelete.id}`,
+          url: `questions/${this.itemToDelete.id}`,
         });
         this.dialogDelete = false;
         this.setTableRows();

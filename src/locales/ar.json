@@ -53,7 +53,12 @@
       "title": "محتوي التطبيق",
       "aboutUs": "من نحن",
       "termsAndConditions": "الشروط و الأحكام",
-      "privacyPolicy": "سياسة الخصوصية"
+      "privacyPolicy": "سياسة الخصوصية" ,
+      "section" : "السكشن التعريفي" ,
+      "message" : "الرؤية والرسالة والأهداف" ,
+      "goals" : "الأهداف" ,
+      "mission" : "الرسالة" ,
+      "Vision" : "الرؤية"
     },
     "settings": {
       "title": "إعدادات التطبيق"
@@ -130,10 +135,23 @@
     "Certificates" : {
       "title" : "الشهادات", 
       "name" : "اسم الشهادة",
+      "image" : "صوره الشهادة",
       "date" : "تاريخ اضافة الشهادة",
       "add" : "إضافة شهادة جديد",
       "show" : "عرض بيانات الشهادة",
       "edit" : "تعديل بيانات الشهادة" 
+    },
+    "questions": {
+      "title": "الأسئلة الشائعة",
+      "name": "اسم السؤال",
+      "answer": "الاجابة",
+      "bodyAr": "السؤال باللغة العربية",
+      "bodyEn": "السؤال باللغة الانجليزية",
+      "answerAr": "الاجابة بالعربية",
+      "answerEn": "الاجابة باالانجليزية",
+      "add": "اضافة سؤال جديد",
+      "edit": "تعديل بيانات سؤال",
+      "date": "تاريخ الإنشاء"
     },
     "financialreports": {
       "title" : "تقارير مالية"
@@ -191,6 +209,10 @@
     "Notifications": {
       "serialNumber": "المسلسل",
       "title": "العنوان",
+      "titleAr" : "العنوان بالعربيه",
+      "titleEn" : "العنوان بالإنجليزية",
+      "contentAr" : "النص بالعربية" ,
+      "contentEn" : "النص بالانجليزى" ,
       "notification": "الإشعار",
       "receiverType": "نوع المستلم",
       "date": "التاريخ",
@@ -385,7 +407,9 @@
       "Totalorder" : "إجمالي سعر الطلب" ,
       "AddedTax": "الضريبة المضافة",
       "programPrice" : "سعر البرنامج بدون الضريبة",
+      "prgram_price" : "سعر البرنامج",
       "totalPriceOrder" : "إجمالي سعر الطلب بالضريبة",
+      "TotalSubscription" : "إجمالي رسوم الاشتراك",
       "vatApp" : "عمولة التطبيق",
       "priceCoach" : "صافي ربح المدرب",
       "rateCoach" : "تقييم المدرب",
@@ -393,7 +417,7 @@
       "SubscriptionPeriod" : "فترة الاشتراك",
       "starSubscription": "بداية فتره الاشتراك",
       "endSubscription" : "نهاية فترة الاشتراك",
-      "date" : "تاريخ الإنشاء",
+      "date" : "تاريخ الاشتراك",
       "UserBalance" : "رصيد المستخدم" ,
       "verified": "تم التحقق",
       "active": "مفعل",
@@ -972,12 +996,14 @@
     "Completed_order_points": "نقاط الطلبات المكتملة",
     "One_riyal_equals_points": "عدد واحد ريال = عدد () نقطة",
 
-    "contact_admins": "التواصل مع الإدارة",
+    "contact_admins": "وسائل التواصل",
     "WhatsApp_contact": "واتساب التواصل",
 
     "facebook_link": "رابط فيسبوك",
     "insta_link": "رابط انستجرام",
     "snap_link": "رابط سناب شات",
+    "tiktok_link" : "رابط تيك توك",
+    "twitter_link" : "رابط اكس",
 
     "vechile_name": "اسم المركبة",
     "vechile_code": "كود المركبة",
@@ -1091,6 +1117,7 @@
     "neighborhood_name": "اسم الحي",
     "number_of_reports_to_block_auto_ad": "عدد البلاغات لحجب إعلان تلقائي",
     "number_of_free_package_ads": "عدد إعلانات الباقة المجانية",
+    "AppVet" : "عمولة  التطبيق %" ,
     "free_package_expiry_duration": "مدة انتهاء الباقة المجانية (بالايام)",
     "search_scope": "نطاق البحث (كم)",
 
@@ -1236,9 +1263,11 @@
     "taxProfile": "يجب اختيار صورة الملف الضريبي",
     "free_package_ads_field_required": "حقل عدد إعلانات الباقة المجانية مطلوب",
     "free_package_duration_field_required": "حقل مدة انتهاء الباقة المجانية مطلوب",
-    "reports_to_block_auto_ad_required": "حقل عدد البلاغات لحجب إعلان تلقائي",
+    "reports_to_block_auto_ad_required": "حقل عموله التطبيق مطلوب",
+    "AtxSalery" : "حقل نسبة ضريبه القيمة المضافه مطلوب",
     "custom_positive_value_required" : "القيمة الإيجابية المخصصة المطلوبة" ,
     "custom_value_range_required" : "لايمكن أن تكون نسبه الضربية أعلى من 100",
+    "AppVet" : "لايمكن أن تكون نسبة عمولة التطبيق أعلى من 100" ,
     "city_field" : "حقل المدينة مطلوب" ,
     "area_field" : "حقل المنطقة مطلوب",
     "arabic_words_required" : "يجب ادخال العنوان باللغة العربية" ,

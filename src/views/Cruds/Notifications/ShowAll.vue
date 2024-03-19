@@ -18,14 +18,6 @@
                 v-model.trim="filterOptions.name" />
               <!-- End:: Name Input -->
 
-              <!-- <base-select-input col="6" :optionsList="receiverTypes"
-                :placeholder="$t('TABLES.Notifications.receiverType')" v-model="filterOptions.type" /> -->
-
-              <!-- <base-input col="4" type="date" :placeholder="$t('PLACEHOLDERS.from')"
-                v-model.trim="filterOptions.startDate" />
-
-              <base-input col="4" type="date" :placeholder="$t('PLACEHOLDERS.to')" v-model.trim="filterOptions.endDate" /> -->
-
             </div>
 
             <div class="btns_wrapper">
@@ -198,9 +190,9 @@ export default {
           align: "center",
           sortable: false,
         },
-        {
+         {
           text: this.$t("TABLES.Notifications.receiverType"),
-          value: "receiver_type",
+          value: "notifiable.type",
           align: "center",
           sortable: false,
         },
@@ -252,9 +244,6 @@ export default {
     },
     async resetFilter() {
       this.filterOptions.name = null;
-      // this.filterOptions.type = null;
-      // this.filterOptions.startDate = null;
-      // this.filterOptions.endDate = null;
       if (this.$route.query.page !== '1') {
         await this.$router.push({ path: '/all-notifications/all', query: { page: 1 } });
       }
@@ -280,13 +269,10 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "notification/get-sending-notifications",
+          url: "notification/index",
           params: {
             page: this.paginations.current_page,
-            title: this.filterOptions.name,
-            //receiver_type: this.filterOptions.type?.value,
-            // startDate: this.filterOptions.startDate,
-            // endDate: this.filterOptions.endDate,
+            unread: this.filterOptions.name,
           },
         });
         this.loading = false;

@@ -14,10 +14,10 @@
           <form @submit.prevent="submitFilterForm">
             <div class="row justify-content-center align-items-center w-100">
 
-              <base-select-input col="6" :optionsList="allproviders" :placeholder="$t('TABLES.FinancialReports.driverName')"
+              <base-input col="6" type="text" :placeholder="$t('TABLES.FinancialReports.driverName')"
                 v-model="filterOptions.provider_name" />
 
-              <base-input col="6" type="text" :placeholder="$t('TABLES.FinancialReports.driverPhone')"
+              <base-input col="6" type="tel" :placeholder="$t('TABLES.FinancialReports.driverPhone')"
                 v-model="filterOptions.driverPhone" />
 
               <!-- Start:: Start Date Input -->
@@ -87,7 +87,7 @@
         </template>
 
         <template v-slot:[`item.total`]="{ item }">
-           <router-link :to="`/orders/all?page=1&provider=${item.id}&type=not_finished`">
+           <router-link :to="`/SubscriptionsPrice/all`">
             {{ item.total }}
           </router-link>
         </template>
@@ -95,7 +95,7 @@
         <!-- ======================== Start:: Dialogs ======================== -->
         <template v-slot:top>
           <!-- Start:: pdf Modal -->
-          <v-dialog v-model="dialogPdf">
+          <!-- <v-dialog v-model="dialogPdf">
             <v-card>
               <button class="ex-btn-s" @click="clickedDownload"> {{ $t("PLACEHOLDERS.export_pdf") }}</button>
 
@@ -104,11 +104,11 @@
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
-          </v-dialog>
+          </v-dialog> -->
           <!-- End:: pdf Modal -->
 
           <!-- Start:: excel Modal -->
-          <v-dialog v-model="dialogExcel">
+          <!-- <v-dialog v-model="dialogExcel">
             <v-card>
               <a class="ex-btn-s" :href="excel" download>
                 {{ $t("PLACEHOLDERS.export_excel") }}
@@ -118,7 +118,7 @@
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
-          </v-dialog>
+          </v-dialog> -->
           <!-- End:: excel Modal -->
 
 
@@ -351,7 +351,7 @@ export default {
           url: "financials",
           params: {
             page: this.paginations.current_page,
-            name: this.filterOptions.provider_name?.id,
+            name: this.filterOptions.provider_name,
             mobile: this.filterOptions.driverPhone,
             from_date: this.filterOptions.from_date,
             to_date: this.filterOptions.to_date,
@@ -390,36 +390,40 @@ export default {
       this.dialogPdf = true;
       this.confirmPdf();
     },
-    // async confirmPdf() {
-    //   try {
-    //     let res = await this.$axios({
-    //       method: "GET",
-    //       url: `financials/export-pdf`,
-    //     });
-    //     this.pdf = res.data.data.pdf;
-    //     // this.dialogPdf = false;
-    //   } catch (error) {
-    //     this.dialogPdf = false;
-    //     this.$message.error(error.response.data.message);
-    //   }
-    // },
+    async confirmPdf() {
+      window.location.href = `https://backend.saramh.co/dashboard-api/v1/financials/export-pdf`;
+      // try {
+      //   let res = await this.$axios({
+      //     method: "GET",
+      //     url: `financials/export-pdf`,
+      //   }); 
+      //   console.log("object", res);
+      //   this.pdf = res.data.data;
+      //   console.log("PDF" , res.data.data);
+      //   // this.dialogPdf = false;
+      // } catch (error) {
+      //   this.dialogPdf = false;
+      //   this.$message.error(error.response.data.message);
+      // }
+    },
     selectExcelItem() {
       this.dialogExcel = true;
       this.confirmExcel();
     },
-    // async confirmExcel() {
-    //   try {
-    //     let res = await this.$axios({
-    //       method: "GET",
-    //       url: `financials/export-excel`,
-    //     });
-    //     this.excel = res.data.data.excel;
-    //     // this.dialogPdf = false;
-    //   } catch (error) {
-    //     this.dialogExcel = false;
-    //     this.$message.error(error.response.data.message);
-    //   }
-    // },
+    async confirmExcel() {
+      window.location.href = `https://backend.saramh.co/dashboard-api/v1/financials/export-excel`;
+      // try {
+      //   let res = await this.$axios({
+      //     method: "GET",
+      //     url: `financials/export-excel`,
+      //   });
+      //   this.excel = res.data.data;
+      //   // this.dialogPdf = false;
+      // } catch (error) {
+      //   this.dialogExcel = false;
+      //   this.$message.error(error.response.data.message);
+      // }
+    },
     clickedDownload() {
       const link = document.createElement('a');
       link.href = this.pdf;

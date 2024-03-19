@@ -3,8 +3,14 @@
     <!-- Start:: Main Section -->
     <main>
       <!--  =========== Start:: Filter Form =========== -->
-      <div class="filter_content_wrapper" :class="{ active: filterFormIsActive }">
-        <button class="filter_toggler" @click="filterFormIsActive = !filterFormIsActive">
+      <div
+        class="filter_content_wrapper"
+        :class="{ active: filterFormIsActive }"
+      >
+        <button
+          class="filter_toggler"
+          @click="filterFormIsActive = !filterFormIsActive"
+        >
           <i class="fal fa-times"></i>
         </button>
         <div class="filter_title_wrapper">
@@ -14,22 +20,39 @@
           <form @submit.prevent="submitFilterForm">
             <div class="row justify-content-center align-items-center w-100">
               <!-- Start:: Name Input -->
-              <base-input col="3" type="text" :placeholder="$t('PLACEHOLDERS.name')" v-model.trim="filterOptions.name" />
+              <base-input
+                col="3"
+                type="text"
+                :placeholder="$t('PLACEHOLDERS.name')"
+                v-model.trim="filterOptions.name"
+              />
               <!-- End:: Name Input -->
 
               <!-- Start:: Email Input -->
-              <base-input col="3" type="text" :placeholder="$t('PLACEHOLDERS.email')"
-                v-model.trim="filterOptions.email" />
+              <base-input
+                col="3"
+                type="text"
+                :placeholder="$t('PLACEHOLDERS.email')"
+                v-model.trim="filterOptions.email"
+              />
               <!-- End:: Email Input -->
 
               <!-- Start:: Phone Input -->
-              <base-input col="3" type="tel" :placeholder="$t('TABLES.Clients.phone')"
-                v-model.trim="filterOptions.phone" />
+              <base-input
+                col="3"
+                type="tel"
+                :placeholder="$t('TABLES.Clients.phone')"
+                v-model.trim="filterOptions.phone"
+              />
               <!-- End:: Phone Input -->
 
               <!-- Start:: Status Input -->
-              <base-select-input col="3" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
-                v-model="filterOptions.isActive" />
+              <base-select-input
+                col="3"
+                :optionsList="activeStatuses"
+                :placeholder="$t('PLACEHOLDERS.status')"
+                v-model="filterOptions.isActive"
+              />
               <!-- End:: Status Input -->
             </div>
 
@@ -37,7 +60,12 @@
               <button class="submit_btn" :disabled="isWaitingRequest">
                 <i class="fal fa-search"></i>
               </button>
-              <button class="reset_btn" type="button" :disabled="isWaitingRequest" @click="resetFilter">
+              <button
+                class="reset_btn"
+                type="button"
+                :disabled="isWaitingRequest"
+                @click="resetFilter"
+              >
                 <i class="fal fa-redo"></i>
               </button>
             </div>
@@ -50,13 +78,16 @@
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
           <h5>{{ $t("TITLES.admins") }}</h5>
-          <button v-if="!filterFormIsActive" class="filter_toggler"
-            @click.stop="filterFormIsActive = !filterFormIsActive">
+          <button
+            v-if="!filterFormIsActive"
+            class="filter_toggler"
+            @click.stop="filterFormIsActive = !filterFormIsActive"
+          >
             <i class="fal fa-search"></i>
           </button>
         </div>
 
-        <div class="title_route_wrapper" v-if="$can('users create', 'users')">
+        <div class="title_route_wrapper" v-if="$can('admins create', 'admins')">
           <router-link to="/admins/create">
             {{ $t("BUTTONS.addAdmin") }}
           </router-link>
@@ -65,9 +96,17 @@
       <!--  =========== End:: Table Title =========== -->
 
       <!--  =========== Start:: Data Table =========== -->
-      <v-data-table class="thumb" :loading="loading" :loading-text="$t('TABLES.loadingData')" :search="searchValue"
-        :headers="tableHeaders" :items="tableRows" item-class="ltr" :items-per-page="paginations.items_per_page"
-        hide-default-footer>
+      <v-data-table
+        class="thumb"
+        :loading="loading"
+        :loading-text="$t('TABLES.loadingData')"
+        :search="searchValue"
+        :headers="tableHeaders"
+        :items="tableRows"
+        item-class="ltr"
+        :items-per-page="paginations.items_per_page"
+        hide-default-footer
+      >
         <!-- Start:: No Data State -->
         <template v-slot:no-data>
           {{ $t("TABLES.noData") }}
@@ -75,12 +114,20 @@
         <!-- Start:: No Data State -->
 
         <!-- Start:: Item Image -->
-        <template v-slot:[`item.user.image`]="{ item }">
+        <template v-slot:[`item.image`]="{ item }">
           <div class="table_image_wrapper">
-            <h6 class="text-danger" v-if="!item.user.image"> {{ $t("TABLES.noData") }} </h6>
+            <h6 class="text-danger" v-if="!item.image">
+              {{ $t("TABLES.noData") }}
+            </h6>
 
-            <button class="my-1" @click="showImageModal(item.user.image)" v-else>
-              <img class="rounded" :src="item.user.image" :alt="item.name" width="60" height="60" />
+            <button class="my-1" @click="showImageModal(item.image)" v-else>
+              <img
+                class="rounded"
+                :src="item.image"
+                :alt="item.name"
+                width="60"
+                height="60"
+              />
             </button>
           </div>
         </template>
@@ -89,29 +136,41 @@
         <!-- Start:: Item Image -->
         <template v-slot:[`item.id`]="{ item, index }">
           <div class="table_image_wrapper">
-            <h6 class="text-danger" v-if="!item.id"> {{ $t("TABLES.noData") }} </h6>
-            <p v-else>{{ (paginations.current_page - 1) * paginations.items_per_page + index + 1 }}</p>
+            <h6 class="text-danger" v-if="!item.id">
+              {{ $t("TABLES.noData") }}
+            </h6>
+            <p v-else>
+              {{
+                (paginations.current_page - 1) * paginations.items_per_page +
+                index +
+                1
+              }}
+            </p>
           </div>
         </template>
         <!-- End:: Item Image -->
 
         <!-- Start:: Name -->
         <template v-slot:[`item.name`]="{ item }">
-          <span class="text-danger" v-if="!item.name"> {{ $t("TABLES.noData") }} </span>
+          <span class="text-danger" v-if="!item.name">
+            {{ $t("TABLES.noData") }}
+          </span>
           <span v-else> {{ item.name }} </span>
         </template>
         <!-- End:: Name -->
 
         <!-- Start:: Phone -->
         <template v-slot:[`item.phone`]="{ item }">
-          <span class="text-danger" v-if="!item.phone"> {{ $t("TABLES.noData") }} </span>
+          <span class="text-danger" v-if="!item.phone">
+            {{ $t("TABLES.noData") }}
+          </span>
           <span v-else> {{ item.phone }} </span>
         </template>
         <!-- End:: Phone -->
 
         <!-- Start:: Activation Status -->
-        <template v-slot:[`item.user.is_active`]="{ item }">
-          <span class="text-success text-h5" v-if="item.user.is_active">
+        <template v-slot:[`item.is_active`]="{ item }">
+          <span class="text-success text-h5" v-if="item.is_active">
             <i class="far fa-check"></i>
           </span>
           <span class="text-danger text-h5" v-else>
@@ -123,7 +182,7 @@
         <!-- Start:: Actions -->
         <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
-            <a-tooltip placement="bottom" v-if="$can('users show', 'users')">
+            <a-tooltip placement="bottom" v-if="$can('admins show', 'admins')">
               <template slot="title">
                 <span>{{ $t("BUTTONS.show") }}</span>
               </template>
@@ -132,7 +191,10 @@
               </button>
             </a-tooltip>
 
-            <a-tooltip placement="bottom" v-if="$can('users edit', 'users') && item.id !== 1">
+            <a-tooltip
+              placement="bottom"
+              v-if="$can('admins edit', 'admins') && item.id !== 1"
+            >
               <template slot="title">
                 <span>{{ $t("BUTTONS.edit") }}</span>
               </template>
@@ -141,7 +203,10 @@
               </button>
             </a-tooltip>
 
-            <a-tooltip placement="bottom" v-if="$can('users delete', 'users') && item.id !== 1">
+            <a-tooltip
+              placement="bottom"
+              v-if="$can('admins delete', 'admins') && item.id !== 1"
+            >
               <template slot="title">
                 <span>{{ $t("BUTTONS.delete") }}</span>
               </template>
@@ -150,27 +215,35 @@
               </button>
             </a-tooltip>
 
-            <template v-if="$can('users activate', 'users') && item.id !== 1">
-              <a-tooltip placement="bottom" v-if="!item.user.is_active">
+            <template v-if="$can('admins activate', 'admins') && item.id !== 1">
+              <a-tooltip placement="bottom" v-if="!item.is_active">
                 <template slot="title">
                   <span>{{ $t("BUTTONS.activate") }}</span>
                 </template>
-                <button class="btn_activate" @click="HandlingItemActivationStatus(item)">
+                <button
+                  class="btn_activate"
+                  @click="HandlingItemActivationStatus(item)"
+                >
                   <i class="fad fa-check-circle"></i>
                 </button>
               </a-tooltip>
-              <a-tooltip placement="bottom" v-if="item.user.is_active">
+              <a-tooltip placement="bottom" v-if="item.is_active">
                 <template slot="title">
                   <span>{{ $t("BUTTONS.deactivate") }}</span>
                 </template>
-                <button class="btn_deactivate" @click="selectDeactivateItem(item)">
+                <button
+                  class="btn_deactivate"
+                  @click="selectDeactivateItem(item)"
+                >
                   <i class="fad fa-times-circle"></i>
                 </button>
               </a-tooltip>
             </template>
 
             <template v-else>
-              <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
+              <i
+                class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"
+              ></i>
             </template>
           </div>
         </template>
@@ -179,28 +252,53 @@
         <!-- ======================== Start:: Dialogs ======================== -->
         <template v-slot:top>
           <!-- Start:: Image Modal -->
-          <image-modal v-if="dialogImage" :modalIsOpen="dialogImage" :modalImage="selectedItemImage"
-            @toggleModal="dialogImage = !dialogImage" />
+          <image-modal
+            v-if="dialogImage"
+            :modalIsOpen="dialogImage"
+            :modalImage="selectedItemImage"
+            @toggleModal="dialogImage = !dialogImage"
+          />
           <!-- End:: Image Modal -->
 
           <!-- Start:: Deactivate Modal -->
           <v-dialog v-model="dialogDeactivate">
             <v-card>
-              <v-card-title class="text-h5 justify-center" v-if="itemToChangeActivationStatus">
-                {{ $t("TITLES.DeactivateConfirmingMessage", { name: itemToChangeActivationStatus.user.name }) }}
+              <v-card-title
+                class="text-h5 justify-center"
+                v-if="itemToChangeActivationStatus"
+              >
+                {{
+                  $t("TITLES.DeactivateConfirmingMessage", {
+                    name: itemToChangeActivationStatus.name,
+                  })
+                }}
               </v-card-title>
 
               <form class="w-100">
-                <base-input col="12" rows="3" type="textarea" :placeholder="$t('PLACEHOLDERS.deactivateReason')"
-                  v-model.trim="deactivateReason" required />
+                <base-input
+                  col="12"
+                  rows="3"
+                  type="textarea"
+                  :placeholder="$t('PLACEHOLDERS.deactivateReason')"
+                  v-model.trim="deactivateReason"
+                  required
+                />
               </form>
 
               <v-card-actions>
-                <v-btn class="modal_confirm_btn" @click="HandlingItemActivationStatus" :disabled="!(!!deactivateReason)">
+                <v-btn
+                  class="modal_confirm_btn"
+                  @click="HandlingItemActivationStatus"
+                  :disabled="!!!deactivateReason"
+                >
                   {{ $t("BUTTONS.ok") }}
                 </v-btn>
 
-                <v-btn class="modal_cancel_btn" @click="dialogDeactivate = false">{{ $t("BUTTONS.cancel") }}</v-btn>
+                <v-btn
+                  class="modal_cancel_btn"
+                  @click="dialogDeactivate = false"
+                  >{{ $t("BUTTONS.cancel") }}</v-btn
+                >
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -211,14 +309,20 @@
           <v-dialog v-model="dialogDelete">
             <v-card>
               <v-card-title class="text-h5 justify-center" v-if="itemToDelete">
-                {{ $t("TITLES.DeleteConfirmingMessage", { name: itemToDelete.user.name }) }}
+                {{
+                  $t("TITLES.DeleteConfirmingMessage", {
+                    name: itemToDelete.name,
+                  })
+                }}
               </v-card-title>
               <v-card-actions>
                 <v-btn class="modal_confirm_btn" @click="confirmDeleteItem">{{
                   $t("BUTTONS.ok")
                 }}</v-btn>
 
-                <v-btn class="modal_cancel_btn" @click="dialogDelete = false">{{ $t("BUTTONS.cancel") }}</v-btn>
+                <v-btn class="modal_cancel_btn" @click="dialogDelete = false">{{
+                  $t("BUTTONS.cancel")
+                }}</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -234,10 +338,20 @@
     <!-- Start:: Pagination -->
     <template>
       <div class="pagination_container text-center mt-3 mb-0">
-        <v-pagination class="py-0" square v-model="paginations.current_page" :length="paginations.last_page"
-          :total-visible="6" @input="updateRouterQueryParam($event)" :prev-icon="getAppLocale == 'ar' ? 'fal fa-angle-right' : 'fal fa-angle-left'
-            " :next-icon="getAppLocale == 'ar' ? 'fal fa-angle-left' : 'fal fa-angle-right'
-    " />
+        <v-pagination
+          class="py-0"
+          square
+          v-model="paginations.current_page"
+          :length="paginations.last_page"
+          :total-visible="6"
+          @input="updateRouterQueryParam($event)"
+          :prev-icon="
+            getAppLocale == 'ar' ? 'fal fa-angle-right' : 'fal fa-angle-left'
+          "
+          :next-icon="
+            getAppLocale == 'ar' ? 'fal fa-angle-left' : 'fal fa-angle-right'
+          "
+        />
       </div>
     </template>
     <!-- End:: Pagination -->
@@ -267,6 +381,11 @@ export default {
           name: this.$t("STATUS.notActive"),
           value: 0,
         },
+        {
+          id: null,
+          name: this.$t("STATUS.all"),
+          value: null,
+        },
       ];
     },
   },
@@ -293,44 +412,44 @@ export default {
       tableHeaders: [
         {
           text: this.$t("TABLES.Admins.serialNumber"),
-          value: "serialNumber",
+          value: "id",
           align: "center",
           width: "80",
           sortable: false,
         },
         {
           text: this.$t("TABLES.Admins.image"),
-          value: "user.image",
+          value: "image",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.Admins.name"),
-          value: "user.name",
+          value: "name",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.Admins.phone"),
-          value: "user.mobile",
+          value: "mobile",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.Admins.email"),
-          value: "user.email",
+          value: "email",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.Admins.joiningDate"),
-          value: "user.created_at",
+          value: "created_at",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("PLACEHOLDERS.status"),
-          value: "user.is_active",
+          value: "is_active",
           align: "center",
           width: "120",
           sortable: false,
@@ -381,8 +500,8 @@ export default {
   methods: {
     // Start:: Handel Filter
     async submitFilterForm() {
-      if (this.$route.query.page !== '1') {
-        await this.$router.push({ path: '/admins/all', query: { page: 1 } });
+      if (this.$route.query.page !== "1") {
+        await this.$router.push({ path: "/admins/all", query: { page: 1 } });
       }
       this.setTableRows();
     },
@@ -391,8 +510,8 @@ export default {
       this.filterOptions.phone = null;
       this.filterOptions.email = null;
       this.filterOptions.isActive = null;
-      if (this.$route.query.page !== '1') {
-        await this.$router.push({ path: '/admins/all', query: { page: 1 } });
+      if (this.$route.query.page !== "1") {
+        await this.$router.push({ path: "/admins/all", query: { page: 1 } });
       }
       this.setTableRows();
     },
@@ -422,18 +541,14 @@ export default {
             name: this.filterOptions.name,
             email: this.filterOptions.email,
             mobile: this.filterOptions.phone,
-            is_active: this.filterOptions.isActive?.value,
+            isActive: this.filterOptions.isActive?.value,
           },
         });
         this.loading = false;
         // console.log("All Data ==>", res.data.data);
-         res.data.data.forEach((item, index) => {
-          item.serialNumber = (this.paginations.current_page - 1) * this.paginations.items_per_page + index + 1;
-         });
         this.tableRows = res.data.data;
         this.paginations.last_page = res.data.meta.last_page;
         this.paginations.items_per_page = res.data.meta.per_page;
-
       } catch (error) {
         this.loading = false;
         console.log(error.response.data.message);
@@ -455,21 +570,27 @@ export default {
     },
     async HandlingItemActivationStatus(selectedItem) {
       this.dialogDeactivate = false;
-      let targetItem = this.itemToChangeActivationStatus ? this.itemToChangeActivationStatus : selectedItem;
-      const REQUEST_DATA = {};
+      let targetItem = this.itemToChangeActivationStatus
+        ? this.itemToChangeActivationStatus
+        : selectedItem;
+      const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
-      REQUEST_DATA.message = this.deactivateReason;
+      REQUEST_DATA.append("message", this.deactivateReason);
       // Start:: Append Request Data
+      // REQUEST_DATA.append("_method", "PUT");
 
       try {
         await this.$axios({
           method: "POST",
-          url: `admins/activate/${targetItem.user.id}`,
-          // data: targetItem.is_active ? REQUEST_DATA : null,
+          url: `admins/activate/${targetItem.id}`,
+          data: REQUEST_DATA,
         });
         this.$message.success(this.$t("MESSAGES.changeActivation"));
-        let filteredElemet = this.tableRows.find(element => element.id === targetItem.id);
+        let filteredElemet = this.tableRows.find(
+          (element) => element.id === targetItem.id
+        );
         filteredElemet.is_active = !filteredElemet.is_active;
+
         this.itemToChangeActivationStatus = null;
         this.deactivateReason = null;
       } catch (error) {
@@ -481,10 +602,10 @@ export default {
     // ==================== Start:: Crud ====================
     // ===== Start:: End
     editItem(item) {
-      this.$router.push({ path: `/admins/edit/${item.user.id}` });
+      this.$router.push({ path: `/admins/edit/${item.id}` });
     },
     showItem(item) {
-      this.$router.push({ path: `/admins/show/${item.user.id}` });
+      this.$router.push({ path: `/admins/show/${item.id}` });
     },
     // ===== End:: End
 
@@ -497,7 +618,7 @@ export default {
       try {
         await this.$axios({
           method: "DELETE",
-          url: `admins/${this.itemToDelete.user.id}`,
+          url: `admins/${this.itemToDelete.id}`,
         });
         this.dialogDelete = false;
         this.tableRows = this.tableRows.filter((item) => {

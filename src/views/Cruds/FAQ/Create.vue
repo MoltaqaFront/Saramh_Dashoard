@@ -2,7 +2,7 @@
   <div class="crud_form_wrapper">
     <!-- Start:: Title -->
     <div class="form_title_wrapper">
-      <h4>{{ $t("SIDENAV.Certificates.add") }}</h4>
+      <h4>{{ $t("SIDENAV.questions.add") }}</h4>
     </div>
     <!-- End:: Title -->
 
@@ -10,24 +10,25 @@
     <div class="single_step_form_content_wrapper">
       <form @submit.prevent="validateFormInputs">
         <div class="row">
-          <!-- Start:: Image Upload Input -->
-          <base-image-upload-input 
-            col="12" 
-            identifier="admin_image" 
-            :placeholder="$t('SIDENAV.Certificates.image')"
-            @selectImage="selectImage" required />
-          <!-- End:: Image Upload Input -->
-
+    
           <!-- Start:: Name Input -->
-          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameAr')" v-model.trim="data.nameAr"
+          <base-input col="6" type="text" :placeholder="$t('SIDENAV.questions.bodyAr')" v-model.trim="data.nameAr"
             @input="validateInput" required />
           <!-- End:: Name Input -->
 
           <!-- Start:: Name Input -->
-          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameEn')" v-model.trim="data.nameEn"
+          <base-input col="6" type="text" :placeholder="$t('SIDENAV.questions.bodyEn')" v-model.trim="data.nameEn"
             @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
 
-         
+          
+            <!-- Start:: Name Input -->
+            <base-input col="6" type="textarea" :placeholder="$t('SIDENAV.questions.answerAr')" v-model.trim="data.answerAr"
+              @input="validateInput" required />
+            <!-- End:: Name Input -->
+
+            <!-- Start:: Name Input -->
+            <base-input col="6" type="textarea" :placeholder="$t('SIDENAV.questions.answerEn')" v-model.trim="data.answerEn"
+              @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
 
             <!-- Start:: Status Input -->
               <base-select-input 
@@ -50,7 +51,7 @@
 </template>
 
 <script>
-import moment from "moment";
+
 
 export default {
   name: "CreateAdditionalFields",
@@ -63,12 +64,11 @@ export default {
 
       // Start:: Data Collection To Send
       data: {
-        image: {
-          path: null,
-          file: null,
-        },
+
         nameAr: null,
         nameEn: null,
+        answerEn: null,
+        answerAr : null,
        is_active: null
       },
       // End:: Data Collection To Send
@@ -110,9 +110,12 @@ export default {
     validateInput() {
       // Remove non-Arabic characters from the input
       this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
+      this.data.answerAr = this.data.answerAr.replace(/[^\u0600-\u06FF\s]/g, "");
     },
     removeArabicCharacters() {
       this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
+      this.data.answerEn = this.data.answerEn.replace(this.EnRegex, "");
+
     },
 
     selectImage(selectedImage) {
@@ -131,6 +134,15 @@ export default {
         this.$message.error(this.$t("VALIDATION.nameEn"));
         return;
       }
+       if (!this.data.answerAr) {
+        this.isWaitingRequest = false;
+        this.$message.error(this.$t("VALIDATION.answerAr"));
+        return;
+      } else if (!this.data.answerEn) {
+        this.isWaitingRequest = false;
+        this.$message.error(this.$t("VALIDATION.answerEn"));
+        return;
+      }
       else {
         this.submitForm();
         return;
@@ -142,21 +154,23 @@ export default {
     async submitForm() {
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
-      REQUEST_DATA.append("image", this.data.image.file);
-      REQUEST_DATA.append("name[ar]", this.data.nameAr);
-      REQUEST_DATA.append("name[en]", this.data.nameEn);
+      REQUEST_DATA.append("body[ar]", this.data.nameAr);
+      REQUEST_DATA.append("body[en]", this.data.nameEn);
+      REQUEST_DATA.append("answer[ar]", this.data.answerAr);
+      REQUEST_DATA.append("answer[en]", this.data.answerEn);
       REQUEST_DATA.append("is_active", this.data.is_active?.value); 
+
       // Start:: Append Request Data
 
       try {
         await this.$axios({
           method: "POST",
-          url: `certificates`,
+          url: `questions`,
           data: REQUEST_DATA,
         });
         this.isWaitingRequest = false;
         this.$message.success(this.$t("MESSAGES.addedSuccessfully"));
-        this.$router.push({ path: "/Certificates/all" });
+        this.$router.push({ path: "/questions/all" });
       } catch (error) {
         this.isWaitingRequest = false;
         this.$message.error(error.response.data.message);

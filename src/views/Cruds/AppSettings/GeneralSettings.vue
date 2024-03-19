@@ -47,6 +47,14 @@
           <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.snap_link')" v-model.trim="data.snap_link" />
           <!-- End:: Driver's Daily Orders Amount Input -->
 
+           <!-- Start:: Delivery Price Input -->
+          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.tiktok_link')" v-model.trim="data.tiktok_link" />
+          <!-- End:: Delivery Price Input -->
+
+          <!-- Start:: Driver's Daily Orders Amount Input -->
+          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.twitter_link')" v-model.trim="data.twitter_link" />
+          <!-- End:: Driver's Daily Orders Amount Input -->
+
           <!-- Start:: Submit Button Wrapper -->
           <div class="btn_wrapper">
             <base-button class="mt-2" styleType="primary_btn" :btnText="$t('BUTTONS.save')" :isLoading="isWaitingRequest"
@@ -76,6 +84,8 @@ export default {
         facebook_link: null,
         snap_link: null,
         insta_link: null,
+        twitter_link: null,
+        tiktok_link: null
 
       },
       // End:: Data Collection To Send
@@ -103,18 +113,20 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `settings?key=dashboard-contact-with-management`,
+          url: `settings?key=social_contact`,
         });
         // Start:: Set Data
 
         // Transform the API response
-
-        this.phones = res.data.data[0].value.phones.map(phone => ({ phone: phone }));
+        console.log("object" , res.data.data[0].value);
+        this.phones = res.data.data[0].value.mobile.map(phone => ({ phone: phone }));
 
         this.data.WhatsApp_contact = res.data.data[0].value.whatsapp;
         this.data.facebook_link = res.data.data[0].value.facebook;
         this.data.snap_link = res.data.data[0].value.snapchat;
         this.data.insta_link = res.data.data[0].value.instagram;
+         this.data.twitter_link = res.data.data[0].value.tiktok;
+        this.data.tiktok_link = res.data.data[0].value.x;
 
         // End:: Set Data
       } catch (error) {
@@ -129,16 +141,18 @@ export default {
 
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
-      REQUEST_DATA.append("key", "dashboard-contact-with-management");
+      REQUEST_DATA.append("key", "social_contact");
 
       this.phones.forEach((element, index) => {
-        REQUEST_DATA.append(`value[phones][${index}]`, element.phone);
+        REQUEST_DATA.append(`value[mobile][${index}]`, element.phone);
       });
 
-      REQUEST_DATA.append("value[watsApp]", this.data.WhatsApp_contact);
+      REQUEST_DATA.append("value[whatsapp]", this.data.WhatsApp_contact);
       REQUEST_DATA.append("value[facebook]", this.data.facebook_link);
       REQUEST_DATA.append("value[snapchat]", this.data.snap_link);
       REQUEST_DATA.append("value[instagram]", this.data.insta_link);
+       REQUEST_DATA.append("value[x]", this.data.twitter_link);
+      REQUEST_DATA.append("value[tiktok]", this.data.tiktok_link);
 
       // Start:: Append Request Data
 

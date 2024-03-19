@@ -14,8 +14,13 @@
           <form @submit.prevent="submitFilterForm">
             <div class="row justify-content-center align-items-center w-100">
               <!-- Start:: Name Input -->
-              <base-input type="text" :placeholder="$t('TABLES.Roles.role')" v-model.trim="filterOptions.name" />
+              <base-input col="6" type="text" :placeholder="$t('TABLES.Roles.role')" v-model.trim="filterOptions.name" />
               <!-- End:: Name Input -->
+
+                 <!-- Start:: Status Input -->
+              <base-select-input col="6" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
+                v-model="filterOptions.status" />
+              <!-- End:: Status Input -->
             </div>
 
             <div class="btns_wrapper">
@@ -105,6 +110,17 @@
         </template>
         <!-- End:: Expanded Row -->
 
+         <!-- Start:: Activation Status -->
+        <template v-slot:[`item.is_active`]="{ item }">
+          <span class="text-success text-h5" v-if="item.is_active">
+            <i class="far fa-check"></i>
+          </span>
+          <span class="text-danger text-h5" v-else>
+            <i class="far fa-times"></i>
+          </span>
+        </template>
+        <!-- End:: Activation Status -->
+
         <!-- Start:: Actions -->
         <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
@@ -130,6 +146,32 @@
               </button>
             </a-tooltip>
 
+
+              <template v-if="$can('roles activate', 'roles') && item.id !== 1">
+              <a-tooltip placement="bottom" v-if="!item.is_active">
+                <template slot="title">
+                  <span>{{ $t("BUTTONS.activate") }}</span>
+                </template>
+                <button
+                  class="btn_activate"
+                  @click="HandlingItemActivationStatus(item)"
+                >
+                  <i class="fad fa-check-circle"></i>
+                </button>
+              </a-tooltip>
+              <a-tooltip placement="bottom" v-if="item.is_active">
+                <template slot="title">
+                  <span>{{ $t("BUTTONS.deactivate") }}</span>
+                </template>
+                <button
+                  class="btn_deactivate"
+                  @click="selectDeactivateItem(item)"
+                >
+                  <i class="fad fa-times-circle"></i>
+                </button>
+              </a-tooltip>
+            </template>
+
             <template v-else>
               <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
             </template>
@@ -139,6 +181,52 @@
 
         <!-- ======================== Start:: Dialogs ======================== -->
         <template v-slot:top>
+
+               <!-- Start:: Deactivate Modal -->
+          <v-dialog v-model="dialogDeactivate">
+            <v-card>
+              <v-card-title
+                class="text-h5 justify-center"
+                v-if="itemToChangeActivationStatus"
+              >
+                {{
+                  $t("TITLES.DeactivateConfirmingMessage", {
+                    name: itemToChangeActivationStatus.name,
+                  })
+                }}
+              </v-card-title>
+
+              <form class="w-100">
+                <base-input
+                  col="12"
+                  rows="3"
+                  type="textarea"
+                  :placeholder="$t('PLACEHOLDERS.deactivateReason')"
+                  v-model.trim="deactivateReason"
+                  required
+                />
+              </form>
+
+              <v-card-actions>
+                <v-btn
+                  class="modal_confirm_btn"
+                  @click="HandlingItemActivationStatus"
+                  :disabled="!!!deactivateReason"
+                >
+                  {{ $t("BUTTONS.ok") }}
+                </v-btn>
+
+                <v-btn
+                  class="modal_cancel_btn"
+                  @click="dialogDeactivate = false"
+                  >{{ $t("BUTTONS.cancel") }}</v-btn
+                >
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <!-- End:: Deactivate Modal -->
+
           <!-- Start:: Delete Modal -->
           <v-dialog v-model="dialogDelete">
             <v-card>
@@ -190,7 +278,7 @@ export default {
       getAppLocale: "AppLangModule/getAppLocale",
     }),
 
-    activeStatuses() {
+   activeStatuses() {
       return [
         {
           id: 1,
@@ -217,6 +305,7 @@ export default {
       filterFormIsActive: false,
       filterOptions: {
         name: null,
+        status : null
       },
       // End:: Filter Data
 
@@ -242,6 +331,12 @@ export default {
           align: 'center',
           sortable: false,
         },
+         {
+          text: this.$t("TABLES.ContactMessages.status"),
+          value: "is_active",
+          align: "center",
+          sortable: false,
+        },
         {
           text: this.$t("TABLES.Roles.actions"),
           value: "actions",
@@ -256,6 +351,9 @@ export default {
       // Start:: Dialogs Control Data
       dialogDelete: false,
       itemToDelete: null,
+      dialogDeactivate: false,
+      itemToChangeActivationStatus: null,
+      deactivateReason: null,
       // End:: Dialogs Control Data
 
       // Start:: Pagination Data
@@ -289,6 +387,7 @@ export default {
     },
     async resetFilter() {
       this.filterOptions.name = null;
+      this.filterOptions.status = null;
       if (this.$route.query.page !== '1') {
         await this.$router.push({ path: '/roles/all', query: { page: 1 } });
       }
@@ -323,7 +422,8 @@ export default {
           url: "roles",
           params: {
             page: this.paginations.current_page,
-            name: this.name
+            name: this.name,
+            isActive: this.filterOptions.status?.value
           },
         });
         this.loading = false;
@@ -339,6 +439,41 @@ export default {
     },
     // End:: Set Table Rows
 
+    // Start:: Change Activation Status
+    selectDeactivateItem(item) {
+      this.dialogDeactivate = true;
+      this.itemToChangeActivationStatus = item;
+    },
+    async HandlingItemActivationStatus(selectedItem) {
+      this.dialogDeactivate = false;
+      let targetItem = this.itemToChangeActivationStatus
+        ? this.itemToChangeActivationStatus
+        : selectedItem;
+      const REQUEST_DATA = new FormData();
+      // Start:: Append Request Data
+      REQUEST_DATA.append("message", this.deactivateReason);
+      // Start:: Append Request Data
+      REQUEST_DATA.append("_method", "PUT");
+
+      try {
+        await this.$axios({
+          method: "POST",
+          url: `roles/status/${targetItem.id}`,
+          data: REQUEST_DATA,
+        });
+        this.$message.success(this.$t("MESSAGES.changeActivation"));
+        let filteredElemet = this.tableRows.find(
+          (element) => element.id === targetItem.id
+        );
+        filteredElemet.is_active = !filteredElemet.is_active;
+
+        this.itemToChangeActivationStatus = null;
+        this.deactivateReason = null;
+      } catch (error) {
+        this.$message.error(error.response.data.message);
+      }
+    },
+    // End:: Change Activation Status
     // Start:: Control Expended Row
     expandItem(item) {
       const indexExpanded = this.expanded.findIndex((i) => i === item);

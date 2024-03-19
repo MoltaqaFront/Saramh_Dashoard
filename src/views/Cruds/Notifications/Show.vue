@@ -13,7 +13,7 @@
             <p>{{ message.data.body }}</p>
 
             <!-- @click="DeleteNotification(message.id)" -->
-            <div v-if="message.id" :class="{ 'read': message.is_read == 1 }" class="delete_notification"
+            <div v-if="message.id" :class="{ 'read': message.is_read == true }" class="delete_notification"
               @click="NotificationsReaded(message.id)">
               <i class="fas fa-check-double"></i>
             </div>
@@ -90,13 +90,14 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "notification/index",
+          url: "notification/user-notifications",
           params: {
             page: this.paginations.current_page
           },
         });
-        console.log("All Data ==>", res.data.data);
+        console.log("All Data ==>", res);
         this.receivedMessages = res.data.data;
+        console.log("objec" , this.receivedMessages);
         this.paginations.last_page = res.data.data.meta.last_page;
         this.paginations.items_per_page = res.data.data.meta.per_page;
 

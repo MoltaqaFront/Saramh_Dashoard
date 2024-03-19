@@ -97,7 +97,7 @@
           <h6 v-else> {{ item.email }} </h6>
         </template>
         <!-- End:: email -->
-
+     
         <template v-slot:[`item.is_verified`]="{ item }">
           <v-chip :color="item.is_verified ? 'green' : 'red'" text-color="white" small>
             <template v-if="item.is_verified">
@@ -112,7 +112,7 @@
        
         <!-- Start:: Activation Status -->
         <template v-slot:[`item.is_active`]="{ item }">
-          <span class="text-success text-h5" v-if="item.user.is_active">
+          <span class="text-success text-h5" v-if="item.is_active">
             <i class="far fa-check"></i>
           </span>
           <span class="text-danger text-h5" v-else>
@@ -142,8 +142,8 @@
                 <i class="fas fa-cash-register"></i>
               </button>
             </a-tooltip>
-            <template v-if="$can('clients activate', 'clients') && item.user.id !== 1">
-              <a-tooltip placement="bottom" v-if="!item.user.is_active">
+            <template v-if="$can('clients activate', 'clients') && item.id !== 1">
+              <a-tooltip placement="bottom" v-if="!item.is_active">
                 <template slot="title">
                   <span>{{ $t("BUTTONS.activate") }}</span>
                 </template>
@@ -151,7 +151,7 @@
                   <i class="fad fa-check-circle"></i>
                 </button>
               </a-tooltip>
-              <a-tooltip placement="bottom" v-if="item.user.is_active">
+              <a-tooltip placement="bottom" v-if="item.is_active">
                 <template slot="title">
                   <span>{{ $t("BUTTONS.deactivate") }}</span>
                 </template>
@@ -274,25 +274,25 @@ export default {
         },
         {
           text: this.$t("TABLES.Clients.name"),
-          value: "user.name",
+          value: "name",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.Clients.code"),
-          value: "user.country_key",
+          value: "country_key",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.Clients.phone"),
-          value: "user.mobile",
+          value: "mobile",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.Clients.joiningDate"),
-          value: "user.created_at",
+          value: "created_at",
           align: "center",
           width: "120",
           sortable: false,
@@ -426,7 +426,7 @@ export default {
       try {
         await this.$axios({
           method: "POST",
-          url: `clients/activate/${item.user.id}`,
+          url: `clients/activate/${item.id}`,
         });
         this.setTableRows();
         this.$message.success(this.$t("MESSAGES.changeActivation"));
@@ -439,13 +439,14 @@ export default {
     // ==================== Start:: Crud ====================
     // ===== Start:: End
     editItem(item) {
-      this.$router.push({ path: `/clients/edit/${item.user.id}` });
+      this.$router.push({ path: `/clients/edit/${item.id}` });
     },
     showItem(item) {
-      this.$router.push({ path: `/clients/show/${item.user.id}` });
+      this.$router.push({ path: `/clients/show/${item.id}` });
     },
-    subscription(item) {
-      this.$router.push({path: `/clients/subscriptions/${item.user.id}`})
+   subscription(item) {
+      const mobileNumber = item.mobile;  
+      this.$router.push({ path: `/SubscriptionsPrice/all`, query: { mobile: mobileNumber } });
     },
     // ===== End:: End
 
