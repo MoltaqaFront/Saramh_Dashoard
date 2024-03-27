@@ -148,7 +148,7 @@ export default {
         // console.log( "DATA TO EDIT =>", res.data.data.region );
 
         // Start:: Set Data
-        this.data.image = res.data.data.user.image;
+        this.data.image.path = res.data.data.user.image;
         this.data.name = res.data.data.user.name;
         this.data.email = res.data.data.user.email;
         this.data.phone = res.data.data.user.mobile;

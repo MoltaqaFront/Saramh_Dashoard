@@ -49,18 +49,19 @@
       "showAll": "All Contact Messages"
     },
     "AppContent": {
-      "title": "App Content",
+      "title": "Platform Content",
       "aboutUs": "About Us",
       "termsAndConditions": "Terms And Conditions",
       "privacyPolicy": "Privacy Policy" ,
       "section": "introductory section",
        "message": "Vision, mission and goals",
+       "management" : "Platform content management",
        "goals": "goals",
        "mission": "message",
        "Vision": "vision"
     },
     "settings": {
-      "title": "App Settings"
+      "title": "Platform Settings"
     },
    "Roles": {
        "title": "Roles and Permissions",

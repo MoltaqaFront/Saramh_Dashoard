@@ -17,7 +17,7 @@
               <base-input col="6" type="text" :placeholder="$t('TABLES.Roles.role')" v-model.trim="filterOptions.name" />
               <!-- End:: Name Input -->
 
-                 <!-- Start:: Status Input -->
+              <!-- Start:: Status Input -->
               <base-select-input col="6" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
                 v-model="filterOptions.status" />
               <!-- End:: Status Input -->
@@ -182,7 +182,7 @@
         <!-- ======================== Start:: Dialogs ======================== -->
         <template v-slot:top>
 
-               <!-- Start:: Deactivate Modal -->
+         <!-- Start:: Deactivate Modal -->
           <v-dialog v-model="dialogDeactivate">
             <v-card>
               <v-card-title
@@ -474,6 +474,7 @@ export default {
       }
     },
     // End:: Change Activation Status
+    
     // Start:: Control Expended Row
     expandItem(item) {
       const indexExpanded = this.expanded.findIndex((i) => i === item);

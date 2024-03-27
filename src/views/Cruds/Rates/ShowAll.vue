@@ -15,7 +15,8 @@
             <div class="row justify-content-center align-items-center w-100">
 
               <!-- Start:: Status Input -->
-              <base-input col="3" type="text" :placeholder="$t('PLACEHOLDERS.user_name')" v-model="filterOptions.name" />
+              <base-input col="3" type="text" :placeholder="$t('PLACEHOLDERS.user_name')"
+                v-model="filterOptions.name" />
               <!-- End:: Status Input -->
 
               <!-- Start:: Start Date Input -->
@@ -87,6 +88,12 @@
         </template>
         <!-- End:: Client Name Route -->
 
+        <!-- Start:: Rate -->
+        <template v-slot:[`item.stars`]="{ item }">
+          <RatingPreview :rate="+item.stars" :size="15" />
+        </template>
+        <!-- End:: Rate -->
+
         <!-- Start:: Rate Comment Btns -->
         <template v-slot:[`item.rate_comment`]="{ item }">
           <h6 class="text-danger" v-if="!item.rate_comment"> {{ $t("TABLES.noData") }} </h6>
@@ -99,8 +106,8 @@
         </template>
         <!-- End:: Rate Comment Btns -->
 
-         <!-- Start:: Actions -->
-         <template v-slot:[`item.actions`]="{ item }">
+        <!-- Start:: Actions -->
+        <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
             <a-tooltip placement="bottom">
               <template slot="title">
@@ -139,12 +146,12 @@
           <description-modal v-if="dialogComment" :modalIsOpen="dialogComment" :modalDesc="selectedCommentTextToShow"
             @toggleModal="dialogComment = !dialogComment" />
           <!-- End:: Desc Modal -->
-             <!-- Start:: Balance Modal -->
-             <v-dialog v-model="dialogBalance">
+          <!-- Start:: Balance Modal -->
+          <v-dialog v-model="dialogBalance">
             <v-card>
               <form class="w-100">
-                <base-input col="12" type="text" :placeholder="$t('TABLES.Rates.user_commet')"
-                  v-model="balance_package" disabled />
+                <base-input col="12" type="text" :placeholder="$t('TABLES.Rates.user_commet')" v-model="balance_package"
+                  disabled />
               </form>
 
             </v-card>
@@ -239,14 +246,14 @@ export default {
         },
         {
           text: this.$t("PLACEHOLDERS.user_name"),
-          value: "user.name",
+          value: "name",
           align: "center",
           width: "220",
           sortable: false
         },
         {
           text: this.$t("TABLES.Rates.rate"),
-          value: "rate",
+          value: "stars",
           align: "center",
           width: "100",
           sortable: false
