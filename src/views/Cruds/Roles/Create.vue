@@ -68,6 +68,7 @@
             ></v-switch>
           </div>
           <!-- End:: Deactivate Switch Input -->
+          
           <!-- Start:: Submit Button Wrapper -->
           <div class="btn_wrapper">
             <base-button class="mt-2" styleType="primary_btn" :btnText="$t('BUTTONS.save')" :isLoading="isWaitingRequest"

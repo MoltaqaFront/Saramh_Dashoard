@@ -45,6 +45,7 @@ import EmailVerificationForm from "../views/Auth/EmailVerificationForm.vue";
 import FinancialReportsHome from "../views/Cruds/FinancialReports/ShowAll.vue";
 import ForbiddenPage from "../pages/ForbiddenPage.vue";
 import GeneralSettings from "../views/Cruds/AppSettings/GeneralSettings.vue";
+import ManagementSettings from "../views/Cruds/AppSettings/ContentDef.vue";
 import HomePage from "../pages/HomePage.vue";
 import LoginForm from "../views/Auth/LoginForm.vue";
 import MainSpecializationsHome from "../views//Cruds/MainSpecializations/Home.vue";
@@ -912,6 +913,18 @@ const routes = [
       {
         path: "/contact_settings",
         component: GeneralSettings,
+        meta: {
+          middleware: [auth],
+          requiresPermission: {
+            action: "settings create",
+            subject: "settings",
+          },
+        },
+      },
+
+      {
+        path: "/management_settings",
+        component: ManagementSettings,
         meta: {
           middleware: [auth],
           requiresPermission: {

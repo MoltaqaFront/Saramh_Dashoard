@@ -50,18 +50,19 @@
       "showAll": "كل رسائل التواصل"
     },
     "AppContent": {
-      "title": "محتوي التطبيق",
+      "title": "محتوي المنصة",
       "aboutUs": "من نحن",
       "termsAndConditions": "الشروط و الأحكام",
       "privacyPolicy": "سياسة الخصوصية" ,
       "section" : "السكشن التعريفي" ,
       "message" : "الرؤية والرسالة والأهداف" ,
       "goals" : "الأهداف" ,
+      "management" : "إدارة محتوي المنصة",
       "mission" : "الرسالة" ,
       "Vision" : "الرؤية"
     },
     "settings": {
-      "title": "إعدادات التطبيق"
+      "title": "إعدادات المنصة"
     },
     "Roles": {
       "title": "الصلاحيات والمهام",

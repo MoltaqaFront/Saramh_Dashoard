@@ -14,11 +14,13 @@
           <form @submit.prevent="submitFilterForm">
             <div class="row justify-content-center align-items-center w-100">
               <!-- Start:: Name Input -->
-              <base-input col="4" type="text" :placeholder="$t('PLACEHOLDERS.name')" v-model.trim="filterOptions.name" />
+              <base-input col="4" type="text" :placeholder="$t('PLACEHOLDERS.name')"
+                v-model.trim="filterOptions.name" />
               <!-- End:: Name Input -->
 
               <!-- Start:: Phone Input -->
-              <base-input col="4" type="tel" :placeholder="$t('PLACEHOLDERS.phone')" v-model.trim="filterOptions.phone" />
+              <base-input col="4" type="tel" :placeholder="$t('PLACEHOLDERS.phone')"
+                v-model.trim="filterOptions.phone" />
               <!-- End:: Phone Input -->
 
               <!-- Start:: Status Input -->
@@ -97,7 +99,7 @@
           <h6 v-else> {{ item.email }} </h6>
         </template>
         <!-- End:: email -->
-     
+
         <template v-slot:[`item.is_verified`]="{ item }">
           <v-chip :color="item.is_verified ? 'green' : 'red'" text-color="white" small>
             <template v-if="item.is_verified">
@@ -109,7 +111,7 @@
           </v-chip>
         </template>
 
-       
+
         <!-- Start:: Activation Status -->
         <template v-slot:[`item.is_active`]="{ item }">
           <span class="text-success text-h5" v-if="item.is_active">
@@ -160,7 +162,7 @@
                 </button>
               </a-tooltip>
             </template>
-            
+
             <template v-else>
               <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
             </template>
@@ -445,8 +447,7 @@ export default {
       this.$router.push({ path: `/clients/show/${item.id}` });
     },
    subscription(item) {
-      const mobileNumber = item.mobile;  
-      this.$router.push({ path: `/SubscriptionsPrice/all`, query: { mobile: mobileNumber } });
+     this.$router.push({ path: `/clients/subscriptions/${item.id}` });
     },
     // ===== End:: End
 
