@@ -17,12 +17,12 @@
 
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameAr')" v-model.trim="data.nameAr"
-            @input="validateInput" required />
+             required />
           <!-- End:: Name Input -->
 
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameEn')" v-model.trim="data.nameEn"
-            @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+            required />
           <!-- End:: Name Input -->
           <!-- Start:: Phone Input -->
           <base-input ref="phoneInput" col="6" type="tel" :placeholder="$t('TABLES.coaches.phone')"
@@ -35,13 +35,13 @@
           <!-- End:: whatsapp Input -->
 
           <!-- Start:: Name Input -->
-          <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr"
-            @input="validateInput" required />
+          <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr"
+            required />
           <!-- End:: Name Input -->
 
           <!-- Start:: Name Input -->
-          <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"
-            @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+          <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"
+             required />
           <!-- End:: Name Input -->
 
           <!-- Start:: main Input -->
@@ -71,21 +71,21 @@
 
               <div class="col-lg-6 col-12">
                 <base-input col="12" type="text" :placeholder="$t('SIDENAV.Coaches.program_nameAr')"
-                  v-model.trim="item.program_nameAr" @input="validateInput" required />
+                  v-model.trim="item.program_nameAr"  required />
               </div>
               <div class="col-lg-6 col-12">
                 <base-input col="12" type="text" :placeholder="$t('SIDENAV.Coaches.program_nameEn')"
-                  v-model.trim="item.program_nameEn" input="removeArabicCharacters" @copy="onCopy" @paste="onPaste"
+                  v-model.trim="item.program_nameEn" 
                   required />
               </div>
 
               <div class="col-lg-6 col-12">
-                <base-input col="12" type="text" :placeholder="$t('SIDENAV.Coaches.descriptionAr')"
-                  v-model.trim="item.descriptionAr" @input="validateInput" required />
+                <base-input col="12" type="textarea" :placeholder="$t('SIDENAV.Coaches.descriptionAr')"
+                  v-model.trim="item.descriptionAr"  required />
               </div>
               <div class="col-lg-6 col-12">
-                <base-input col="12" type="text" :placeholder="$t('SIDENAV.Coaches.descriptionEn')"
-                  v-model.trim="item.descriptionEn" input="removeArabicCharacters" @copy="onCopy" @paste="onPaste"
+                <base-input col="12" type="textarea" :placeholder="$t('SIDENAV.Coaches.descriptionEn')"
+                  v-model.trim="item.descriptionEn" 
                   required />
               </div>
 
@@ -181,9 +181,6 @@ export default {
         },
       ],
       // End:: Data Collection To Send
-
-      arabicRegex: /^[\u0600-\u06FF\s]+$/,
-      EnRegex: /[\u0600-\u06FF]/,
     };
   },
 
@@ -224,13 +221,6 @@ export default {
       return current && current < moment().startOf("day");
     },
 
-    onCopy(event) {
-      event.preventDefault();
-    },
-    onPaste(event) {
-      event.preventDefault();
-    },
-
     addRow() {
       this.field_values.push(
         {
@@ -246,20 +236,6 @@ export default {
 
     removeRow(index) {
       this.field_values.splice(index, 1)
-    },
-
-    validateInput() {
-      // Remove non-Arabic characters from the input
-      this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.des_ar = this.data.des_ar.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.noteAr = this.data.noteAr.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.program_nameAr = this.data.program_nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-    },
-    removeArabicCharacters() {
-      this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
-      this.data.des_en = this.data.des_en.replace(this.EnRegex, "");
-      this.data.noteEn = this.data.noteEn.replace(this.EnRegex, "");
-      this.data.program_nameEn = this.data.program_nameEn.replace(this.EnRegex, "");
     },
 
     selectImage(selectedImage) {

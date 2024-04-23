@@ -30,8 +30,8 @@
       <form>
         <div class="row">
           <!-- Start:: Image Upload Input -->
-          <base-image-upload-input col="12" identifier="client_image" :placeholder="$t('PLACEHOLDERS.personalImage')"
-            :preSelectedImage="data.image" disabled class="disabled_input" />
+        <base-image-upload-input col="12" identifier="admin_image" :preSelectedImage="data.image.path"
+            :placeholder="$t('PLACEHOLDERS.personalImage')" @selectImage="selectImage" disabled />
           <!-- End:: Image Upload Input -->
 
           <!-- Start:: Ar Name Input -->
@@ -141,7 +141,10 @@ export default {
 
       // Start:: Data
       data: {
-        image: null,
+        image: {
+          path: null,
+          file: null,
+        },
         name: null,
         phone: null,
         registration_otp_status: null,
@@ -175,7 +178,7 @@ export default {
           url: `clients/${this.$route.params.id}`,
         });
         // console.log("DATA =>", res.data.data);
-        this.data.image = res.data.data.Client.image.path;
+        this.data.image.path = res.data.data.Client.image;
         this.data.name = res.data.data.Client.name;
         this.data.phone = res.data.data.Client.mobile;
         this.data.registration_otp_status = res.data.data.Client.is_verified;

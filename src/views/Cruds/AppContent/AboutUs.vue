@@ -11,15 +11,6 @@
       <form @submit.prevent="validateFormInputs">
         <div class="row">
 
-          <!-- Start:: Name Input -->
-          <!-- <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.titleAr')" v-model.trim="data.nameAr" required /> -->
-          <!-- End:: Name Input -->
-
-          <!-- Start:: Name Input -->
-          <!-- <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.titleEn')" v-model.trim="data.nameEn" required /> -->
-
-          <!-- End:: Name Input -->
-
           <!-- Start:: Ar Content Text Editor -->
           <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentAr')" v-model.trim="data.contentAr" required />
           <!-- End:: Ar Content Text Editor -->
@@ -73,8 +64,6 @@ export default {
         // Start:: Set Data
         this.data.contentAr = res.data.data[0].value_ar;
         this.data.contentEn = res.data.data[0].value_en;
-        // this.data.nameAr = res.data.data[0].name_ar;
-        // this.data.nameEn = res.data.data[0].name_en;
         // End:: Set Data
       } catch (error) {
         console.log(error.response.data.message);
@@ -107,8 +96,6 @@ export default {
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
       REQUEST_DATA.append("key", "about_us");
-      // REQUEST_DATA.append("value[name_en]", this.data.nameEn);
-      // REQUEST_DATA.append("value[name_ar]", this.data.nameAr);
       REQUEST_DATA.append("value[ar]", this.data.contentAr);
       REQUEST_DATA.append("value[en]", this.data.contentEn);
       // REQUEST_DATA.append("_method", "PUT");

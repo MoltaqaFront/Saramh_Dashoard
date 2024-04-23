@@ -140,6 +140,16 @@ export default {
         this.isWaitingRequest = false;
         this.$message.error(this.$t("VALIDATION.contentEn"));
         return;
+       }
+       if (!this.data.aboutusAr) {
+        this.isWaitingRequest = false;
+        this.$message.error(this.$t("VALIDATION.contentAr"));
+        return;
+      }
+      else if (!this.data.aboutusEn) {
+        this.isWaitingRequest = false;
+        this.$message.error(this.$t("VALIDATION.contentEn"));
+        return;
       }
       else {
         this.submitForm();

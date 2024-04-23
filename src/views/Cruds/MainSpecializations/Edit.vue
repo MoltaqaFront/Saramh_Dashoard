@@ -12,12 +12,12 @@
         <div class="row">
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameAr')" v-model.trim="data.nameAr"
-            @input="validateInput" required />
+            required />
           <!-- End:: Name Input -->
 
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameEn')" v-model.trim="data.nameEn"
-            @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+            required />
 
           <!-- End:: Name Input -->
 
@@ -61,9 +61,6 @@ export default {
       allVehicleTypes: [],
 
       // End:: Data Collection To Send
-
-      arabicRegex: /^[\u0600-\u06FF\s]+$/,
-      EnRegex: /[\u0600-\u06FF]/,
     };
   },
 
@@ -91,19 +88,6 @@ export default {
       return current && current < moment().startOf("day");
     },
 
-    onCopy(event) {
-      event.preventDefault();
-    },
-    onPaste(event) {
-      event.preventDefault();
-    },
-    validateInput() {
-      // Remove non-Arabic characters from the input
-      this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-    },
-    removeArabicCharacters() {
-      this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
-    },
     // Start:: validate Form Inputs
     validateFormInputs() {
       this.isWaitingRequest = true;

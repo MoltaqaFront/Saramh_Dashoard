@@ -14,14 +14,14 @@
           <div class="col-md-6 col-12">
             <!-- Start:: Name Input -->
             <base-input cols="6" type="text" :placeholder="$t('PLACEHOLDERS.nameAr')" v-model.trim="data.name_ar" required
-              @input="validateInput" @copy="onCopy" @paste="onPaste" />
+               />
             <!-- End:: Name Input -->
           </div>
 
           <div class="col-md-6 col-12">
             <!-- Start:: Name Input -->
             <base-input cols="6" type="text" :placeholder="$t('PLACEHOLDERS.nameEn')" v-model.trim="data.name_en"
-              @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" />
+             required />
             <!-- End:: Name Input -->
           </div>
 
@@ -105,7 +105,6 @@ export default {
         active: null,
         permissions: [],
       },
-      EnRegex: /[\u0600-\u06FF]/,
       // End:: Data Collection To Send
     };
   },
@@ -124,22 +123,6 @@ export default {
       getAllSystemPermissions: "PermissionsModule/getAllSystemPermissions",
     }),
     // End:: Vuex Actions
-
-    onCopy(event) {
-      event.preventDefault();
-    },
-    onPaste(event) {
-      event.preventDefault();
-    },
-
-    validateInput() {
-      // Remove non-Arabic characters from the input
-      this.data.name_ar = this.data.name_ar.replace(/[^\u0600-\u06FF\s]/g, "");
-    },
-
-    removeArabicCharacters() {
-      this.data.name_en = this.data.name_en.replace(this.EnRegex, "");
-    },
 
     // Start:: Get Data To Edit
     async getDataToEdit() {

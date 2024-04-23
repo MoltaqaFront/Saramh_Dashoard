@@ -118,17 +118,6 @@ export default {
     // Start:: validate Form Inputs
     validateFormInputs() {
       this.isWaitingRequest = true;
-      const arabicRegex = /^[\u0600-\u06FF\s]+$/;
-      if (!arabicRegex.test(this.data.titleAr)) {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.arabic_words_required"));
-        return;
-      }
-      if (!arabicRegex.test(this.data.contentAr)) {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.arabic_words_required"));
-        return;
-      }
       if (!this.data.titleAr) {
         this.isWaitingRequest = false;
         this.$message.error(this.$t("VALIDATION.nameAr"));
@@ -193,10 +182,10 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "clients"
+          url: "all-clients"
         });
         this.loading = false;
-        this.clients = res.data.data;
+        this.clients = res.data.data.Client;
       } catch (error) {
         this.loading = false;
         console.log(error.response.data.message);

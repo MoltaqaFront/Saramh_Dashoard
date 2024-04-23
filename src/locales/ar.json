@@ -679,7 +679,8 @@
 
     "MainSpecializations" : "إضافة تخصص رئيسي",
     "Subspecialties" : "إضافة تخصص فرعي" ,
-    "download_invoice": "تحميل الفاتورة"
+    "download_invoice": "تحميل الفاتورة",
+    "Invoiceimage" : "الفاتوره الالكترونيه"
   },
 
   "TABS": {

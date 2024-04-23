@@ -116,10 +116,10 @@ export default {
           }
         });
         this.$message.success(res.data.message);
+        this.getData();
         this.readAllNotifications();
         this.notificationsData.unreadNotifications--;
         console.log("notificationsData.unreadNotifications", this.notificationsData.unreadNotifications)
-        this.getData();
       } catch (error) {
         this.dialogDelete = false;
         this.$message.error(error.response.data.errors);

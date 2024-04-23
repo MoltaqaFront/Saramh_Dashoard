@@ -16,37 +16,37 @@
           <!-- End:: Image Upload Input -->
 
            <!-- Start:: Name Input -->
-            <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameAr')" v-model.trim="data.nameAr" @input="validateInput" required />
+            <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameAr')" v-model.trim="data.nameAr"  required />
             <!-- End:: Name Input -->
 
              <!-- Start:: Name Input -->
-              <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameEn')" v-model.trim="data.nameEn"  @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+              <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameEn')" v-model.trim="data.nameEn"  required />
               <!-- End:: Name Input -->
              <!-- Start:: Phone Input -->
             <base-input ref="phoneInput" col="6" type="tel" :placeholder="$t('TABLES.coaches.phone')"
-              v-model.trim="data.phone" required autocomplete="new-password" />
+              v-model.trim="data.phone" required  />
             <!-- End:: Phone Input -->
 
             <!-- Start:: whatsapp Input -->
               <base-input ref="phoneInput" col="6" type="tel" :placeholder="$t('TABLES.coaches.moblie')"
-                v-model.trim="data.mobile" required autocomplete="new-password" />
+                v-model.trim="data.mobile" required  />
               <!-- End:: whatsapp Input -->
 
               <!-- Start:: Name Input -->
-              <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr" @input="validateInput" required />
+              <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr"  required />
               <!-- End:: Name Input -->
 
               <!-- Start:: Name Input -->
-                <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"  @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+                <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"   required />
                 <!-- End:: Name Input -->
 
                 <!-- Start:: main Input -->
                 <base-select-input col="6" :optionsList="Mainspescial"  :placeholder="$t('TABLES.coaches.main')"
-                    v-model="data.main" required/>
+                    v-model="data.main" @input="getSub" required/>
                 <!-- End:: main Input -->
 
                 <!-- Start:: sub Input -->
-                  <base-select-input  col="6" :optionsList="Subspecail" :placeholder="$t('TABLES.coaches.sub')"
+                  <base-select-input  col="6" v-if="Subspecail" :optionsList="Subspecail" :placeholder="$t('TABLES.coaches.sub')"
                     v-model="data.sub" required />
                   <!-- End:: sub Input -->
 
@@ -88,7 +88,7 @@
                <div class="col-lg-6 col-12">
                     <base-input 
                       col="12" 
-                      type="text" 
+                      type="textarea" 
                       :placeholder="$t('SIDENAV.Coaches.descriptionAr')" 
                       v-model.trim="item.descriptionAr"
                       @input="validateInput" 
@@ -97,7 +97,7 @@
                 <div class="col-lg-6 col-12">
                   <base-input 
                     col="12" 
-                    type="text" 
+                    type="textarea" 
                     :placeholder="$t('SIDENAV.Coaches.descriptionEn')" 
                     v-model.trim="item.descriptionEn"
                     input="removeArabicCharacters"
@@ -380,7 +380,8 @@ export default {
           method: "GET",
           url: `subspecialties`,
           params: {
-            "status": 1
+            "status": 1 ,
+           specialty_id: `${this.data.main?.id}`,
           }
         });
         // console.log("Cities =>", res.data.data);

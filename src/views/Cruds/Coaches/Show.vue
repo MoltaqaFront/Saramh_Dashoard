@@ -33,11 +33,11 @@
                 <!-- End:: whatsapp Input -->
 
                 <!-- Start:: Name Input -->
-                <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr" @input="validateInput" disabled />
+                <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr" @input="validateInput" disabled />
                 <!-- End:: Name Input -->
 
                 <!-- Start:: Name Input -->
-                  <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"  @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" disabled />
+                  <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"  @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" disabled />
                   <!-- End:: Name Input -->
 
                   <!-- Start:: main Input -->
@@ -84,7 +84,7 @@
                               <div class="col-lg-6 col-12">
                                     <base-input 
                                       col="12" 
-                                      type="text" 
+                                      type="textarea" 
                                       :placeholder="$t('SIDENAV.Coaches.descriptionAr')" 
                                       v-model.trim="item.descriptionAr"
                                       @input="validateInput" 
@@ -93,7 +93,7 @@
                                 <div class="col-lg-6 col-12">
                                   <base-input 
                                     col="12" 
-                                    type="text" 
+                                    type="textarea" 
                                     :placeholder="$t('SIDENAV.Coaches.descriptionEn')" 
                                     v-model.trim="item.descriptionEn"
                                     input="removeArabicCharacters"

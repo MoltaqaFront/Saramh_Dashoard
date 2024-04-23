@@ -691,7 +691,9 @@
     "components": "Components",
     "MainSpecializations": "Add a main specialization",
     "Subspecialties": "Add a subspecialty",
-    "subscriptions": "Subscription history" 
+    "subscriptions": "Subscription history" ,
+     "download_invoice": "Download invoice",
+     "Invoiceimage": "Electronic Invoice"
   },
 
   "TABS": {

@@ -21,22 +21,22 @@
 
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('TABLES.Notifications.titleAr')" v-model.trim="data.nameAr"
-            @input="validateInput" required />
+             required />
           <!-- End:: Name Input -->
 
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('TABLES.Notifications.titleEn')" v-model.trim="data.nameEn"
-            @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+            required />
 
           
             <!-- Start:: Name Input -->
             <base-input col="6" type="textarea" :placeholder="$t('TABLES.Notifications.contentAr')" v-model.trim="data.contentAr"
-              @input="validateInput" required />
+              required />
             <!-- End:: Name Input -->
 
             <!-- Start:: Name Input -->
             <base-input col="6" type="textarea" :placeholder="$t('TABLES.Notifications.contentEn')" v-model.trim="data.contentEn"
-              @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+               required />
 
            
           <!-- Start:: Submit Button Wrapper -->
@@ -76,9 +76,6 @@ export default {
         contentAr : null,
       },
       // End:: Data Collection To Send
-
-      arabicRegex: /^[\u0600-\u06FF\s]+$/,
-      EnRegex: /[\u0600-\u06FF]/,
     };
   },
 
