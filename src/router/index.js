@@ -746,6 +746,10 @@ const routes = [
             component: AllFinancialReports,
             meta: {
               middleware: [auth],
+              requiresPermission: {
+                action: "financial reports",
+                subject: "financial",
+              },
             },
           },
           // {

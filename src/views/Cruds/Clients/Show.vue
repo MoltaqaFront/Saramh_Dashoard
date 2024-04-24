@@ -65,7 +65,7 @@
           <!-- End:: height Input -->
 
            <!-- Start:: diseases Input -->
-           <base-input col="3" type="text" :placeholder="$t('TABLES.Clients.diseases')" v-model.trim="data.diseases"
+           <base-input col="3"  type="text" :placeholder="$t('TABLES.Clients.diseases')" v-model.trim="data.diseases"
             readonly class="disabled_input" />
           <!-- End:: diseases Input -->
           
@@ -80,22 +80,22 @@
           <!-- End:: surgeries  Input -->
 
            <!-- Start:: surgeries_what  Input -->
-           <base-input col="4"  type="text" :placeholder="$t('TABLES.Clients.surgeries_what')" v-model.trim="data.surgeries_what"
+           <base-input col="4"  v-if="data.surgeries === 'نعم'"  type="text" :placeholder="$t('TABLES.Clients.surgeries_what')" v-model.trim="data.surgeries_what"
             readonly class="disabled_input" />
           <!-- End:: surgeries_what  Input -->
 
            <!-- Start:: surgeries_when Input -->
-           <base-input col="4"  type="text" :placeholder="$t('TABLES.Clients.surgeries_when')" v-model.trim="data.surgeries_when"
+           <base-input col="4"  v-if="data.surgeries === 'نعم'"  type="text" :placeholder="$t('TABLES.Clients.surgeries_when')" v-model.trim="data.surgeries_when"
             readonly class="disabled_input" />
           <!-- End:: surgeries_when Input -->
 
            <!-- Start:: playing_sports Input -->
-           <base-input col="6"  type="text" :placeholder="$t('TABLES.Clients.playing_sports')" v-model.trim="data.playing_sports"
+           <base-input col="6"   type="text" :placeholder="$t('TABLES.Clients.playing_sports')" v-model.trim="data.playing_sports"
             readonly class="disabled_input" />
           <!-- End:: playing_sports Input -->
 
           <!-- Start:: practice_duration Input -->
-            <base-input col="6" type="text" :placeholder="$t('TABLES.Clients.practice_duration')" v-model.trim="data.practice_duration"
+            <base-input col="6" v-if="data.playing_sports === 'نعم'" type="text" :placeholder="$t('TABLES.Clients.practice_duration')" v-model.trim="data.practice_duration"
             readonly class="disabled_input" />
           <!-- End:: practice_duration Input -->
 

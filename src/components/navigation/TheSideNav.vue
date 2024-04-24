@@ -179,7 +179,8 @@
       <!-- End:: SubscriptionsPrice management -->
 
       <!-- Start:: financialreports management -->
-      <div class="home_route" @click="$emit('fireToggleNavDrawerEmit')">
+      <div class="home_route" @click="$emit('fireToggleNavDrawerEmit')"
+      v-if="$can('financial reports', 'financial')">
         <router-link to="/financial-reports/all">
           <span class="route_icon">
             <img src="@/assets/media/icons/ui_icons/price.png" alt="icon" width="40" height="40" />
