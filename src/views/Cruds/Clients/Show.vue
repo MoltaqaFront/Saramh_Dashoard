@@ -63,30 +63,37 @@
            <base-input col="3" type="text" :placeholder="$t('TABLES.Clients.height')" v-model.trim="data.height"
             readonly class="disabled_input" />
           <!-- End:: height Input -->
-
-           <!-- Start:: diseases Input -->
-           <base-input col="3"  type="text" :placeholder="$t('TABLES.Clients.diseases')" v-model.trim="data.diseases"
-            readonly class="disabled_input" />
-          <!-- End:: diseases Input -->
           
           <!-- Start:: Joining Date Input -->
           <base-input col="3" type="text" :placeholder="$t('TABLES.Clients.joiningDate')" v-model.trim="data.joiningDate"
             readonly class="disabled_input" />
           <!-- End:: Joining Date Input -->
 
+             <!-- Start:: diseases Input -->
+           <base-input col="6"  type="text" :placeholder="$t('TABLES.Clients.diseases')" v-model.trim="data.diseases"
+            readonly class="disabled_input" />
+          <!-- End:: diseases Input -->
+
+          
+           <!-- Start:: diseases_what  Input -->
+           <base-input col="6"  v-if="data.diseases === 'نعم'"  type="text" :placeholder="$t('TABLES.Clients.surgeries_what')" v-model.trim="data.diseases_what"
+            readonly class="disabled_input" />
+          <!-- End:: surgeries_what  Input -->
+
+
            <!-- Start:: surgeries Input -->
-           <base-input col="4"  type="text" :placeholder="$t('TABLES.Clients.surgeries')" v-model.trim="data.surgeries"
+           <base-input col="6"  type="text" :placeholder="$t('TABLES.Clients.surgeries')" v-model.trim="data.surgeries"
             readonly class="disabled_input" />
           <!-- End:: surgeries  Input -->
 
            <!-- Start:: surgeries_what  Input -->
-           <base-input col="4"  v-if="data.surgeries === 'نعم'"  type="text" :placeholder="$t('TABLES.Clients.surgeries_what')" v-model.trim="data.surgeries_what"
+           <base-input col="6"  v-if="data.surgeries === 'نعم'"  type="text" :placeholder="$t('TABLES.Clients.surgeries_what')" v-model.trim="data.surgeries_what"
             readonly class="disabled_input" />
           <!-- End:: surgeries_what  Input -->
 
            <!-- Start:: surgeries_when Input -->
-           <base-input col="4"  v-if="data.surgeries === 'نعم'"  type="text" :placeholder="$t('TABLES.Clients.surgeries_when')" v-model.trim="data.surgeries_when"
-            readonly class="disabled_input" />
+           <!-- <base-input col="4"  v-if="data.surgeries === 'نعم'"  type="text" :placeholder="$t('TABLES.Clients.surgeries_when')" v-model.trim="data.surgeries_when"
+            readonly class="disabled_input" /> -->
           <!-- End:: surgeries_when Input -->
 
            <!-- Start:: playing_sports Input -->
@@ -95,24 +102,30 @@
           <!-- End:: playing_sports Input -->
 
           <!-- Start:: practice_duration Input -->
-            <base-input col="6" v-if="data.playing_sports === 'نعم'" type="text" :placeholder="$t('TABLES.Clients.practice_duration')" v-model.trim="data.practice_duration"
+            <base-input col="6" v-if="data.playing_sports === 'نعم'" type="text" :placeholder="$t('TABLES.Clients.playing_days')" v-model.trim="data.practice_duration"
             readonly class="disabled_input" />
           <!-- End:: practice_duration Input -->
+
+           <!-- Start:: playing_place Input -->
+           <base-input col="6" type="text" :placeholder="$t('TABLES.Clients.playing_place')" v-model.trim="data.playing_place"
+            readonly class="disabled_input" />
+          <!-- End:: playing_place Input -->
+         
+           <!-- Start:: playing_tools Input -->
+           <base-input col="6"  type="text" v-if="data.tools == 'home'" :placeholder="$t('TABLES.Clients.playing_tools')" v-model.trim="data.playing_tools"
+            readonly class="disabled_input" />
+          <!-- End:: playing_tools Input -->
+
+           <!-- Start:: playing_days Input -->
+           <base-input col="6" type="text" :placeholder="$t('TABLES.Clients.practice_duration')" v-model.trim="data.playing_days"
+            readonly class="disabled_input" />
+          <!-- End:: playing_days Input -->
 
            <!-- Start:: goal Input -->
            <base-input col="6" type="text" :placeholder="$t('TABLES.Clients.goal')" v-model.trim="data.goal"
             readonly class="disabled_input" />
           <!-- End:: goal  Input -->
 
-           <!-- Start:: playing_days Input -->
-           <base-input col="8" type="text" :placeholder="$t('TABLES.Clients.playing_days')" v-model.trim="data.playing_days"
-            readonly class="disabled_input" />
-          <!-- End:: playing_days Input -->
-
-           <!-- Start:: playing_place Input -->
-           <base-input col="8" type="text" :placeholder="$t('TABLES.Clients.playing_place')" v-model.trim="data.playing_place"
-            readonly class="disabled_input" />
-          <!-- End:: playing_place Input -->
 
         </div>
       </form>
@@ -154,9 +167,11 @@ export default {
         weight: null,
         height : null,
         diseases: null,
+        diseases_what: null,
         surgeries : null,
         playing_sports: null,
-        playing_place : null,
+        playing_place: null,
+        playing_tools: null,
         goal : null,
         tools : null,
         practice_duration : null,
@@ -190,15 +205,17 @@ export default {
         this.data.age = res.data.data.Client.pesonalInfo.age;
         this.data.weight = res.data.data.Client.pesonalInfo.weight;
         this.data.height = res.data.data.Client.pesonalInfo.height;
-        this.data.diseases = res.data.data.Client.pesonalInfo.diseases_bool ==1 ? "نعم" : "لا"
+        this.data.diseases = res.data.data.Client.pesonalInfo.diseases_bool == 1 ? "نعم" : "لا";
+        this.data.diseases_what = res.data.data.Client.pesonalInfo.diseases;
         this.data.surgeries = res.data.data.Client.pesonalInfo.surgeries_bool ==1 ? "نعم" : "لا";
         this.data.surgeries_what = res.data.data.Client.pesonalInfo.surgeries ;
-        this.data.surgeries_when = res.data.data.Client.pesonalInfo.surgeries_date ;
+        // this.data.surgeries_when = res.data.data.Client.pesonalInfo.surgeries_date ;
         this.data.playing_sports = res.data.data.Client.pesonalInfo.playing_sports_bool ==1 ? "نعم" : "لا";
-        this.data.playing_place = res.data.data.Client.pesonalInfo.playing_place;
+        this.data.playing_place = res.data.data.Client.pesonalInfo.trans_playing_place;
+        this.data.tools = res.data.data.Client.pesonalInfo.playing_place ;
+        this.data.playing_tools = res.data.data.Client.pesonalInfo.tools;
         this.data.playing_days = res.data.data.Client.pesonalInfo.playing_days_count;
-        this.data.goal = res.data.data.Client.pesonalInfo.goal;
-        this.data.tools = res.data.data.Client.pesonalInfo.tools;
+        this.data.goal = res.data.data.Client.pesonalInfo.trans_goal;
         this.data.practice_duration = res.data.data.Client.pesonalInfo.practice_duration;
         
       } catch (error) {

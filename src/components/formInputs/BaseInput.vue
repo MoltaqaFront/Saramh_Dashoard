@@ -25,8 +25,8 @@
       <input class="form-control" :type="passwordIsVisible ? 'text' : 'password'" :value="value"
         @input="updateValue($event)" :readonly="readonly" :disabled="disabled" />
       <button type="button" class="password_visibility_toggler" @click="passwordIsVisible = !passwordIsVisible">
-        <i class="fal fa-eye-slash" v-if="passwordIsVisible"></i>
-        <i class="fal fa-eye" v-else></i>
+        <i class="fal fa-eye" v-if="passwordIsVisible"></i>
+        <i class="fal fa-eye-slash" v-else></i>
       </button>
     </div>
     <!-- ========== End:: Password Input ========== -->

@@ -199,11 +199,11 @@
               </tr>
             </tbody>
           </table>
-
-          <div  class="qrcode text-center">
+          <div  class="text-center w-24 h-100">
             <h4 >{{ $t("PLACEHOLDERS.qr") }}</h4>
-             <span v-html="qr" ></span>
+            <span v-html="qr" class="qrcode"></span>
           </div>
+        
         </div>
       </section>
     </vue-html2pdf>
