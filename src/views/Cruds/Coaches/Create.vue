@@ -70,7 +70,7 @@
                     type="text" 
                     :placeholder="$t('SIDENAV.Coaches.program_nameAr')" 
                     v-model.trim="item.program_nameAr"
-                    @input="validateInput" 
+                  
                     required />
               </div>
               <div class="col-lg-6 col-12">
@@ -79,9 +79,6 @@
                   type="text" 
                   :placeholder="$t('SIDENAV.Coaches.program_nameEn')" 
                   v-model.trim="item.program_nameEn"
-                  input="removeArabicCharacters"
-                  @copy="onCopy" 
-                  @paste="onPaste" 
                   required />
               </div>
 
@@ -91,7 +88,6 @@
                       type="textarea" 
                       :placeholder="$t('SIDENAV.Coaches.descriptionAr')" 
                       v-model.trim="item.descriptionAr"
-                      @input="validateInput" 
                       required />
                 </div>
                 <div class="col-lg-6 col-12">
@@ -100,9 +96,6 @@
                     type="textarea" 
                     :placeholder="$t('SIDENAV.Coaches.descriptionEn')" 
                     v-model.trim="item.descriptionEn"
-                    input="removeArabicCharacters"
-                    @copy="onCopy" 
-                    @paste="onPaste" 
                     required />
                 </div>
 
@@ -196,9 +189,6 @@ export default {
         },
       ],
       // End:: Data Collection To Send
-
-      arabicRegex: /^[\u0600-\u06FF\s]+$/,
-      EnRegex: /[\u0600-\u06FF]/,
     };
   },
 
@@ -239,13 +229,6 @@ export default {
       return current && current < moment().startOf("day");
     },
 
-    onCopy(event) {
-      event.preventDefault();
-    },
-    onPaste(event) {
-      event.preventDefault();
-    },
-
     addRow() {
       this.field_values.push(
         {
@@ -261,20 +244,6 @@ export default {
 
     removeRow(index) {
       this.field_values.splice(index, 1)
-    },
-
-    validateInput() {
-      // Remove non-Arabic characters from the input
-      this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.des_ar = this.data.des_ar.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.noteAr = this.data.noteAr.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.program_nameAr = this.data.program_nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-    },
-    removeArabicCharacters() {
-      this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
-      this.data.des_en = this.data.des_en.replace(this.EnRegex, "");
-      this.data.noteEn = this.data.noteEn.replace(this.EnRegex, "");
-      this.data.program_nameEn = this.data.program_nameEn.replace(this.EnRegex, "");
     },
 
     selectImage(selectedImage) {
