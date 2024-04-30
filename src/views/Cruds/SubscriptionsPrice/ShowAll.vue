@@ -197,12 +197,13 @@
                 <td>{{ $t("TABLES.subscriptions.priceCoach") }}</td>
                 <td>{{ priceCoach }}</td>
               </tr>
+
+             <h4 class="text-center mx-10">{{ $t("PLACEHOLDERS.qr") }}</h4>
+               <tr class="text-center mx-10">
+                <td ><span v-html="qr"></span></td>
+              </tr>
             </tbody>
           </table>
-          <div  class="text-center w-24 h-100">
-            <h4 >{{ $t("PLACEHOLDERS.qr") }}</h4>
-            <span v-html="qr" class="qrcode"></span>
-          </div>
         
         </div>
       </section>

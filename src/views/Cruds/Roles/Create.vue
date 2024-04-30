@@ -177,7 +177,7 @@ export default {
       // Start:: Append Request Data
       REQUEST_DATA.append("name[ar]", this.data.name_ar);
       REQUEST_DATA.append("name[en]", this.data.name_en);
-      REQUEST_DATA.append("name[en]", this.data.active);
+      REQUEST_DATA.append("is_active", this.data.active);
       this.data.permissions.forEach(element => {
         REQUEST_DATA.append("role_permissions[]", element);
       });

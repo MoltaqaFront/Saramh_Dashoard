@@ -143,7 +143,7 @@ export default {
           method: "GET",
           url: `specialties`,
           params: {
-            "status": 1
+            "is_active": 1
           }
         });
         // console.log("Cities =>", res.data.data);

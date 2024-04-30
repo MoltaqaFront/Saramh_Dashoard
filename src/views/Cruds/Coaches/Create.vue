@@ -333,7 +333,7 @@ export default {
           method: "GET",
           url: `specialties`,
           params: {
-            "status": 1
+            "is_active": 1
           }
         });
         // console.log("Cities =>", res.data.data);
@@ -349,7 +349,7 @@ export default {
           method: "GET",
           url: `subspecialties`,
           params: {
-            "status": 1 ,
+            "is_active": 1 ,
            specialty_id: `${this.data.main?.id}`,
           }
         });

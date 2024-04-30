@@ -44,15 +44,16 @@
              required />
           <!-- End:: Name Input -->
 
-          <!-- Start:: main Input -->
-          <base-select-input col="6" :optionsList="Mainspescial" :placeholder="$t('TABLES.coaches.main')"
-            v-model="data.main" required />
-          <!-- End:: main Input -->
+         <!-- Start:: main Input -->
+                <base-select-input col="6" :optionsList="Mainspescial"  :placeholder="$t('TABLES.coaches.main')"
+                    v-model="data.main" @input="getSub" required/>
+                <!-- End:: main Input -->
 
-          <!-- Start:: sub Input -->
-          <base-select-input col="6" :optionsList="Subspecail" :placeholder="$t('TABLES.coaches.sub')" v-model="data.sub"
-            required />
-          <!-- End:: sub Input -->
+                <!-- Start:: sub Input -->
+                  <base-select-input  col="6" v-if="Subspecail" :optionsList="Subspecail" :placeholder="$t('TABLES.coaches.sub')"
+                    v-model="data.sub" required />
+                  <!-- End:: sub Input -->
+
 
           <!-- Start experiences Input -->
           <base-input col="6" type="number" :placeholder="$t('TABLES.coaches.experience')" v-model.trim="data.experience"
@@ -391,7 +392,7 @@ export default {
           method: "GET",
           url: `specialties`,
           params: {
-            "status": 1
+            "is_active": 1
           }
         });
         // console.log("Cities =>", res.data.data);
@@ -407,7 +408,8 @@ export default {
           method: "GET",
           url: `subspecialties`,
           params: {
-            "status": 1
+            "is_active": 1 ,
+           specialty_id: `${this.data.main?.id}`,
           }
         });
         // console.log("Cities =>", res.data.data);
