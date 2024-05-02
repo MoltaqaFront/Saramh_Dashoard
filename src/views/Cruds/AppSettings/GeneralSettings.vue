@@ -153,14 +153,24 @@ export default {
       this.phones.forEach((element, index) => {
         REQUEST_DATA.append(`value[mobile][${index}]`, element.phone);
       });
-
-      REQUEST_DATA.append("value[whatsapp]", this.data.WhatsApp_contact);
-      REQUEST_DATA.append("value[facebook]", this.data.facebook_link);
-      REQUEST_DATA.append("value[email]", this.data.email);
-      REQUEST_DATA.append("value[snapchat]", this.data.snap_link);
-      REQUEST_DATA.append("value[instagram]", this.data.insta_link);
-      //  REQUEST_DATA.append("value[x]", this.data.twitter_link);
-      REQUEST_DATA.append("value[tiktok]", this.data.tiktok_link);
+      if (this.data.WhatsApp_contact) {
+        REQUEST_DATA.append("value[whatsapp]", this.data.WhatsApp_contact);
+      }
+      if (this.data.facebook_link) {
+        REQUEST_DATA.append("value[facebook]", this.data.facebook_link);
+      }
+      if (this.data.email) {
+        REQUEST_DATA.append("value[email]", this.data.email);
+      }
+      if (this.data.snap_link) {
+        REQUEST_DATA.append("value[snapchat]", this.data.snap_link);
+      }
+      if (this.data.insta_link) {
+        REQUEST_DATA.append("value[instagram]", this.data.insta_link);
+      }
+      if (this.data.tiktok_link) {
+        REQUEST_DATA.append("value[tiktok]", this.data.tiktok_link);
+      }
 
       // Start:: Append Request Data
 
