@@ -390,7 +390,7 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `specialties`,
+          url: `get-all-specialties`,
           params: {
             "is_active": 1
           }
@@ -406,7 +406,7 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `subspecialties`,
+          url: `get-all-sub-specialties`,
           params: {
             "is_active": 1 ,
            specialty_id: `${this.data.main?.id}`,

@@ -176,7 +176,7 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `specialties`,
+          url: `get-all-specialties`,
           params: {
             "is_active": 1
           }
