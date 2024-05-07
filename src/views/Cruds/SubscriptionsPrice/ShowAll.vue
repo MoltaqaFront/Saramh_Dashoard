@@ -148,6 +148,11 @@
           <h4 class="mx-5 text-center">{{ $t("BUTTONS.Invoiceimage") }}</h4>
           <table class="table table-striped my-10">
             <tbody>
+               <tr class="file_title">
+                  <td>{{ $t("PLACEHOLDERS.qr") }}</td>
+                  <td ><span v-html="qr"></span></td>
+                </tr>
+
                 <tr class="file_title">
                   <td>{{ $t("TABLES.subscriptions.number") }}</td>
                   <td>{{ serialNumber }}</td>
@@ -197,11 +202,11 @@
                 <td>{{ $t("TABLES.subscriptions.priceCoach") }}</td>
                 <td>{{ priceCoach }}</td>
               </tr>
-
+<!-- 
              <h4 class="text-center mx-10">{{ $t("PLACEHOLDERS.qr") }}</h4>
                <tr class="text-center mx-10">
                 <td ><span v-html="qr"></span></td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         
@@ -427,7 +432,7 @@ export default {
     // ==================== Start:: Crud ====================
     // ===== Start:: End
     showItem(item) {
-      this.$router.push({ path: `/SubscriptionsPrice/show/${item.user.id}` });
+      this.$router.push({ path: `/SubscriptionsPrice/show/${item.id}` });
     },
     // subscription(item) {
     //   this.$router.push({path: `/SubscriptionsPrice/price/${item.user.id}`})

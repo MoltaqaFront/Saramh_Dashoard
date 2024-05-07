@@ -89,6 +89,7 @@
       "showAll": "كل المدربين",
       "add": "إضافة مدرب جديد",
       "program" :"برامج المدرب" ,
+      "programName" : "اسم البرنامج ",
       "program_nameAr" : "اسم البرنامج بالعربي",
       "program_nameEn" : "اسم البرنامج باالانجليزي",
       "descriptionAr" : "وصف البرنامج بالعربية" ,
@@ -391,8 +392,12 @@
       "comment": "التعليق",
       "orderNumber": "رقم الطلب",
       "driverName": "إسم السائق",
-      "sendDate": "تاريخ الإرسال",
-      "publishStatus": "حالة النشر"
+      "sendDate": "تاريخ التقييم",
+      "publishStatus": "حالة النشر" ,
+      "unpublished": "محجوب" ,
+      "show" : "عرض بيانات رأى العميل",
+      "image" : "صورة العميل" ,
+      "date" : "تاريخ الاشتراك في البرنامج"
     },
     "subscriptions": {
       "serialNumber": "المسلسل",

@@ -88,6 +88,7 @@
        "showAll": "All trainers",
        "add": "Add a new coach",
        "program": "trainer programs",
+        "programName" : "Program Name",
        "program_nameAr": "Program name in Arabic",
        "program_nameEn": "Program name in English",
        "descriptionAr": "Description of the program in Arabic",
@@ -405,7 +406,11 @@
       "orderNumber": "Order Number",
       "driverName": "Driver Name",
       "sendDate": "Send Date",
-      "publishStatus": "Publish Status"
+      "publishStatus": "Publish Status" ,
+      "unpublished": "Block" ,
+      "show": "Display customer Rate data" ,
+      "image" : "Clinet Imnage" ,
+      "date": "Date of participation in the program"
     },
    "subscriptions": {
        "serialNumber": "serial",
