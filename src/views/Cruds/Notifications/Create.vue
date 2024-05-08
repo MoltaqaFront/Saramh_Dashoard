@@ -145,20 +145,21 @@ export default {
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
 
+      
       if (this.data.receiverType.value == "all") {
-        REQUEST_DATA.append(`roles[]`, "client");
-        REQUEST_DATA.append(`receiver_type`, "client");
+        REQUEST_DATA.append(`roles[]`, "all");
+        // REQUEST_DATA.append(`receiver_type`, "client");
       }
       else if (this.data.receiverType.value == "clients") {
         this.data.clients.forEach((element, index) => {
-          REQUEST_DATA.append(`roles[]`, "client");
+          //REQUEST_DATA.append(`roles[]`, "client");
           REQUEST_DATA.append(`users[${index}]`, element.id);
         });
       }
-      REQUEST_DATA.append("title_ar", this.data.titleAr);
-      REQUEST_DATA.append("title_en", this.data.titleEn);
-      REQUEST_DATA.append("body_ar", this.data.contentAr);
-      REQUEST_DATA.append("body_en", this.data.contentEn);
+      REQUEST_DATA.append("title[ar]", this.data.titleAr);
+      REQUEST_DATA.append("title[en]", this.data.titleEn);
+      REQUEST_DATA.append("body[ar]", this.data.contentAr);
+      REQUEST_DATA.append("body[en]", this.data.contentEn);
       // Start:: Append Request Data
 
       try {

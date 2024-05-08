@@ -70,6 +70,7 @@
 
             <div class="row align-items-center" v-for="(item, index) in field_values" :key="'o' + index">
 
+              <!-- {{ item.program_id }} -->
               <div class="col-lg-6 col-12">
                 <base-input col="12" type="text" :placeholder="$t('SIDENAV.Coaches.program_nameAr')"
                   v-model.trim="item.program_nameAr"  required />
@@ -178,7 +179,8 @@ export default {
           descriptionAr: "",
           descriptionEn: "",
           price_sub: "",
-          active_pro: ""
+          active_pro: "",
+          program_id: ""
         },
       ],
       // End:: Data Collection To Send
@@ -265,6 +267,7 @@ export default {
 
         // Populate the field_values array
         this.field_values = res.data.data.Coach.programs.map((item) => ({
+          program_id: item.id,
           program_nameAr: item.name_ar,
           program_nameEn: item.name_en,
           descriptionAr: item.description_ar,
@@ -346,6 +349,7 @@ export default {
       REQUEST_DATA.append("available", this.data.is_available.id);
       if (this.field_values) {
         this.field_values.forEach((element, index) => {
+         REQUEST_DATA.append(`programs[${index}][id]`, element.program_id);
           if (element.program_nameAr) {
             REQUEST_DATA.append(`programs[${index}][name][ar]`, element.program_nameAr);
           }
