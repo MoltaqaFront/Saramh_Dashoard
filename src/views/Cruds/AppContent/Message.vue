@@ -35,6 +35,16 @@
             <!-- Start:: En Content Text Editor -->
             <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentEn')" v-model.trim="data.goalEn" required />
 
+            
+            <h3>{{ $t("SIDENAV.AppContent.aboutUs") }}</h3>
+            <!-- Start:: Ar Content Text Editor -->
+            <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentAr')" v-model.trim="data.aboutusAr" required />
+            <!-- End:: Ar Content Text Editor -->
+
+            <!-- Start:: En Content Text Editor -->
+            <base-text-editor col="6" :placeholder="$t('PLACEHOLDERS.contentEn')" v-model.trim="data.aboutusEn" required />
+
+
           <!-- Start:: Submit Button Wrapper -->
           <div class="btn_wrapper">
             <base-button class="mt-2" styleType="primary_btn" :btnText="$t('BUTTONS.save')" :isLoading="isWaitingRequest"
@@ -66,6 +76,9 @@ export default {
         visionEn: null,
         missionAr: null,
         missionEn: null,
+        aboutusAr: null,
+        aboutusAr: null,
+        aboutusEn: null
       },
       // End:: Data Collection To Send
     };
@@ -86,6 +99,8 @@ export default {
         this.data.visionEn = res.data.data[0].value.vision.description.en;
         this.data.missionAr = res.data.data[0].value.mission.description.ar;
         this.data.missionEn = res.data.data[0].value.mission.description.en;
+          this.data.aboutusAr = res.data.data[0].value.aboutus.description.ar;
+        this.data.aboutusEn = res.data.data[0].value.aboutus.description.en;
         // End:: Set Data
       } catch (error) {
         console.log(error.response.data.message);
@@ -125,6 +140,16 @@ export default {
         this.isWaitingRequest = false;
         this.$message.error(this.$t("VALIDATION.contentEn"));
         return;
+       }
+       if (!this.data.aboutusAr) {
+        this.isWaitingRequest = false;
+        this.$message.error(this.$t("VALIDATION.contentAr"));
+        return;
+      }
+      else if (!this.data.aboutusEn) {
+        this.isWaitingRequest = false;
+        this.$message.error(this.$t("VALIDATION.contentEn"));
+        return;
       }
       else {
         this.submitForm();
@@ -145,6 +170,8 @@ export default {
       REQUEST_DATA.append("value[vision][description][en]", this.data.visionEn);
        REQUEST_DATA.append("value[mission][description][ar]", this.data.missionAr);
       REQUEST_DATA.append("value[mission][description][en]", this.data.missionEn);
+       REQUEST_DATA.append("value[aboutus][description][ar]", this.data.aboutusAr);
+      REQUEST_DATA.append("value[aboutus][description][en]", this.data.aboutusEn);
       // REQUEST_DATA.append("_method", "PUT");
 
       try {

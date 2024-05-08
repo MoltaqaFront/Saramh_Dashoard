@@ -118,17 +118,6 @@ export default {
     // Start:: validate Form Inputs
     validateFormInputs() {
       this.isWaitingRequest = true;
-      const arabicRegex = /^[\u0600-\u06FF\s]+$/;
-      if (!arabicRegex.test(this.data.titleAr)) {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.arabic_words_required"));
-        return;
-      }
-      if (!arabicRegex.test(this.data.contentAr)) {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.arabic_words_required"));
-        return;
-      }
       if (!this.data.titleAr) {
         this.isWaitingRequest = false;
         this.$message.error(this.$t("VALIDATION.nameAr"));
@@ -156,20 +145,21 @@ export default {
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
 
+      
       if (this.data.receiverType.value == "all") {
-        REQUEST_DATA.append(`roles[]`, "client");
-        REQUEST_DATA.append(`receiver_type`, "client");
+        REQUEST_DATA.append(`roles[]`, "all");
+        // REQUEST_DATA.append(`receiver_type`, "client");
       }
       else if (this.data.receiverType.value == "clients") {
         this.data.clients.forEach((element, index) => {
-          REQUEST_DATA.append(`roles[]`, "client");
+          //REQUEST_DATA.append(`roles[]`, "client");
           REQUEST_DATA.append(`users[${index}]`, element.id);
         });
       }
-      REQUEST_DATA.append("title_ar", this.data.titleAr);
-      REQUEST_DATA.append("title_en", this.data.titleEn);
-      REQUEST_DATA.append("body_ar", this.data.contentAr);
-      REQUEST_DATA.append("body_en", this.data.contentEn);
+      REQUEST_DATA.append("title[ar]", this.data.titleAr);
+      REQUEST_DATA.append("title[en]", this.data.titleEn);
+      REQUEST_DATA.append("body[ar]", this.data.contentAr);
+      REQUEST_DATA.append("body[en]", this.data.contentEn);
       // Start:: Append Request Data
 
       try {
@@ -193,10 +183,10 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "clients"
+          url: "all-clients"
         });
         this.loading = false;
-        this.clients = res.data.data;
+        this.clients = res.data.data.Client;
       } catch (error) {
         this.loading = false;
         console.log(error.response.data.message);

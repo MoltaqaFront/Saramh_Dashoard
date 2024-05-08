@@ -16,37 +16,37 @@
           <!-- End:: Image Upload Input -->
 
            <!-- Start:: Name Input -->
-            <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameAr')" v-model.trim="data.nameAr" @input="validateInput" required />
+            <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameAr')" v-model.trim="data.nameAr"  required />
             <!-- End:: Name Input -->
 
              <!-- Start:: Name Input -->
-              <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameEn')" v-model.trim="data.nameEn"  @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+              <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameEn')" v-model.trim="data.nameEn"  required />
               <!-- End:: Name Input -->
              <!-- Start:: Phone Input -->
             <base-input ref="phoneInput" col="6" type="tel" :placeholder="$t('TABLES.coaches.phone')"
-              v-model.trim="data.phone" required autocomplete="new-password" />
+              v-model.trim="data.phone" required  />
             <!-- End:: Phone Input -->
 
             <!-- Start:: whatsapp Input -->
               <base-input ref="phoneInput" col="6" type="tel" :placeholder="$t('TABLES.coaches.moblie')"
-                v-model.trim="data.mobile" required autocomplete="new-password" />
+                v-model.trim="data.mobile" required  />
               <!-- End:: whatsapp Input -->
 
               <!-- Start:: Name Input -->
-              <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr" @input="validateInput" required />
+              <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr"  required />
               <!-- End:: Name Input -->
 
               <!-- Start:: Name Input -->
-                <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"  @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+                <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"   required />
                 <!-- End:: Name Input -->
 
                 <!-- Start:: main Input -->
                 <base-select-input col="6" :optionsList="Mainspescial"  :placeholder="$t('TABLES.coaches.main')"
-                    v-model="data.main" required/>
+                    v-model="data.main" @input="getSub" required/>
                 <!-- End:: main Input -->
 
                 <!-- Start:: sub Input -->
-                  <base-select-input  col="6" :optionsList="Subspecail" :placeholder="$t('TABLES.coaches.sub')"
+                  <base-select-input  col="6" v-if="Subspecail" :optionsList="Subspecail" :placeholder="$t('TABLES.coaches.sub')"
                     v-model="data.sub" required />
                   <!-- End:: sub Input -->
 
@@ -70,7 +70,7 @@
                     type="text" 
                     :placeholder="$t('SIDENAV.Coaches.program_nameAr')" 
                     v-model.trim="item.program_nameAr"
-                    @input="validateInput" 
+                  
                     required />
               </div>
               <div class="col-lg-6 col-12">
@@ -79,30 +79,23 @@
                   type="text" 
                   :placeholder="$t('SIDENAV.Coaches.program_nameEn')" 
                   v-model.trim="item.program_nameEn"
-                  input="removeArabicCharacters"
-                  @copy="onCopy" 
-                  @paste="onPaste" 
                   required />
               </div>
 
                <div class="col-lg-6 col-12">
                     <base-input 
                       col="12" 
-                      type="text" 
+                      type="textarea" 
                       :placeholder="$t('SIDENAV.Coaches.descriptionAr')" 
                       v-model.trim="item.descriptionAr"
-                      @input="validateInput" 
                       required />
                 </div>
                 <div class="col-lg-6 col-12">
                   <base-input 
                     col="12" 
-                    type="text" 
+                    type="textarea" 
                     :placeholder="$t('SIDENAV.Coaches.descriptionEn')" 
                     v-model.trim="item.descriptionEn"
-                    input="removeArabicCharacters"
-                    @copy="onCopy" 
-                    @paste="onPaste" 
                     required />
                 </div>
 
@@ -196,9 +189,6 @@ export default {
         },
       ],
       // End:: Data Collection To Send
-
-      arabicRegex: /^[\u0600-\u06FF\s]+$/,
-      EnRegex: /[\u0600-\u06FF]/,
     };
   },
 
@@ -239,13 +229,6 @@ export default {
       return current && current < moment().startOf("day");
     },
 
-    onCopy(event) {
-      event.preventDefault();
-    },
-    onPaste(event) {
-      event.preventDefault();
-    },
-
     addRow() {
       this.field_values.push(
         {
@@ -261,20 +244,6 @@ export default {
 
     removeRow(index) {
       this.field_values.splice(index, 1)
-    },
-
-    validateInput() {
-      // Remove non-Arabic characters from the input
-      this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.des_ar = this.data.des_ar.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.noteAr = this.data.noteAr.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.program_nameAr = this.data.program_nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-    },
-    removeArabicCharacters() {
-      this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
-      this.data.des_en = this.data.des_en.replace(this.EnRegex, "");
-      this.data.noteEn = this.data.noteEn.replace(this.EnRegex, "");
-      this.data.program_nameEn = this.data.program_nameEn.replace(this.EnRegex, "");
     },
 
     selectImage(selectedImage) {
@@ -362,9 +331,9 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `specialties`,
+          url: `get-all-specialties`,
           params: {
-            "status": 1
+            "is_active": 1
           }
         });
         // console.log("Cities =>", res.data.data);
@@ -378,9 +347,10 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `subspecialties`,
+          url: `get-all-sub-specialties`,
           params: {
-            "status": 1
+            "is_active": 1 ,
+           specialty_id: `${this.data.main?.id}`,
           }
         });
         // console.log("Cities =>", res.data.data);

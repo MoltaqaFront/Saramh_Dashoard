@@ -194,7 +194,7 @@ export default {
 
   created() {
 
-    // this.getData();
+    this.getData();
     this.readAllNotifications();
 
     navigator.serviceWorker.addEventListener('message', event => {

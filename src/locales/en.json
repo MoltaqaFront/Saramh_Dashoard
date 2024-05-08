@@ -88,6 +88,7 @@
        "showAll": "All trainers",
        "add": "Add a new coach",
        "program": "trainer programs",
+        "programName" : "Program Name",
        "program_nameAr": "Program name in Arabic",
        "program_nameEn": "Program name in English",
        "descriptionAr": "Description of the program in Arabic",
@@ -246,30 +247,31 @@
       "actions": "Actions"
     },
     "Clients": {
-      "serialNumber": "Serial",
-      "name": "Client",
-      "nameAr": "Arabic Client Name",
-      "nameEn": "English Client Name",
-      "phone": "phone",
-      "email": "Email",
-      "age": "age",
+     "serialNumber": "serial",
+       "name": "Name",
+       "nameAr": "Customer's name in Arabic",
+       "nameEn": "Customer name in English",
+       "phone": "mobile number",
+       "email": "Email",
+       "age": "age",
        "widght": "weight in kg",
-       "height": "height in cm",
+       "height": "Height in cm",
        "diseases": "Are there health diseases?",
        "surgeries": "Are there any previous surgeries?",
        "surgeries_when": "And when was it?" ,
-       "surgeries_what": "he mentioned it?" ,
+       "surgeries_what": "Please mention it and when it occurred?" ,
        "playing_sports": "Are you currently playing sports?",
-       "playing_days": "If you are currently exercising, how long have you been exercising in months?",
-       "playing_place": "Where are you currently practicing sports until the schedule is designed?",
+       "playing_days": "How long do you exercise in months?",
+       "playing_place": "Where do you practice sports?",
+       "playing_tools": "Mention the tools you have available?",
        "goal": "What is the goal that you would like me to help you achieve?",
        "tools": "If you are exercising at home, please mention the available tools.",
        "practice_duration": "How many days of exercise are appropriate for you?",
-      "joiningDate": "Joining Date",
-      "code" : "Country code",
-      "verified": "Verified",
-      "active": "Active",
-      "actions": "Actions"
+       "joiningDate": "Creation date",
+       "code": "country code",
+       "verified": "verified",
+       "active": "status",
+       "actions": "control"
     },
     "Admins": {
       "serialNumber": "Serial",
@@ -404,7 +406,11 @@
       "orderNumber": "Order Number",
       "driverName": "Driver Name",
       "sendDate": "Send Date",
-      "publishStatus": "Publish Status"
+      "publishStatus": "Publish Status" ,
+      "unpublished": "Block" ,
+      "show": "Display customer Rate data" ,
+      "image" : "Clinet Imnage" ,
+      "date": "Date of participation in the program"
     },
    "subscriptions": {
        "serialNumber": "serial",
@@ -691,7 +697,9 @@
     "components": "Components",
     "MainSpecializations": "Add a main specialization",
     "Subspecialties": "Add a subspecialty",
-    "subscriptions": "Subscription history" 
+    "subscriptions": "Subscription history" ,
+     "download_invoice": "Download invoice",
+     "Invoiceimage": "Electronic Invoice"
   },
 
   "TABS": {

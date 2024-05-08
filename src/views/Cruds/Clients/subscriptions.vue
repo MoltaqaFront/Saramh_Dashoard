@@ -158,19 +158,19 @@ export default {
         },
         {
           text: this.$t("TABLES.subscriptions.coach"),
-          value: "user_name",
+          value: "coach.name",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.subscriptions.coachNumber"),
-          value: "user_mobile",
+          value: "coach.mobile",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.subscriptions.prgram_price"),
-          value: "balance",
+          value: "net_price",
           align: "center",
           sortable: false,
         },
@@ -182,13 +182,13 @@ export default {
         },
         {
           text: this.$t("TABLES.subscriptions.TotalSubscription"),
-          value: "total_balance",
+          value: "total",
           align: "center",
           sortable: false,
         },
         {
           text: this.$t("TABLES.subscriptions.date"),
-          value: "start_date",
+          value: "created_at",
           align: "center",
           sortable: false,
         },
@@ -276,22 +276,22 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `packages/subscriptions/${this.$route.params.id}`,
+          url: `client-subscriptions/${this.$route.params.id}`,
           params: {
             page: this.paginations.current_page,
-            name: this.filterOptions.user_name,
-            mobile: this.filterOptions.user_mobile,
-            packagePrice: this.filterOptions.balance,
-            AddedTax: this.filterOptions.tax,
-            totalSubscription :this.filterOptions.total_balance,
-            starSubscription: this.filterOptions.start_date,
-            endSubscription: this.filterOptions.end_date,
-            UserBalance:  this.filterOptions.package_id,
-            status: this.filterOptions.isActive?.value,
+            // name: this.filterOptions.user_name,
+            // mobile: this.filterOptions.user_mobile,
+            // packagePrice: this.filterOptions.balance,
+            // AddedTax: this.filterOptions.tax,
+            // totalSubscription :this.filterOptions.total_balance,
+            // starSubscription: this.filterOptions.start_date,
+            // endSubscription: this.filterOptions.end_date,
+            // UserBalance:  this.filterOptions.package_id,
+            // status: this.filterOptions.isActive?.value,
           },
         });
         this.loading = false;
-        this.tableRows = res.data.data.subscriptions;
+        this.tableRows = res.data.data.Subscription;
         this.paginations.last_page = res.data.meta.last_page;
         this.paginations.items_per_page = res.data.meta.per_page;
 

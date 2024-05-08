@@ -272,7 +272,7 @@ export default {
           url: "notification/index",
           params: {
             page: this.paginations.current_page,
-            unread: this.filterOptions.name,
+            title: this.filterOptions.name,
           },
         });
         this.loading = false;

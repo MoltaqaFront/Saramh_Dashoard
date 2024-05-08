@@ -29,6 +29,11 @@
 
           </div>
 
+           <!-- Start:: Tax Percentage Input -->
+          <base-input col="6" type="email" :placeholder="$t('PLACEHOLDERS.email')"
+            v-model.trim="data.email" />
+          <!-- End:: Tax Percentage Input -->
+
           <!-- Start:: Tax Percentage Input -->
           <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.WhatsApp_contact')"
             v-model.trim="data.WhatsApp_contact" />
@@ -52,7 +57,7 @@
           <!-- End:: Delivery Price Input -->
 
           <!-- Start:: Driver's Daily Orders Amount Input -->
-          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.twitter_link')" v-model.trim="data.twitter_link" />
+          <!-- <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.twitter_link')" v-model.trim="data.twitter_link" /> -->
           <!-- End:: Driver's Daily Orders Amount Input -->
 
           <!-- Start:: Submit Button Wrapper -->
@@ -85,7 +90,8 @@ export default {
         snap_link: null,
         insta_link: null,
         twitter_link: null,
-        tiktok_link: null
+        tiktok_link: null,
+        email : null
 
       },
       // End:: Data Collection To Send
@@ -123,10 +129,11 @@ export default {
 
         this.data.WhatsApp_contact = res.data.data[0].value.whatsapp;
         this.data.facebook_link = res.data.data[0].value.facebook;
+        this.data.email = res.data.data[0].value.email;
         this.data.snap_link = res.data.data[0].value.snapchat;
         this.data.insta_link = res.data.data[0].value.instagram;
-         this.data.twitter_link = res.data.data[0].value.tiktok;
-        this.data.tiktok_link = res.data.data[0].value.x;
+        //  this.data.twitter_link = res.data.data[0].value.x;
+        this.data.tiktok_link = res.data.data[0].value.tiktok;
 
         // End:: Set Data
       } catch (error) {
@@ -146,13 +153,24 @@ export default {
       this.phones.forEach((element, index) => {
         REQUEST_DATA.append(`value[mobile][${index}]`, element.phone);
       });
-
-      REQUEST_DATA.append("value[whatsapp]", this.data.WhatsApp_contact);
-      REQUEST_DATA.append("value[facebook]", this.data.facebook_link);
-      REQUEST_DATA.append("value[snapchat]", this.data.snap_link);
-      REQUEST_DATA.append("value[instagram]", this.data.insta_link);
-       REQUEST_DATA.append("value[x]", this.data.twitter_link);
-      REQUEST_DATA.append("value[tiktok]", this.data.tiktok_link);
+      if (this.data.WhatsApp_contact) {
+        REQUEST_DATA.append("value[whatsapp]", this.data.WhatsApp_contact);
+      }
+      if (this.data.facebook_link) {
+        REQUEST_DATA.append("value[facebook]", this.data.facebook_link);
+      }
+      if (this.data.email) {
+        REQUEST_DATA.append("value[email]", this.data.email);
+      }
+      if (this.data.snap_link) {
+        REQUEST_DATA.append("value[snapchat]", this.data.snap_link);
+      }
+      if (this.data.insta_link) {
+        REQUEST_DATA.append("value[instagram]", this.data.insta_link);
+      }
+      if (this.data.tiktok_link) {
+        REQUEST_DATA.append("value[tiktok]", this.data.tiktok_link);
+      }
 
       // Start:: Append Request Data
 

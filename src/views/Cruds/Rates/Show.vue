@@ -2,7 +2,7 @@
   <div class="crud_form_wrapper">
     <!-- Start:: Title -->
     <div class="form_title_wrapper">
-      <h4>{{ $t("TABLES.Rates.comment") }}</h4>
+      <h4>{{ $t("TABLES.Rates.show") }}</h4>
     </div>
     <!-- End:: Title -->
 
@@ -11,14 +11,23 @@
       <form @submit.prevent="validateFormInputs">
         <div class="row">
 
+           <base-image-upload-input col="12" identifier="admin_image" :preSelectedImage="data.image.path"
+            :placeholder="$t('TABLES.Rates.image')" @selectImage="selectImage" disabled />
+
           <!-- Start:: Name Input -->
-          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.user_name')" v-model.trim="data.name" disabled />
-          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.phone')" v-model.trim="data.mobile" disabled />
-          <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.status')" v-model.trim="data.status" disabled />
+          <base-input col="6" type="text" :placeholder="$t('TABLES.Rates.clientName')" v-model.trim="data.name" disabled />
           <base-input col="6" type="text" :placeholder="$t('TABLES.Rates.sendDate')" v-model.trim="data.created_at"
             disabled />
-          <base-input col="6" cols="5" rows="5" type="textarea" :placeholder="$t('PLACEHOLDERS.comment')"
+          <base-rate-input col="6" :placeholder="$t('TABLES.Rates.rate')" v-model="data.rate"
+            size="22" disabled />
+          <base-input col="6"  type="text" :placeholder="$t('TABLES.Rates.comment')"
             v-model.trim="data.comment" disabled />
+          <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.name')" v-model.trim="data.Coach"  disabled />
+          <base-input col="6" type="text" :placeholder="$t('SIDENAV.Coaches.programName')" v-model.trim="data.programName"  disabled />
+
+            <base-input col="6" type="text" :placeholder="$t('TABLES.Rates.date')" v-model.trim="data.createdprogram"
+            disabled />
+
           <!-- End:: Name Input -->
 
         </div>
@@ -29,10 +38,14 @@
 </template>
 
 <script>
+import RatingPreview from "@/components/ui/RatingPreview.vue";
 
 export default {
   name: "showCity",
+   components: {
+    RatingPreview,
 
+  },
   data() {
     return {
       // Start:: Loader Control Data
@@ -41,17 +54,24 @@ export default {
 
       // Start:: Data Collection To Send
       data: {
+        image: {
+          path: null,
+          file: null,
+        },
         name: null,
-        mobile: null,
+        rate: null,
         comment: null,
-        status: null,
+        Coach: null,
+        programName: null,
         created_at: null,
+        createdprogram: null
       },
       // End:: Data Collection To Send
     };
   },
 
   computed: {
+
   },
 
   methods: {
@@ -62,11 +82,14 @@ export default {
           method: "GET",
           url: `rates/${this.$route.params.id}`,
         });
+        this.data.image.path = res.data.data.Rate.image;
         this.data.name = res.data.data.Rate.name;
-        this.data.mobile = res.data.data.Rate.mobile;
-        this.data.comment = res.data.data.Rate.comment;
-        this.data.status = res.data.data.Rate.status;
         this.data.created_at = res.data.data.Rate.created_at;
+        this.data.rate = res.data.data.Rate.stars;
+        this.data.comment = res.data.data.Rate.comment;
+        this.data.Coach = res.data.data.Rate.coach_name;
+        this.data.programName = res.data.data.Rate.program_name;
+        this.data.createdprogram = res.data.data.Rate.created_at;
 
       } catch (error) {
         this.loading = false;

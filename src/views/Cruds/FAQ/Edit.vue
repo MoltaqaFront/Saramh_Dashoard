@@ -13,22 +13,22 @@
            
           <!-- Start:: Name Input -->
             <base-input col="6" type="text" :placeholder="$t('SIDENAV.questions.bodyAr')" v-model.trim="data.nameAr"
-              @input="validateInput" required />
+               required />
             <!-- End:: Name Input -->
 
             <!-- Start:: Name Input -->
             <base-input col="6" type="text" :placeholder="$t('SIDENAV.questions.bodyEn')" v-model.trim="data.nameEn"
-              @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+              required />
 
           
               <!-- Start:: Name Input -->
               <base-input col="6" type="textarea" :placeholder="$t('SIDENAV.questions.answerAr')" v-model.trim="data.answerAr"
-                @input="validateInput" required />
+                required />
               <!-- End:: Name Input -->
 
               <!-- Start:: Name Input -->
               <base-input col="6" type="textarea" :placeholder="$t('SIDENAV.questions.answerEn')" v-model.trim="data.answerEn"
-                @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+                 required />
 
               <!-- Start:: Status Input -->
                 <base-select-input 
@@ -69,9 +69,6 @@ export default {
         is_active: null
       },
       // End:: Data Collection To Send
-
-      arabicRegex: /^[\u0600-\u06FF\s]+$/,
-      EnRegex: /[\u0600-\u06FF]/,
     };
   },
 
@@ -97,23 +94,6 @@ export default {
     disabledDate(current) {
       return current && current < moment().startOf("day");
     },
-
-    onCopy(event) {
-      event.preventDefault();
-    },
-    onPaste(event) {
-      event.preventDefault();
-    },
-    validateInput() {
-      // Remove non-Arabic characters from the input
-      this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.answerAr = this.data.answerAr.replace(/[^\u0600-\u06FF\s]/g, "");
-    },
-    removeArabicCharacters() {
-      this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
-      this.data.answerEn = this.data.answerEn.replace(this.EnRegex, "");
-    },
-
     async getDataToEdit() {
       try {
         let res = await this.$axios({

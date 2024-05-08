@@ -13,12 +13,12 @@
 
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameAr')" v-model.trim="data.nameAr"
-            @input="validateInput" required />
+             required />
           <!-- End:: Name Input -->
 
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('PLACEHOLDERS.nameEn')" v-model.trim="data.nameEn"
-            @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+            required />
 
           <!-- End:: Name Input -->
            <base-select-input col="6" :optionsList="spectial" :placeholder="$t('TABLES.MainSpecializations.name')"
@@ -64,9 +64,6 @@ export default {
       spectial: [],
       allVehicleTypes: [],
       // End:: Data Collection To Send
-
-      arabicRegex: /^[\u0600-\u06FF\s]+$/,
-      EnRegex: /[\u0600-\u06FF]/,
     };
   },
 
@@ -90,20 +87,7 @@ export default {
   },
 
   methods: {
-    onCopy(event) {
-      event.preventDefault();
-    },
-    onPaste(event) {
-      event.preventDefault();
-    },
-
-    validateInput() {
-      // Remove non-Arabic characters from the input
-      this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-    },
-    removeArabicCharacters() {
-      this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
-    },
+    
 
     // Start:: validate Form Inputs
     validateFormInputs() {
@@ -157,9 +141,9 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `specialties`,
+          url: `get-all-specialties`,
           params: {
-            "status": 1
+            "is_active": 1
           }
         });
         // console.log("Cities =>", res.data.data);

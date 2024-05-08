@@ -25,7 +25,7 @@
 
           <!-- Start:: Phone Input -->
           <base-input ref="phoneInput" col="6" type="tel" :placeholder="$t('PLACEHOLDERS.phone')"
-            v-model.trim="data.phone" required autocomplete="new-password" />
+            v-model.trim="data.phone" required  />
           <!-- End:: Phone Input -->
 
           <!-- Start:: Roles Input -->

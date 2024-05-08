@@ -140,81 +140,76 @@
 
      <!-- Start:: Generate PDF Template Content -->
     <vue-html2pdf :show-layout="false" :float-layout="true" :enable-download="true" :preview-modal="true"
-      filename="report" :pdf-quality="2" pdf-format="a4" :manual-pagination="false" :paginate-elements-by-height="1400"
+      filename="report" :pdf-quality="1" pdf-format="a4" :manual-pagination="false" :paginate-elements-by-height="1500"
       pdf-content-width="100%" @progress="bdfDownloadBtnIsLoading = true"
       @hasGenerated="$message.success($t('MESSAGES.generatedSuccessfully'))" ref="html2Pdf">
       <section slot="pdf-content">
-        <div class="pdf_file_content">
-          <!-- <tr v-for="(value, key) in itemReport" :key="key">
-                <td>{{ key }}</td>
-                <td>{{ value }}</td>
-              </tr> -->
-
-          <table class="table table-striped">
+        <div class="pdf_file_content ">
+          <h4 class="mx-5 text-center">{{ $t("BUTTONS.Invoiceimage") }}</h4>
+          <table class="table table-striped my-10">
             <tbody>
-               <tr class="text-center">
-                <td>
-                  <span v-html="qr" ></span>
-                  <span class="mx-5">{{ $t("PLACEHOLDERS.qr") }}</span>
-                </td>
-              </tr>
-                <tr class="text-center">
+               <tr class="file_title">
+                  <td>{{ $t("PLACEHOLDERS.qr") }}</td>
+                  <td ><span v-html="qr"></span></td>
+                </tr>
+
+                <tr class="file_title">
                   <td>{{ $t("TABLES.subscriptions.number") }}</td>
                   <td>{{ serialNumber }}</td>
                 </tr>
 
-              <tr class="text-center">
+              <tr class="file_title">
                 <td>{{ $t("TABLES.subscriptions.date") }}</td>
                 <td>{{ date }}</td>
               </tr>
 
-              <tr class="text-center">
+              <tr class="file_title">
                 <td>{{ $t("TABLES.subscriptions.nameclient") }}</td>
                 <td>{{ nameclient }}</td>
               </tr>
 
-              <tr class="text-center">
+              <tr class="file_title">
                 <td>{{ $t("TABLES.subscriptions.coach") }}</td>
                 <td>{{ coach }}</td>
               </tr>
 
-              <tr class="text-center">
+              <tr class="file_title">
                 <td>{{ $t("TABLES.subscriptions.program") }}</td>
                 <td>{{ program }}</td>
               </tr>
 
-              <!-- <tr class="text-center">
-                <td>{{ $t("TABLES.subscriptions.dataPrice") }}</td>
-                <td>{{ dataPrice }}</td>
-              </tr> -->
-
-              <tr class="text-center">
+              <tr class="file_title">
                 <td>{{ $t("TABLES.subscriptions.programPrice") }}</td>
                 <td>{{ programPrice }}</td>
               </tr>
 
-              <tr class="text-center">
+              <tr class="file_title">
                 <td>{{ $t("TABLES.subscriptions.AddedTax") }}</td>
                 <td>{{ AddedTax }}</td>
               </tr>
 
-              <tr class="text-center">
+              <tr class="file_title">
                 <td>{{ $t("TABLES.subscriptions.totalPriceOrder") }}</td>
                 <td>{{ totalPriceOrder }}</td>
               </tr>
 
-              <tr class="text-center">
+              <tr class="file_title">
                 <td>{{ $t("TABLES.subscriptions.vatApp") }}</td>
                 <td>{{ vatApp }}</td>
               </tr>
 
-              <tr class="text-center">
+              <tr class="file_title">
                 <td>{{ $t("TABLES.subscriptions.priceCoach") }}</td>
                 <td>{{ priceCoach }}</td>
               </tr>
+<!-- 
+             <h4 class="text-center mx-10">{{ $t("PLACEHOLDERS.qr") }}</h4>
+               <tr class="text-center mx-10">
+                <td ><span v-html="qr"></span></td>
+              </tr> -->
             </tbody>
           </table>
-
+        
         </div>
       </section>
     </vue-html2pdf>
@@ -437,7 +432,7 @@ export default {
     // ==================== Start:: Crud ====================
     // ===== Start:: End
     showItem(item) {
-      this.$router.push({ path: `/SubscriptionsPrice/show/${item.user.id}` });
+      this.$router.push({ path: `/SubscriptionsPrice/show/${item.id}` });
     },
     // subscription(item) {
     //   this.$router.push({path: `/SubscriptionsPrice/price/${item.user.id}`})
@@ -498,6 +493,11 @@ span.submit_btn {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.pdf_file_content{
+  position: relative;
+  top: 50px;
+
 }
 
 </style>

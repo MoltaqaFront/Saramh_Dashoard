@@ -17,12 +17,12 @@
 
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameAr')" v-model.trim="data.nameAr"
-            @input="validateInput" required />
+             required />
           <!-- End:: Name Input -->
 
           <!-- Start:: Name Input -->
           <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.nameEn')" v-model.trim="data.nameEn"
-            @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+            required />
           <!-- End:: Name Input -->
           <!-- Start:: Phone Input -->
           <base-input ref="phoneInput" col="6" type="tel" :placeholder="$t('TABLES.coaches.phone')"
@@ -35,24 +35,25 @@
           <!-- End:: whatsapp Input -->
 
           <!-- Start:: Name Input -->
-          <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr"
-            @input="validateInput" required />
+          <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteAr')" v-model.trim="data.noteAr"
+            required />
           <!-- End:: Name Input -->
 
           <!-- Start:: Name Input -->
-          <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"
-            @input="removeArabicCharacters" @copy="onCopy" @paste="onPaste" required />
+          <base-input col="6" type="textarea" :placeholder="$t('TABLES.coaches.noteEn')" v-model.trim="data.noteEn"
+             required />
           <!-- End:: Name Input -->
 
-          <!-- Start:: main Input -->
-          <base-select-input col="6" :optionsList="Mainspescial" :placeholder="$t('TABLES.coaches.main')"
-            v-model="data.main" required />
-          <!-- End:: main Input -->
+         <!-- Start:: main Input -->
+                <base-select-input col="6" :optionsList="Mainspescial"  :placeholder="$t('TABLES.coaches.main')"
+                    v-model="data.main" @input="getSub" required/>
+                <!-- End:: main Input -->
 
-          <!-- Start:: sub Input -->
-          <base-select-input col="6" :optionsList="Subspecail" :placeholder="$t('TABLES.coaches.sub')" v-model="data.sub"
-            required />
-          <!-- End:: sub Input -->
+                <!-- Start:: sub Input -->
+                  <base-select-input  col="6" v-if="Subspecail" :optionsList="Subspecail" :placeholder="$t('TABLES.coaches.sub')"
+                    v-model="data.sub" required />
+                  <!-- End:: sub Input -->
+
 
           <!-- Start experiences Input -->
           <base-input col="6" type="number" :placeholder="$t('TABLES.coaches.experience')" v-model.trim="data.experience"
@@ -69,23 +70,24 @@
 
             <div class="row align-items-center" v-for="(item, index) in field_values" :key="'o' + index">
 
+              <!-- {{ item.program_id }} -->
               <div class="col-lg-6 col-12">
                 <base-input col="12" type="text" :placeholder="$t('SIDENAV.Coaches.program_nameAr')"
-                  v-model.trim="item.program_nameAr" @input="validateInput" required />
+                  v-model.trim="item.program_nameAr"  required />
               </div>
               <div class="col-lg-6 col-12">
                 <base-input col="12" type="text" :placeholder="$t('SIDENAV.Coaches.program_nameEn')"
-                  v-model.trim="item.program_nameEn" input="removeArabicCharacters" @copy="onCopy" @paste="onPaste"
+                  v-model.trim="item.program_nameEn" 
                   required />
               </div>
 
               <div class="col-lg-6 col-12">
-                <base-input col="12" type="text" :placeholder="$t('SIDENAV.Coaches.descriptionAr')"
-                  v-model.trim="item.descriptionAr" @input="validateInput" required />
+                <base-input col="12" type="textarea" :placeholder="$t('SIDENAV.Coaches.descriptionAr')"
+                  v-model.trim="item.descriptionAr"  required />
               </div>
               <div class="col-lg-6 col-12">
-                <base-input col="12" type="text" :placeholder="$t('SIDENAV.Coaches.descriptionEn')"
-                  v-model.trim="item.descriptionEn" input="removeArabicCharacters" @copy="onCopy" @paste="onPaste"
+                <base-input col="12" type="textarea" :placeholder="$t('SIDENAV.Coaches.descriptionEn')"
+                  v-model.trim="item.descriptionEn" 
                   required />
               </div>
 
@@ -177,13 +179,11 @@ export default {
           descriptionAr: "",
           descriptionEn: "",
           price_sub: "",
-          active_pro: ""
+          active_pro: "",
+          program_id: ""
         },
       ],
       // End:: Data Collection To Send
-
-      arabicRegex: /^[\u0600-\u06FF\s]+$/,
-      EnRegex: /[\u0600-\u06FF]/,
     };
   },
 
@@ -224,13 +224,6 @@ export default {
       return current && current < moment().startOf("day");
     },
 
-    onCopy(event) {
-      event.preventDefault();
-    },
-    onPaste(event) {
-      event.preventDefault();
-    },
-
     addRow() {
       this.field_values.push(
         {
@@ -246,20 +239,6 @@ export default {
 
     removeRow(index) {
       this.field_values.splice(index, 1)
-    },
-
-    validateInput() {
-      // Remove non-Arabic characters from the input
-      this.data.nameAr = this.data.nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.des_ar = this.data.des_ar.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.noteAr = this.data.noteAr.replace(/[^\u0600-\u06FF\s]/g, "");
-      this.data.program_nameAr = this.data.program_nameAr.replace(/[^\u0600-\u06FF\s]/g, "");
-    },
-    removeArabicCharacters() {
-      this.data.nameEn = this.data.nameEn.replace(this.EnRegex, "");
-      this.data.des_en = this.data.des_en.replace(this.EnRegex, "");
-      this.data.noteEn = this.data.noteEn.replace(this.EnRegex, "");
-      this.data.program_nameEn = this.data.program_nameEn.replace(this.EnRegex, "");
     },
 
     selectImage(selectedImage) {
@@ -288,6 +267,7 @@ export default {
 
         // Populate the field_values array
         this.field_values = res.data.data.Coach.programs.map((item) => ({
+          program_id: item.id,
           program_nameAr: item.name_ar,
           program_nameEn: item.name_en,
           descriptionAr: item.description_ar,
@@ -369,6 +349,7 @@ export default {
       REQUEST_DATA.append("available", this.data.is_available.id);
       if (this.field_values) {
         this.field_values.forEach((element, index) => {
+         REQUEST_DATA.append(`programs[${index}][id]`, element.program_id);
           if (element.program_nameAr) {
             REQUEST_DATA.append(`programs[${index}][name][ar]`, element.program_nameAr);
           }
@@ -413,9 +394,9 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `specialties`,
+          url: `get-all-specialties`,
           params: {
-            "status": 1
+            "is_active": 1
           }
         });
         // console.log("Cities =>", res.data.data);
@@ -429,9 +410,10 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `subspecialties`,
+          url: `get-all-sub-specialties`,
           params: {
-            "status": 1
+            "is_active": 1 ,
+           specialty_id: `${this.data.main?.id}`,
           }
         });
         // console.log("Cities =>", res.data.data);
