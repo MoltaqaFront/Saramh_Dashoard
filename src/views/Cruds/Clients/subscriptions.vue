@@ -178,7 +178,7 @@ export default {
           text: this.$t("TABLES.subscriptions.AddedTax"),
           value: "tax",
           align: "center",
-          sortable: false,
+          sortable: false, 
         },
         {
           text: this.$t("TABLES.subscriptions.TotalSubscription"),

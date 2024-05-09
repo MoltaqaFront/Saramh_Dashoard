@@ -86,8 +86,29 @@
           </div>
         </template>
 
+          <template v-slot:[`item.total_profit`]="{ item }">
+          <div class="table_image_wrapper">
+            <h6 class="text-danger" v-if="!item.total_profit"> {{ $t("TABLES.noData") }} </h6>
+            <p v-else>{{parseInt(item.total_profit)}}</p>
+          </div>
+        </template>
+
+         <template v-slot:[`item.total_commission`]="{ item }">
+          <div class="table_image_wrapper">
+            <h6 class="text-danger" v-if="!item.total_commission"> {{ $t("TABLES.noData") }} </h6>
+            <p v-else>{{parseInt(item.total_commission)}}</p>
+          </div>
+        </template>
+
+         <template v-slot:[`item.total_vat`]="{ item }">
+          <div class="table_image_wrapper">
+            <h6 class="text-danger" v-if="!item.total_vat"> {{ $t("TABLES.noData") }} </h6>
+            <p v-else>{{parseInt(item.total_vat)}}</p>
+          </div>
+        </template>
+
         <template v-slot:[`item.total`]="{ item }">
-           <router-link  :to="{ path: `/SubscriptionsPrice/show/${item.id}` }">
+           <router-link  :to="{ path: `/clients/subscriptions/${item.id}` }">
             {{ item.total }}
           </router-link>
         </template>
@@ -155,10 +176,10 @@
             <tbody>
               <template>
                 <tr class="text-center all-stat">
-                  <td>{{ statistic.total }}</td>
-                  <td>{{ statistic.total_profit }}</td>
-                  <td>{{ statistic.total_commission }}</td>
-                  <td>{{ statistic.total_vat }}</td>
+                  <td>{{ parseInt(statistic.total) }}</td>
+                  <td>{{ parseInt(statistic.total_profit) }}</td>
+                  <td>{{ parseInt(statistic.total_commission) }}</td>
+                  <td>{{ parseInt(statistic.total_vat) }}</td>
                 </tr>
               </template>
             </tbody>

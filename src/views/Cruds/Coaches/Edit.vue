@@ -97,11 +97,11 @@
               </div>
 
               <!-- Start:: Deactivate Switch Input -->
-              <div class="input_wrapper switch_wrapper col-lg-6 col-12  my-5">
-                <v-switch color="green"
-                  :label="item.active_pro ? $t('PLACEHOLDERS.active') : $t('PLACEHOLDERS.notActive')"
-                  v-model="item.active_pro" hide-details></v-switch>
-              </div>
+               <div class="input_wrapper switch_wrapper col-lg-6 col-12 my-5">
+                  <v-switch color="green" :label="item.active_pro ? $t('PLACEHOLDERS.active') : $t('PLACEHOLDERS.notActive')"
+                    v-model="item.active_pro" hide-details></v-switch>
+                </div>
+             
               <!-- End:: Deactivate Switch Input -->
               <div class="col-2">
                 <div class="all_actions">
@@ -349,7 +349,9 @@ export default {
       REQUEST_DATA.append("available", this.data.is_available.id);
       if (this.field_values) {
         this.field_values.forEach((element, index) => {
-         REQUEST_DATA.append(`programs[${index}][id]`, element.program_id);
+          if (element.program_id) {
+            REQUEST_DATA.append(`programs[${index}][id]`, element.program_id);
+          }
           if (element.program_nameAr) {
             REQUEST_DATA.append(`programs[${index}][name][ar]`, element.program_nameAr);
           }
@@ -365,9 +367,7 @@ export default {
           if (element.price_sub) {
             REQUEST_DATA.append(`programs[${index}][price]`, element.price_sub);
           }
-          if (element.active_pro) {
-            REQUEST_DATA.append(`programs[${index}][is_active]`, +element.active_pro);
-          }
+          REQUEST_DATA.append(`programs[${index}][is_active]`, +element.active_pro);      
         });
       }
       REQUEST_DATA.append("_method", "PUT")
@@ -381,7 +381,7 @@ export default {
 
         });
         this.isWaitingRequest = false;
-        this.$message.success(this.$t("MESSAGES.addedSuccessfully"));
+        this.$message.success(this.$t("MESSAGES.editedSuccessfully"));
         this.$router.push({ path: "/Coaches/all" });
       } catch (error) {
         this.isWaitingRequest = false;

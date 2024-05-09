@@ -5,23 +5,84 @@
     <div class="single_step_form_content_wrapper">
       <form>
 
-        <transition-group name="fade" v-if="receivedMessages.length">
-          <div class="notification" v-for="(message, index) in receivedMessages" :key="'k' + index">
+        
+           <transition-group name="fade" v-if="receivedMessages.length">
+            <div class="notification" v-for="(message, index) in receivedMessages" :key="'k' + index">
 
-            <!-- <router-link :to="'chat/show/' + message.chatId" v-if="message.type == 'new_message'"> -->
+            <!-- start :: rate -->
+            <!-- <router-link v-if="message.data.notification_type == 'rate'" :to="'/rates/all'">
+              <h3>{{ message.data.title }}</h3>
+              <p>{{ message.data.body }}</p>
+
+              <div v-if="message.id" :class="{ 'read': message.is_read == 1 }" class="delete_notification"
+                @click="NotificationsReaded(message.id)">
+                <i class="fas fa-check-double"></i>
+              </div>
+            </router-link> -->
+            <!-- End :: rate -->
+
+            <!-- start :: contact -->
+            <!-- <router-link v-if="message.data.notification_type == 'contact'" :to="'/contact-messages/all'">
+              <h3>{{ message.data.title }}</h3>
+              <p>{{ message.data.body }}</p>
+
+              <div v-if="message.id" :class="{ 'read': message.is_read == true }" class="delete_notification"
+                @click="NotificationsReaded(message.id)">
+                <i class="fas fa-check-double"></i>
+              </div>
+            </router-link> -->
+            <!-- End :: contact -->
+
+            <!-- start :: users -->
+            <!-- <router-link v-if="message.data.notification_type == 'new_client'" :to="'/clients/all'">
+              <h3>{{ message.data.title }}</h3>
+              <p>{{ message.data.body }}</p>
+
+              <div v-if="message.id" :class="{ 'read': message.is_read == true }" class="delete_notification"
+                @click="NotificationsReaded(message.id)">
+                <i class="fas fa-check-double"></i>
+              </div>
+            </router-link> -->
+            <!-- End :: users -->
+
+            <!-- start :: delete_account -->
+            <!-- <router-link v-if="message.data.notification_type == 'delete_account'" :to="'/admins/all'">
+              <h3>{{ message.data.title }}</h3>
+              <p>{{ message.data.body }}</p>
+              <div v-if="message.id" :class="{ 'read': message.is_read == true }" class="delete_notification"
+                @click="NotificationsReaded(message.id)">
+                <i class="fas fa-check-double"></i>
+              </div>
+            </router-link> -->
+            <!-- End :: delete_account -->           
+
             <h3>{{ message.data.title }}</h3>
             <p>{{ message.data.body }}</p>
 
-            <!-- @click="DeleteNotification(message.id)" -->
             <div v-if="message.id" :class="{ 'read': message.is_read == true }" class="delete_notification"
               @click="NotificationsReaded(message.id)">
               <i class="fas fa-check-double"></i>
             </div>
-            <!-- </router-link> -->
+
 
           </div>
 
         </transition-group>
+        
+        <!-- <transition-group name="fade" v-if="receivedMessages.length">
+          <div class="notification" v-for="(message, index) in receivedMessages" :key="'k' + index">
+
+            <h3>{{ message.data.title }}</h3>
+            <p>{{ message.data.body }}</p>
+
+            <div v-if="message.id" :class="{ 'read': message.is_read == true }" class="delete_notification"
+              @click="NotificationsReaded(message.id)">
+              <i class="fas fa-check-double"></i>
+            </div>
+
+          </div>
+
+        </transition-group> -->
 
         <p class="text-danger text-center text--darken-4 pt-5 pb-5" v-else>{{ $t('PLACEHOLDERS.no_notifications') }}</p>
 
@@ -86,6 +147,19 @@ export default {
       readAllNotifications: "NotificationsModule/readAllNotifications",
     }),
 
+     updateRouterQueryParam(pagenationValue) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          page: pagenationValue,
+        },
+      });
+
+      // Scroll To Screen's Top After Get Products
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    },
+
     async getData() {
       try {
         let res = await this.$axios({
@@ -98,8 +172,8 @@ export default {
         console.log("All Data ==>", res);
         this.receivedMessages = res.data.data;
         console.log("objec" , this.receivedMessages);
-        this.paginations.last_page = res.data.data.meta.last_page;
-        this.paginations.items_per_page = res.data.data.meta.per_page;
+       this.paginations.last_page = res.data.meta.last_page;
+        this.paginations.items_per_page = res.data.meta.per_page;
 
       } catch (error) {
         this.loading = false;
@@ -140,18 +214,6 @@ export default {
       }
     },
 
-    updateRouterQueryParam(pagenationValue) {
-      this.$router.push({
-        query: {
-          ...this.$route.query,
-          page: pagenationValue,
-        },
-      });
-
-      // Scroll To Screen's Top After Get Products
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    },
 
 
   },
