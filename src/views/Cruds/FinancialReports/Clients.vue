@@ -6,7 +6,7 @@
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
-          <h5>{{ $t("TITLES.subscriptions") }}</h5>
+          <h5>{{ $t("TITLES.AllClients") }}</h5>
           <button v-if="!filterFormIsActive" class="filter_toggler"
             @click.stop="filterFormIsActive = !filterFormIsActive">
             <i class="fal fa-search"></i>
@@ -25,17 +25,19 @@
         </template>
         <!-- Start:: No Data State -->
 
+        
         <!-- Start:: Name -->
-        <template v-slot:[`item.name`]="{ item }">
-          <span class="text-danger" v-if="!item.name"> {{ $t("TABLES.noData") }} </span>
-          <span v-else> {{ item.name }} </span>
-        </template>
+                 <template v-slot:[`item.name`]="{ item }">
+                  <h6 class="text-danger" v-if="!item.name"> - </h6>
+                  <h6 v-else> {{ item.name }} </h6>
+                </template>
         <!-- End:: Name -->
 
+
         <!-- Start:: Phone -->
-        <template v-slot:[`item.phone`]="{ item }">
-          <span class="text-danger" v-if="!item.phone"> {{ $t("TABLES.noData") }} </span>
-          <span v-else> {{ item.phone }} </span>
+        <template v-slot:[`item.mobile`]="{ item }">
+          <span class="text-danger" v-if="!item.mobile"> {{ $t("TABLES.noData") }} </span>
+          <span v-else> {{ item.mobile }} </span>
         </template>
         <!-- End:: Phone -->
       
@@ -152,19 +154,19 @@ export default {
       tableHeaders: [
         {
           text: this.$t("TABLES.subscriptions.serialNumber"),
-          value: "id",
+          value: "serialNumber",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.subscriptions.coach"),
-          value: "coach.name",
+          text: this.$t("TABLES.Clients.name"),
+          value: "name",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t("TABLES.subscriptions.coachNumber"),
-          value: "coach.mobile",
+          text: this.$t("TABLES.Clients.phone"),
+          value: "mobile",
           align: "center",
           sortable: false,
         },
@@ -243,14 +245,7 @@ export default {
       this.setTableRows();
     },
     async resetFilter() {
-      this.filterOptions.user_name = null;
-      this.filterOptions.user_mobile = null;
-      this.filterOptions.balance = null;
-      this.filterOptions.tax = null;
-      this.filterOptions.total_balance = null;
-      this.filterOptions.start_date = null;
-      this.filterOptions.end_date = null;
-      this.filterOptions.package_id = null
+      // this.filterOptions.package_id = null
       if (this.$route.query.page !== '1') {
         await this.$router.push({ path: '/subscriptions/:id', query: { page: 1 } });
       }
@@ -276,13 +271,16 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `client-subscriptions/${this.$route.params.id}`,
+          url: `coaches/coach-client-subscriptions/${this.$route.params.id}`,
           params: {
-            page: this.paginations.current_page,
+            page: this.paginations.current_page
           },
         });
         this.loading = false;
         this.tableRows = res.data.data.Subscription;
+          res.data.data.Subscription.forEach((item, index) => {
+          item.serialNumber = (this.paginations.current_page - 1) * this.paginations.items_per_page + index + 1;
+        });
         this.paginations.last_page = res.data.meta.last_page;
         this.paginations.items_per_page = res.data.meta.per_page;
 

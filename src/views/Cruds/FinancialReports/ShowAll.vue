@@ -107,8 +107,16 @@
           </div>
         </template>
 
+        <!-- <template v-slot:[`item.total`]="{ item }">
+          <router-link :to="{
+            path: `/Clients/Subscriptions/${item.id}`
+          }" :disabled="item.total == '0.00' || item.total == '0'">
+            {{ item.total }}
+          </router-link>
+        </template> -->
+
         <template v-slot:[`item.total`]="{ item }">
-           <router-link  :to="{ path: `/clients/subscriptions/${item.id}` }">
+           <router-link  :to="{ path: `/Clients-Subscriptions/${item.id}` }">
             {{ item.total }}
           </router-link>
         </template>
@@ -401,9 +409,7 @@ export default {
 
     // ==================== Start:: Crud ====================
     // ===== Start:: Show
-    showItem(item) {
-      this.$router.push({ path: `/financial-not-finshed-reports/show/${item.id}` });
-    },
+  
     // ===== End:: Show
 
     // ===== Start:: Delete

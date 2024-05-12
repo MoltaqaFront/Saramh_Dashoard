@@ -10,7 +10,7 @@
             <div class="notification" v-for="(message, index) in receivedMessages" :key="'k' + index">
 
             <!-- start :: rate -->
-            <!-- <router-link v-if="message.data.notification_type == 'rate'" :to="'/rates/all'">
+            <router-link v-if="message.data.notification_type == 'new_subscription'" :to="`/SubscriptionsPrice/show/${message.data.notification_id}`">
               <h3>{{ message.data.title }}</h3>
               <p>{{ message.data.body }}</p>
 
@@ -18,11 +18,11 @@
                 @click="NotificationsReaded(message.id)">
                 <i class="fas fa-check-double"></i>
               </div>
-            </router-link> -->
+            </router-link>
             <!-- End :: rate -->
 
             <!-- start :: contact -->
-            <!-- <router-link v-if="message.data.notification_type == 'contact'" :to="'/contact-messages/all'">
+            <router-link v-if="message.data.notification_type == 'contact_us'" :to="'/contact-messages/all'">
               <h3>{{ message.data.title }}</h3>
               <p>{{ message.data.body }}</p>
 
@@ -30,11 +30,11 @@
                 @click="NotificationsReaded(message.id)">
                 <i class="fas fa-check-double"></i>
               </div>
-            </router-link> -->
+            </router-link>
             <!-- End :: contact -->
 
             <!-- start :: users -->
-            <!-- <router-link v-if="message.data.notification_type == 'new_client'" :to="'/clients/all'">
+            <router-link v-if="message.data.notification_type == 'new_client'" :to="`/clients/show/${message.data.notification_id}`">
               <h3>{{ message.data.title }}</h3>
               <p>{{ message.data.body }}</p>
 
@@ -42,27 +42,19 @@
                 @click="NotificationsReaded(message.id)">
                 <i class="fas fa-check-double"></i>
               </div>
-            </router-link> -->
+            </router-link>
             <!-- End :: users -->
 
             <!-- start :: delete_account -->
-            <!-- <router-link v-if="message.data.notification_type == 'delete_account'" :to="'/admins/all'">
+            <router-link v-if="message.data.notification_type == 'delete_account'" :to="'/clients/all'">
               <h3>{{ message.data.title }}</h3>
               <p>{{ message.data.body }}</p>
               <div v-if="message.id" :class="{ 'read': message.is_read == true }" class="delete_notification"
                 @click="NotificationsReaded(message.id)">
                 <i class="fas fa-check-double"></i>
               </div>
-            </router-link> -->
+            </router-link>
             <!-- End :: delete_account -->           
-
-            <h3>{{ message.data.title }}</h3>
-            <p>{{ message.data.body }}</p>
-
-            <div v-if="message.id" :class="{ 'read': message.is_read == true }" class="delete_notification"
-              @click="NotificationsReaded(message.id)">
-              <i class="fas fa-check-double"></i>
-            </div>
 
 
           </div>
