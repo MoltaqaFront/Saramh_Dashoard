@@ -20,7 +20,7 @@
             disabled />
           <base-rate-input col="6" :placeholder="$t('TABLES.Rates.rate')" v-model="data.rate"
             size="22" disabled />
-          <base-input col="6"  type="text" :placeholder="$t('TABLES.Rates.comment')"
+          <base-input col="6"  type="textarea" :placeholder="$t('TABLES.Rates.comment')"
             v-model.trim="data.comment" disabled />
           <base-input col="6" type="text" :placeholder="$t('TABLES.coaches.name')" v-model.trim="data.Coach"  disabled />
           <base-input col="6" type="text" :placeholder="$t('SIDENAV.Coaches.programName')" v-model.trim="data.programName"  disabled />
