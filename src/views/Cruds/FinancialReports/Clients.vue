@@ -2,6 +2,13 @@
   <div class="show_all_content_wrapper">
     <!-- Start:: Main Section -->
     <main>
+      <!--  =========== Start:: Filter Form =========== -->
+      <div class="filter_content_wrapper" :class="{ active: filterFormIsActive }">
+        <button class="filter_toggler" @click="filterFormIsActive = !filterFormIsActive">
+          <i class="fal fa-times"></i>
+        </button>
+      </div>
+      <!--  =========== End:: Filter Form =========== -->
 
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
@@ -25,63 +32,23 @@
         </template>
         <!-- Start:: No Data State -->
 
-        
+        <template v-slot:[`item.serialNumber`]="{ item }">
+          <p class="blue-grey--text text--darken-1 fs-3" v-if="!item.serialNumber">-</p>
+          <p v-else>{{ item.serialNumber }}</p>
+        </template>
         <!-- Start:: Name -->
-                 <template v-slot:[`item.name`]="{ item }">
-                  <h6 class="text-danger" v-if="!item.name"> - </h6>
-                  <h6 v-else> {{ item.name }} </h6>
-                </template>
-        <!-- End:: Name -->
+        <template v-slot:[`item.name`]="{ item }">
+          <h6 class="text-danger" v-if="!item.name"> {{ $t("TABLES.noData") }} </h6>
+          <h6 v-else> {{ item.name }} </h6>
+        </template>
 
-
-        <!-- Start:: Phone -->
+         <!-- Start:: Phone -->
         <template v-slot:[`item.mobile`]="{ item }">
           <span class="text-danger" v-if="!item.mobile"> {{ $t("TABLES.noData") }} </span>
           <span v-else> {{ item.mobile }} </span>
         </template>
         <!-- End:: Phone -->
-      
-        <!-- Start:: Actions -->
-        <template v-slot:[`item.actions`]="{ item }">
-          <div class="actions">
-            <a-tooltip placement="bottom">
-              <template slot="title">
-                <span>{{ $t("PLACEHOLDERS.current_balance") }}</span>
-              </template>
-
-              <button class="btn_edit" @click="selectAcceptItem(item)">
-                <i class="fal fa-wallet"></i>
-              </button>
-            </a-tooltip>
-          </div>
-        </template>
-        <!-- End:: Actions -->
-
-        <!-- ======================== Start:: Dialogs ======================== -->
-        <template v-slot:top>
-           <!-- Start:: Balance Modal -->
-           <v-dialog v-model="dialogBalance">
-            <v-card>
-              <v-card-title class="text-h5 justify-center" v-if="itemToBalance">
-                <span>{{ $t('PLACEHOLDERS.current_balance') }} : </span>
-                <span>{{ itemToBalance.balance }}</span>
-              </v-card-title>
-
-              <form class="w-100">
-
-                <base-input col="12" type="text" :placeholder="$t('PLACEHOLDERS.Remaining_advertising')"
-                  v-model.trim="Remaining_advertising" disabled />
-                <base-input col="12" type="text" :placeholder="$t('PLACEHOLDERS.Consumer_advertising')"
-                  v-model.trim="Consumer_advertising" disabled />
-                <base-input col="12" type="text" :placeholder="$t('PLACEHOLDERS.packega_balence')"
-                  v-model.trim="balance_package" disabled />
-              </form>
-
-            </v-card>
-          </v-dialog>
-          <!-- End:: Balance Modal -->
-        </template>
-        <!-- ======================== End:: Dialogs ======================== -->
+        
       </v-data-table>
       <!--  =========== End:: Data Table =========== -->
     </main>
@@ -97,39 +64,21 @@
       </div>
     </template>
     <!-- End:: Pagination -->
+
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
+
 export default {
-  name: "AllSubscriptons",
+  name: "AllRates",
 
   computed: {
     ...mapGetters({
       getAppLocale: "AppLangModule/getAppLocale",
-    }),
-
-    activeStatuses() {
-      return [
-        {
-          id: 1,
-          name: this.$t("STATUS.active"),
-          value: 1,
-        },
-        {
-          id: 2,
-          name: this.$t("STATUS.notActive"),
-          value: 0,
-        },
-        {
-          id: null,
-          name: this.$t("STATUS.all"),
-          value: null,
-        },
-      ];
-    },
+    })
   },
 
   data() {
@@ -141,17 +90,12 @@ export default {
 
       // Start:: Filter Data
       filterFormIsActive: false,
-      filterOptions: {
-        name: null,
-        phone: null,
-        email: null,
-        isActive: null,
-      },
+      providers_list: [],
       // End:: Filter Data
 
       // Start:: Table Data
       searchValue: "",
-      tableHeaders: [
+        tableHeaders: [
         {
           text: this.$t("TABLES.subscriptions.serialNumber"),
           value: "serialNumber",
@@ -199,13 +143,8 @@ export default {
       // End:: Table Data
 
       // Start:: Dialogs Control Data
-      dialogImage: false,
-      selectedItemImage: null,
-      dialogDeactivate: false,
-      itemToChangeActivationStatus: null,
-      deactivateReason: null,
-      dialogDelete: false,
-      itemToDelete: null,
+      dialogComment: false,
+      selectedCommentTextToShow: "",
       dialogBalance: false,
       itemToBalance: null,
       // End:: Dialogs Control Data
@@ -218,12 +157,9 @@ export default {
       },
       // End:: Pagination Data
 
-      // Start:: Page Permissions
-      permissions: null,
-      // Start:: Page Permissions
-      Remaining_advertising:'',
-      Consumer_advertising:'',
+      status_word: '',
       balance_package:'',
+
     };
   },
 
@@ -238,16 +174,17 @@ export default {
 
   methods: {
     // Start:: Handel Filter
-    async submitFilterForm() {
+   async submitFilterForm() {
       if (this.$route.query.page !== '1') {
-        await this.$router.push({ path: '/subscriptions/:id', query: { page: 1 } });
+        await this.$router.push({ path: '/rates/all', query: { page: 1 } });
       }
       this.setTableRows();
     },
     async resetFilter() {
-      // this.filterOptions.package_id = null
+      this.filterOptions.name = null;
+      this.filterOptions.status = null;
       if (this.$route.query.page !== '1') {
-        await this.$router.push({ path: '/subscriptions/:id', query: { page: 1 } });
+        await this.$router.push({ path: '/rates/all', query: { page: 1 } });
       }
       this.setTableRows();
     },
@@ -277,10 +214,10 @@ export default {
           },
         });
         this.loading = false;
-        this.tableRows = res.data.data.Subscription;
-          res.data.data.Subscription.forEach((item, index) => {
+        res.data.data.forEach((item, index) => {
           item.serialNumber = (this.paginations.current_page - 1) * this.paginations.items_per_page + index + 1;
         });
+        this.tableRows = res.data.data;
         this.paginations.last_page = res.data.meta.last_page;
         this.paginations.items_per_page = res.data.meta.per_page;
 
@@ -292,77 +229,110 @@ export default {
     // End:: Set Table Rows
 
     // Start:: Control Modals
-    showImageModal(image) {
-      this.dialogImage = true;
-      this.selectedItemImage = image;
+    showCommentModal(comment) {
+      this.dialogComment = true;
+      this.selectedCommentTextToShow = comment;
     },
     // End:: Control Modals
 
-    // ===== Start:: Handling Activation & Deactivation
-    selectDeactivateItem(item) {
-      this.dialogDeactivate = true;
-      this.itemToChangeActivationStatus = item;
+    // Start:: Change Activation Status
+    // async changeActivationStatus(item) {
+    //   if (item.is_active == "new") {
+    //     this.status_word = "unpublished"
+    //   } else {
+    //     this.status_word = "published"
+    //   }
+    //   try {
+    //     await this.$axios({
+    //       method: "POST",
+    //       url: `rates/${item.id}`, 
+    //       data: { status: this.status_word }
+    //     });
+    //     this.$message.success(this.$t("MESSAGES.changedSuccessfully"));
+    //   } catch (error) {
+    //     this.$message.error(error.response.data.message);
+    //   }
+    // },
+    // End:: Change Activation Status
+      showItem(item) {
+      this.$router.push({ path: `/rates/show/${item.id}` });
     },
-    async HandlingItemActivationStatus(selectedItem) {
-      this.dialogDeactivate = false;
-      let targetItem = this.itemToChangeActivationStatus ? this.itemToChangeActivationStatus : selectedItem;
-      const REQUEST_DATA = {};
-      // Start:: Append Request Data
-      REQUEST_DATA.message = this.deactivateReason;
-      // Start:: Append Request Data
-
-      try {
-        await this.$axios({
-          method: "POST",
-          url: `packages/active/${targetItem.id}`,
-          data: targetItem.is_active ? REQUEST_DATA : null,
-        });
-        this.$message.success(this.$t("MESSAGES.changeActivation"));
-        let filteredElemet = this.tableRows.find(element => element.id === targetItem.id);
-        filteredElemet.is_active = !filteredElemet.is_active;
-        this.itemToChangeActivationStatus = null;
-        this.deactivateReason = null;
-      } catch (error) {
-        this.$message.error(error.response.data.message);
-      }
-    },
-    // ===== End:: Handling Activation & Deactivation
-
-    // ==================== Start:: Crud ====================
-    // ===== Start:: balance
-    selectAcceptItem(item) {
+      // ===== Start:: balance
+      selectAcceptItem(item) {
       console.log("item",item);
       this.dialogBalance = true;
       this.itemToBalance = item;
 
-      this.Remaining_advertising = item.user_balance.Remaining_advertising_balance;
-      this.Consumer_advertising = item.user_balance.Consumer_advertising_balance;
-      this.balance_package = item.user_balance.package;
+      this.balance_package = item.comment;
 
     },
-    async confirmAcceptItem(item) {
-
-      const REQUEST_DATA = new FormData();
-      REQUEST_DATA.append("balance", this.balance_package);
-      // REQUEST_DATA.append("_method", "PUT");
-
+      selectUpdateItem(item) {
+      this.dialogUpdate = true;
+      this.itemToUpdate = item;
+      // console.log(item);
+    },
+     async confirmAccept(item) {
       try {
-        await this.$axios({
+        let res = await this.$axios({
           method: "POST",
-          url: `change-client-balance/${this.itemToBalance.id}`,
-          data: REQUEST_DATA,
+          url: `rates/publishing/${item.id}`,
+          data: { status: "published" }
         });
-        this.dialogBalance = false;
-        this.balance_package = null,
-          this.setTableRows();
-        this.$message.success(this.$t("MESSAGES.verifiedSuccessfully"));
+        this.setTableRows();
+        this.$message.success(res.data.message);
       } catch (error) {
-        this.dialogBalance = false;
         this.$message.error(error.response.data.message);
       }
     },
+     async confirmChangeStatus(item) {
+      try {
+        let res = await this.$axios({
+          method: "POST",
+          url: `rates/publishing/${item.id}`,
+          data: { status: "unpublished" }
+        });
+        this.setTableRows();
+        this.$message.success(res.data.message);
+      } catch (error) {
+        this.$message.error(error.response.data.message);
+      }
+    },
+
+  //   async confirmAccept(item , Content) {
+  //     const REQUEST_DATA = {};
+  //     if (this.status === "unpublished") {
+  //   // If current status is unpublished, change it to published
+  //   REQUEST_DATA.status = "published";
+  // } else if (this.status === "new") {
+  //   // If current status is new, change it to unpublished
+  //   REQUEST_DATA.status = "unpublished";
+  // } else if (this.status === "published") {
+  //   // If current status is published, change it to unpublished
+  //   REQUEST_DATA.status = "unpublished";
+  // }
+  //     // if (this.status == "new") {
+  //     //   console.log("object" , Content);
+  //     //   // REQUEST_DATA.status = "new";
+  //     //    REQUEST_DATA.status = Content
+  //     // } else if (this.status == "published"){
+  //     //   REQUEST_DATA.status = "unpublished";
+  //     // } else {
+  //     //   REQUEST_DATA.status = "unpublished";
+  //     // }
+  //     try {
+  //       let res = await this.$axios({
+  //         method: "POST",
+  //         url: `rates/publishing/${item.id}`,
+  //         data: REQUEST_DATA
+  //       });
+  //       this.setTableRows();
+  //       this.$message.success(res.data.message);
+  //     } catch (error) {
+  //       this.$message.error(error.response.data.message);
+  //     }
+  //   },
     // ===== End:: balance
-    // ==================== End:: Crud ====================
+   
   },
 
   created() {
@@ -378,3 +348,6 @@ export default {
   },
 };
 </script>
+<style>
+
+</style>

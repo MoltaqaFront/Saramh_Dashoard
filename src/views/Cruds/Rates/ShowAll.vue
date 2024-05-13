@@ -112,7 +112,7 @@
         <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
 
-              <a-tooltip placement="bottom" v-if="item.status == 'new'">
+              <a-tooltip placement="bottom" v-if="item.new_status == 'new'">
               <template slot="title">
                 <span>{{ $t("BUTTONS.share") }}</span>
               </template>
@@ -122,7 +122,7 @@
               </button>
             </a-tooltip>
 
-            <a-tooltip placement="bottom" v-if="item.status == 'new'">
+            <a-tooltip placement="bottom" v-if="item.new_status == 'new'">
               <template slot="title">
                 <span>{{ $t("BUTTONS.block") }}</span>
               </template>
@@ -132,7 +132,7 @@
               </button>
             </a-tooltip>
 
-            <a-tooltip placement="bottom" v-if="item.status == 'unpublished'">
+            <a-tooltip placement="bottom" v-if="item.new_status == 'unpublished'">
               <template slot="title">
                 <span>{{ $t("BUTTONS.share") }}</span>
               </template>
@@ -142,7 +142,7 @@
               </button>
             </a-tooltip>
 
-            <a-tooltip placement="bottom" v-if="item.status == 'published'">
+            <a-tooltip placement="bottom" v-if="item.new_status == 'published'">
               <template slot="title">
                 <span>{{ $t("BUTTONS.block") }}</span>
               </template>
