@@ -178,7 +178,7 @@ export default {
           text: this.$t("TABLES.subscriptions.AddedTax"),
           value: "tax",
           align: "center",
-          sortable: false,
+          sortable: false, 
         },
         {
           text: this.$t("TABLES.subscriptions.TotalSubscription"),
@@ -279,15 +279,6 @@ export default {
           url: `client-subscriptions/${this.$route.params.id}`,
           params: {
             page: this.paginations.current_page,
-            // name: this.filterOptions.user_name,
-            // mobile: this.filterOptions.user_mobile,
-            // packagePrice: this.filterOptions.balance,
-            // AddedTax: this.filterOptions.tax,
-            // totalSubscription :this.filterOptions.total_balance,
-            // starSubscription: this.filterOptions.start_date,
-            // endSubscription: this.filterOptions.end_date,
-            // UserBalance:  this.filterOptions.package_id,
-            // status: this.filterOptions.isActive?.value,
           },
         });
         this.loading = false;

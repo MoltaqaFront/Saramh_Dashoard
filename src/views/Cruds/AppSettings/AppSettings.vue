@@ -122,18 +122,11 @@ export default {
         this.$message.error(this.$t("VALIDATION.AtxSalery"));
         return;
       }
-      else if (this.data.VAT_percentage < 1 || this.data.VAT_percentage > 100) {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.custom_value_range_required"));
-        } else if (!this.data.AppVet || this.data.AppVet === 'null') {
+       else if (!this.data.AppVet || this.data.AppVet === 'null') {
         this.isWaitingRequest = false;
         this.$message.error(this.$t("VALIDATION.reports_to_block_auto_ad_required"));
         return;
-      } else if (this.data.AppVet < 1 || this.data.AppVet > 100) {
-        this.isWaitingRequest = false;
-        this.$message.error(this.$t("VALIDATION.AppVet"));
-        return;
-      }
+      } 
       else {
         this.submitForm();
         return;

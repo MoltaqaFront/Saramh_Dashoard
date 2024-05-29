@@ -148,11 +148,9 @@ export default {
       
       if (this.data.receiverType.value == "all") {
         REQUEST_DATA.append(`roles[]`, "all");
-        // REQUEST_DATA.append(`receiver_type`, "client");
       }
       else if (this.data.receiverType.value == "clients") {
         this.data.clients.forEach((element, index) => {
-          //REQUEST_DATA.append(`roles[]`, "client");
           REQUEST_DATA.append(`users[${index}]`, element.id);
         });
       }

@@ -7,46 +7,13 @@
         <button class="filter_toggler" @click="filterFormIsActive = !filterFormIsActive">
           <i class="fal fa-times"></i>
         </button>
-        <div class="filter_title_wrapper">
-          <h5>{{ $t("TITLES.searchBy") }}</h5>
-        </div>
-        <div class="filter_form_wrapper">
-          <form @submit.prevent="submitFilterForm">
-             <div class="row justify-content-center align-items-center w-100">
-
-              <!-- Start:: Status Input -->
-              <base-input col="6" type="text" :placeholder="$t('TABLES.Rates.clientName')"
-                v-model="filterOptions.name" />
-              <!-- End:: Status Input -->
-
-              <!-- Start:: Status Input -->
-              <base-select-input col="6" :optionsList="activeStatuses" :placeholder="$t('PLACEHOLDERS.status')"
-                v-model="filterOptions.status" />
-              <!-- End:: Status Input -->
-
-              <!-- Start:: Rate Input -->
-              <!-- <base-rate-input col="4" :placeholder="$t('PLACEHOLDERS.rating_stars')" v-model="filterOptions.rate"
-                size="22" disabled /> -->
-              <!-- End:: Rate Input -->
-            </div>
-
-            <div class="btns_wrapper">
-              <button class="submit_btn" :disabled="isWaitingRequest">
-                <i class="fal fa-search"></i>
-              </button>
-              <button class="reset_btn" type="button" :disabled="isWaitingRequest" @click="resetFilter">
-                <i class="fal fa-redo"></i>
-              </button>
-            </div>
-          </form>
-        </div>
       </div>
       <!--  =========== End:: Filter Form =========== -->
 
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
-          <h5>{{ $t("TABLES.Rates.rates") }}</h5>
+          <h5>{{ $t("TITLES.AllClients") }}</h5>
           <button v-if="!filterFormIsActive" class="filter_toggler"
             @click.stop="filterFormIsActive = !filterFormIsActive">
             <i class="fal fa-search"></i>
@@ -69,150 +36,19 @@
           <p class="blue-grey--text text--darken-1 fs-3" v-if="!item.serialNumber">-</p>
           <p v-else>{{ item.serialNumber }}</p>
         </template>
-
-        <!-- Start:: Rate Comment Btns -->
-        <template v-slot:[`item.comment`]="{ item }">
-          <h6 class="text-danger" v-if="!item.comment"> {{ $t("TABLES.noData") }} </h6>
-
-          <div class="actions" v-else>
-            <button class="btn_show" @click="showCommentModal(item.comment)">
-              <i class="fal fa-file-alt"></i>
-            </button>
-          </div>
-        </template>
-        <!-- End:: Rate Comment Btns -->
         <!-- Start:: Name -->
         <template v-slot:[`item.name`]="{ item }">
           <h6 class="text-danger" v-if="!item.name"> {{ $t("TABLES.noData") }} </h6>
           <h6 v-else> {{ item.name }} </h6>
         </template>
 
-        <!-- Start:: status Type -->
-        <template v-slot:[`item.status`]="{ item }">
-          <h6 class="text-danger" v-if="!item.status"> {{ $t("TABLES.noData") }} </h6>
-          <v-chip v-else color="blue-grey darken-3" text-color="white" small>
-            {{ item.status }}
-          </v-chip>
+         <!-- Start:: Phone -->
+        <template v-slot:[`item.mobile`]="{ item }">
+          <span class="text-danger" v-if="!item.mobile"> {{ $t("TABLES.noData") }} </span>
+          <span v-else> {{ item.mobile }} </span>
         </template>
-        <!-- End:: status Type -->
-
-        <!-- Start:: Activation -->
-        <!-- Start:: Activation Status -->
-        <template v-slot:[`item.is_active`]="{ item }">
-          <span class="text-success text-h5" v-if="item.is_active">
-            <i class="far fa-check"></i>
-          </span>
-          <span class="text-danger text-h5" v-else>
-            <i class="far fa-times"></i>
-          </span>
-        </template>
-        <!-- End:: Activation Status -->
-
-        <!-- Start:: Actions -->
-        <template v-slot:[`item.actions`]="{ item }">
-          <div class="actions">
-
-              <a-tooltip placement="bottom" v-if="item.new_status == 'new'">
-              <template slot="title">
-                <span>{{ $t("BUTTONS.share") }}</span>
-              </template>
-
-              <button class="btn_activate" @click="confirmAccept(item),'published'">
-                <i class="fas fa-share"></i>
-              </button>
-            </a-tooltip>
-
-            <a-tooltip placement="bottom" v-if="item.new_status == 'new'">
-              <template slot="title">
-                <span>{{ $t("BUTTONS.block") }}</span>
-              </template>
-
-              <button class="btn_deactivate" @click="confirmChangeStatus(item),'unpublished'">
-                <i class="fas fa-ban"></i>
-              </button>
-            </a-tooltip>
-
-            <a-tooltip placement="bottom" v-if="item.new_status == 'unpublished'">
-              <template slot="title">
-                <span>{{ $t("BUTTONS.share") }}</span>
-              </template>
-
-              <button class="btn_activate" @click="confirmAccept(item)">
-                <i class="fas fa-share"></i>
-              </button>
-            </a-tooltip>
-
-            <a-tooltip placement="bottom" v-if="item.new_status == 'published'">
-              <template slot="title">
-                <span>{{ $t("BUTTONS.block") }}</span>
-              </template>
-
-              <button class="btn_deactivate" @click="confirmChangeStatus(item)">
-                <i class="fas fa-ban"></i>
-              </button>
-            </a-tooltip>
-
-            <a-tooltip placement="bottom" v-if="$can('rates show', 'rates')">
-              <template slot="title">
-                <span>{{ $t("BUTTONS.show") }}</span>
-              </template>
-              <button class="btn_show" @click="showItem(item)">
-                <i class="fal fa-eye"></i>
-              </button>
-            </a-tooltip>
-
-  
-            <template v-else>
-              <i class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"></i>
-            </template>
-          </div>
-        </template>
-        <!-- End:: Actions -->
-
-        <!-- ======================== Start:: Dialogs ======================== -->
-        <template v-slot:top>
-
-           <!-- Start:: Image Modal -->
-          <description-modal v-if="dialogComment" :modalIsOpen="dialogComment" :modalDesc="selectedCommentTextToShow"
-            @toggleModal="dialogComment = !dialogComment" />
-          <!-- End:: Image Modal -->
-
-          <!-- Start:: Update Modal -->
-          <v-dialog v-model="dialogUpdate">
-            <v-card>
-              <v-card-title class="text-h5 justify-center w-100" v-if="itemToUpdate">
-                {{ $t("PLACEHOLDERS.block_reason") }}
-
-                <div class="filter_form_wrapper w-100">
-                  <form class="w-100">
-
-                    <div class="form-group">
-                      <base-input col="12" rows="3" type="textarea" :placeholder="$t('PLACEHOLDERS.reason')"
-                        v-model="reason" required />
-                    </div>
-
-                  </form>
-                </div>
-
-              </v-card-title>
-              <v-card-actions>
-                <v-btn class="modal_confirm_btn" @click="confirmChangeStatus">{{
-                  $t("BUTTONS.ok")
-                }}</v-btn>
-
-                <v-btn class="modal_cancel_btn" @click="dialogUpdate = false">{{ $t("BUTTONS.cancel") }}</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <!-- End:: Update Modal -->
-
-          
-
-        </template>
-        <!-- ======================== End:: Dialogs ======================== -->
-
-
+        <!-- End:: Phone -->
+        
       </v-data-table>
       <!--  =========== End:: Data Table =========== -->
     </main>
@@ -242,27 +78,7 @@ export default {
   computed: {
     ...mapGetters({
       getAppLocale: "AppLangModule/getAppLocale",
-    }),
-
-    activeStatuses() {
-      return [
-        {
-          id: 1,
-          name: this.$t("STATUS.published"),
-          value: "published",
-        },
-        {
-          id: 2,
-          name: this.$t("TABLES.Rates.unpublished"),
-          value: "unpublished",
-        },
-        {
-          id: null,
-          name: this.$t("STATUS.new"),
-          value: "new",
-        },
-      ];
-    },
+    })
   },
 
   data() {
@@ -274,53 +90,53 @@ export default {
 
       // Start:: Filter Data
       filterFormIsActive: false,
-      filterOptions: {
-        status: null,
-        name: null
-      },
       providers_list: [],
       // End:: Filter Data
 
       // Start:: Table Data
       searchValue: "",
-      tableHeaders: [
+        tableHeaders: [
         {
-          text: this.$t("TABLES.Rates.serialNumber"),
+          text: this.$t("TABLES.subscriptions.serialNumber"),
           value: "serialNumber",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         {
-          text: this.$t("TABLES.Rates.clientName"),
+          text: this.$t("TABLES.Clients.name"),
           value: "name",
           align: "center",
-          width: "220",
-          sortable: false
+          sortable: false,
         },
         {
-          text: this.$t("TABLES.Rates.comment"),
-          value: "comment",
+          text: this.$t("TABLES.Clients.phone"),
+          value: "mobile",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         {
-          text: this.$t("PLACEHOLDERS.add_at"),
+          text: this.$t("TABLES.subscriptions.prgram_price"),
+          value: "net_price",
+          align: "center",
+          sortable: false,
+        },
+        {
+          text: this.$t("TABLES.subscriptions.AddedTax"),
+          value: "tax",
+          align: "center",
+          sortable: false, 
+        },
+        {
+          text: this.$t("TABLES.subscriptions.TotalSubscription"),
+          value: "total",
+          align: "center",
+          sortable: false,
+        },
+        {
+          text: this.$t("TABLES.subscriptions.date"),
           value: "created_at",
           align: "center",
-          sortable: false
-        },
-        {
-          text: this.$t("TABLES.Rates.publishStatus"),
-          value: "status",
-          align: "center",
-          sortable: false
-        },
-         {
-          text: this.$t("TABLES.ContactMessages.actions"),
-          value: "actions",
           sortable: false,
-          align: "center",
-          width: "80",
         },
       ],
       tableRows: [],
@@ -392,11 +208,9 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "rates",
+          url: `coaches/coach-client-subscriptions/${this.$route.params.id}`,
           params: {
-            page: this.paginations.current_page,
-            name: this.filterOptions.name,
-            status: this.filterOptions.status?.value,
+            page: this.paginations.current_page
           },
         });
         this.loading = false;

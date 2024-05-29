@@ -8,6 +8,8 @@ import AllClients from "../views/Cruds/Clients/ShowAll.vue";
 import AllCoaches from "../views/Cruds/Coaches/ShowAll.vue";
 import AllContactMessages from "../views/Cruds/ContactMessages/ShowAll.vue";
 import AllFinancialReports from "../views/Cruds/FinancialReports/Show.vue";
+import ClientsFinancialReport from "../views/Cruds/FinancialReports/Clients.vue";
+
 import AllMainSpecializations from "../views/Cruds/MainSpecializations/ShowAll.vue";
 import AllNotifications from "../views/Cruds/Notifications/ShowAll.vue";
 import AllRates from "../views/Cruds/Rates/ShowAll.vue";
@@ -752,18 +754,20 @@ const routes = [
               },
             },
           },
-          // {
-          //   path: "show/:id",
-          //   name: "ShowFinancialReport",
-          //   component: ShowFinancialReport,
-          //   props: true,
-          //   meta: {
-          //     middleware: [auth],
-          //   },
-          // },
         ],
       },
       // End:: Financial Reports Routes Config
+
+      // Start:: Orders Routes Config
+      {
+        path: "/Clients-Subscriptions/:id",
+        name: "ClientsFinancialReport",
+        component: ClientsFinancialReport,
+        meta: {
+          middleware: [auth],
+        },
+      },
+      // End:: Orders Routes Config
 
       // Start:: Contact Messages Routes Config
       {

@@ -130,7 +130,7 @@ export default {
           data: REQUEST_DATA,
         });
         this.isWaitingRequest = false;
-        this.$message.success(this.$t("MESSAGES.addedSuccessfully"));
+        this.$message.success(this.$t("MESSAGES.editedSuccessfully"));
         this.$router.push({ path: "/Subspecialties/all" });
       } catch (error) {
         this.isWaitingRequest = false;

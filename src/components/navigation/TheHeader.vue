@@ -181,10 +181,10 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "notification/user-notifications"
+          url: "notification/notifications-count"
         });
         // console.log("All Data ==>", res.data.data);
-        this.notificationCount = res.data.data.filter((item) => item.is_read == false).length;
+        this.notificationCount = res.data.count;
       } catch (error) {
         this.loading = false;
         console.log(error.response.data.message);

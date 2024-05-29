@@ -541,6 +541,7 @@
     "logoutConfirmingMessage": "Are You Sure?! You Want To Logout",
     "users": "Users",
     "subscriptions": "Subscription history" ,
+    "AllClients": "Clients History",
     "addUser": "Add New User",
     "addNotification": "Send New Notification",
     "editUser": "Edit User",
