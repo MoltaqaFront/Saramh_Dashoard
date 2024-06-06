@@ -87,7 +87,7 @@
         </template>
 
         <template v-slot:[`item.total`]="{ item }">
-           <router-link  :to="{ path: `/SubscriptionsPrice/show/${item.id}` }">
+            <router-link  :to="{ path: `/Clients-Subscriptions/${item.id}` }">
             {{ item.total }}
           </router-link>
         </template>
